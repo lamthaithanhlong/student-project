@@ -1,4 +1,4 @@
-# student-project
+# House-Rental-Management-System
 
 The Jira instace is https://cs-425-student-project.atlassian.net
 
