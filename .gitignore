@@ -33,7 +33,8 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+# .vscode/
 
 ### MAC OS ###
 .DS_Store
+
