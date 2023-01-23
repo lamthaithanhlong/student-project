@@ -4,6 +4,16 @@ The Jira instace is https://cs-425-student-project.atlassian.net
 
 This is the Student Project of Group 6 : House Rental Management System.
 
+## Running the system
+
+# Running with Visual Studio code
+
+Checkout the Repository to your local machine.
+Open Visual Studio code and open the git repository folder.
+Install recommended extensions from Visual Studio Code ```  View -> Command Palette.. -> Run "EXtensions: Show recommended extensions"```
+Modify ```src/main/resources/application.properties``` file with the values for your mysql installation.
+Go to the menu Run and select "Start Debugging" or "Run without Debugging"
+
 ## Guidelines
 
 * Use documents folder to storing documents. Do not commit binary files.
