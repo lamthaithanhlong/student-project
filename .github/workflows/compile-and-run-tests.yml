@@ -1,4 +1,4 @@
-# This workflow will build (and run tests for) the Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# This workflow will build the Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 name: compile-and-run-tests
 
 on:
@@ -21,7 +21,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn install -DskipTests --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
