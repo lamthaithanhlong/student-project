@@ -4,8 +4,14 @@ name: compile-and-run-tests
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - src/**
+      - pom.xml
   pull_request:
     branches: [ "main" ]
+    paths:
+      - src/**
+      - pom.xml
 
 jobs:
   build:
