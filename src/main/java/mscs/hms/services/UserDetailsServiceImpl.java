@@ -4,10 +4,15 @@ import mscs.hms.models.Role;
 import mscs.hms.models.UserInfo;
 import mscs.hms.models.UserInfoDetail;
 import mscs.hms.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +23,7 @@ import java.util.Optional;
 @Transactional
 public class UserDetailsServiceImpl implements IUserService, UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override
