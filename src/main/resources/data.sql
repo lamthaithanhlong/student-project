@@ -1,5 +1,3 @@
-#INSERT INTO roles (name) VALUES ('Admin'), ('Owner'), ('Renter'), ('Guest');
-
 INSERT INTO roles (name)
 SELECT 'Admin' FROM DUAL
 WHERE NOT EXISTS (SELECT * FROM roles WHERE name='Admin' LIMIT 1);
