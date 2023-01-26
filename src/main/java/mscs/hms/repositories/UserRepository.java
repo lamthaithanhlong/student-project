@@ -1,7 +1,7 @@
 package mscs.hms.repositories;
 
-import mscs.hms.models.Role;
-import mscs.hms.models.UserInfo;
+import mscs.hms.entity.Role;
+import mscs.hms.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,10 +12,10 @@ import java.util.Optional;
 
 @Repository
 @Qualifier("users")
-public interface UserRepository extends JpaRepository<UserInfo, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM UserInfo u WHERE u.userName = ?1")
-    public Optional<UserInfo> getUserByUsername(String username);
+    @Query("SELECT u FROM User u WHERE u.username = ?1")
+    public User getUserByUsername(String username);
 
     @Query("SELECT r FROM Role r")
     public List<Role> getAllRoles();

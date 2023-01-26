@@ -1,35 +1,35 @@
-package mscs.hms.models;
+package mscs.hms.security;
 
+import mscs.hms.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Optional;
 
-public class UserInfoDetail implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
-    private Optional<UserInfo> userInfo;
+    private User user;
 
-    public UserInfoDetail(Optional<UserInfo> userInfo) {
-        this.userInfo = userInfo;
+    public CustomUserDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] userRoles = this.getUserInfo().getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
+        String[] userRoles = this.getUser().getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return userInfo.get().getPassword();
+        return user == null ? "" : user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userInfo.get().getUserName();
+        return user == null ? "" : user.getUsername();
     }
 
     @Override
@@ -52,11 +52,8 @@ public class UserInfoDetail implements UserDetails {
         return true;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo.get();
+    public User getUser() {
+        return user;
     }
 
-    public String getFullName() {
-        return userInfo.get().getFirstName() + " " + userInfo.get().getLastName();
-    }
 }
