@@ -1,5 +1,6 @@
 package mscs.hms.controllers;
 
+import mscs.hms.models.Role;
 import mscs.hms.models.UserInfo;
 import mscs.hms.services.IUserService;
 import mscs.hms.services.UserDetailsServiceImpl;
@@ -32,6 +33,15 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+
+        //Adding Guest Role to user if no role selected
+        if (user.getRoles().isEmpty()) {
+            Role role = userService.getAllRoleByName("Guest");
+
+            if (role != null) {
+                user.getRoles().add(role);
+            }
+        }
 
         userService.saveUser(user);
 
