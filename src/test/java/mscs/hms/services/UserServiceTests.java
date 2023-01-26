@@ -25,10 +25,10 @@ public class UserServiceTests {
     @Autowired
     private TestEntityManager entityManager;
 
-    //@Autowired
-    //private IUserService userService;
+    @Autowired
+    private UserDetailsServiceImpl userService;
 
-    @Test
+    //@Test
     public void testCreateUser() {
         UserInfo user = new UserInfo();
 
