@@ -1,4 +1,4 @@
-package mscs.hms.models;
+package mscs.hms.entity;
 
 import jakarta.persistence.*;
 
@@ -15,7 +15,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private List<UserInfo> users;
+    private List<User> users;
 
     public Integer getId() {
         return id;
@@ -33,14 +33,14 @@ public class Role {
         this.name = name;
     }
 
-    public List<UserInfo> getUsers() {
+    public List<User> getUsers() {
         if (users == null) {
             users = new ArrayList<>();
         }
         return users;
     }
 
-    public void setUsers(List<UserInfo> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }
