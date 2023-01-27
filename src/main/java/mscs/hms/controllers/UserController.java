@@ -1,11 +1,9 @@
 package mscs.hms.controllers;
 
-import mscs.hms.models.UserInfo;
-import mscs.hms.services.IUserService;
-import mscs.hms.services.UserDetailsServiceImpl;
+import mscs.hms.entity.Role;
+import mscs.hms.entity.User;
+import mscs.hms.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,20 +16,29 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserInfo());
+        model.addAttribute("user", new User());
         return "signup";
     }
 
     @PostMapping("/process_register")
-    public String processRegister(UserInfo user) {
+    public String processRegister(User user) {
         System.out.println("Registration request received");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+
+        //Adding Guest Role to user if no role selected
+        if (user.getRoles().isEmpty()) {
+            Role role = userService.getRoleByName("Guest");
+
+            if (role != null) {
+                user.getRoles().add(role);
+            }
+        }
 
         userService.saveUser(user);
 
@@ -40,9 +47,12 @@ public class UserController {
 
     @GetMapping("/users")
     public String listUsers(Model model) {
-        List<UserInfo> users = userService.findAllUsers();
+        List<User> users = userService.findAllUsers();
+        for(User user : users) {
+            System.out.println("Username = " + user.getUsername());
+        }
         model.addAttribute("users", users);
 
-        return "users";
+        return "user_list";
     }
 }

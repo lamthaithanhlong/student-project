@@ -1,11 +1,11 @@
-package mscs.hms.configurations;
+package mscs.hms.config;
 
-import mscs.hms.services.UserDetailsServiceImpl;
+import mscs.hms.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,13 +16,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    //@Autowired
+    //private UserDetailsService userDetailsService;
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+    protected UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    protected BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -35,10 +38,17 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
+    /*
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+    */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/users", "/index", "/process_register", "/register", "/register_success").permitAll()
+                        .requestMatchers("/", "/users", "/index", "/process_register", "/register", "/register_success").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())
@@ -46,7 +56,8 @@ public class WebSecurityConfig {
                                         .failureUrl("/login?error")
                                         .defaultSuccessUrl("/home")
                                         .permitAll())
-                .logout((logout) -> logout.logoutSuccessUrl("/login?logout").permitAll());
+                .logout((logout) -> logout.logoutSuccessUrl("/login?logout")
+                .permitAll());
 
         return httpSecurity.build();
     }
