@@ -1,19 +1,17 @@
 package mscs.hms.services;
 
-import mscs.hms.models.Role;
-import mscs.hms.models.UserInfo;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import mscs.hms.entity.Role;
+import mscs.hms.entity.User;
 
 import java.util.List;
 
 public interface IUserService {
 
-    public UserInfo saveUser(UserInfo user);
+    public User saveUser(User user);
 
-    public List<UserInfo> findAllUsers();
+    public List<User> findAllUsers();
 
     public List<Role> getAllRoles();
 
-    public Role getAllRoleByName(String name);
+    public Role getRoleByName(String name);
 }

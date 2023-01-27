@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"mscs.hms"})
-public class StudentProjectApplication {
+public class StudentProjectApplication /* extends SpringBootServletInitializer */{
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentProjectApplication.class, args);
