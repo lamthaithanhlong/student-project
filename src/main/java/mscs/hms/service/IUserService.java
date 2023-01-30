@@ -1,4 +1,4 @@
-package mscs.hms.services;
+package mscs.hms.service;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;

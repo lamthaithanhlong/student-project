@@ -1,8 +1,8 @@
-package mscs.hms.services;
+package mscs.hms.service;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
-import mscs.hms.repositories.UserRepository;
+import mscs.hms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

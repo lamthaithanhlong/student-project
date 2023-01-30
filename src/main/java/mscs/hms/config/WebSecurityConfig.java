@@ -1,6 +1,6 @@
 package mscs.hms.config;
 
-import mscs.hms.services.IUserService;
+import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

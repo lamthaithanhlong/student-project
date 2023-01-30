@@ -1,4 +1,4 @@
-package mscs.hms.repositories;
+package mscs.hms.repository;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
