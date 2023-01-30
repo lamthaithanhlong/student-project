@@ -1,9 +1,10 @@
-package mscs.hms.services;
+package mscs.hms.service;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
-import mscs.hms.repositories.UserRepository;
+import mscs.hms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,17 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.getUserByUsername(username);
+
+        if (user != null) {
+            return user;
+        } else {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+    }
 
     @Override
     public User saveUser(User user) {
@@ -31,6 +43,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Role getRoleByName(String name) {
-        return userRepository.getAllRoleByName(name);
+        return userRepository.getRoleByName(name);
     }
 }

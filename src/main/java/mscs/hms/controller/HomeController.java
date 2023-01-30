@@ -1,11 +1,13 @@
-package mscs.hms.controllers;
+package mscs.hms.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
+
 @Controller
-public class AppBaseController {
+public class HomeController {
 
     @GetMapping({"/", "/index"})
     public String index() {
@@ -13,7 +15,8 @@ public class AppBaseController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Principal principal, Model model) {
+        model.addAttribute("loggedInUserName", principal.getName());
         return "home";
     }
 }
