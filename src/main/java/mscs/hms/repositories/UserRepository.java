@@ -13,7 +13,7 @@ import java.util.List;
 @Qualifier("users")
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.userName = ?1")
+    @Query("SELECT u FROM User u WHERE u.username = ?1")
     public User getUserByUsername(String username);
 
     @Query("SELECT r FROM Role r")

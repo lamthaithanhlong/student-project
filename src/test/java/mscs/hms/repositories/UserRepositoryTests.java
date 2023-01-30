@@ -31,7 +31,7 @@ public class UserRepositoryTests {
 
         int index = (new Random()).nextInt(1000, Integer.MAX_VALUE);
 
-        user.setUserName("test-user" + index);
+        user.setUsername("test-user" + index);
         user.setFirstName("Unit-" + index);
         user.setLastName("Test-" + index);
         user.setEmail("test" + index + "@test.com");

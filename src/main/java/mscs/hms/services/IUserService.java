@@ -2,14 +2,13 @@ package mscs.hms.services;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface IUserService {
+public interface IUserService extends UserDetailsService {
 
     public User saveUser(User user);
-
-    public User getUserByUsername(String userName);
 
     public List<User> findAllUsers();
 

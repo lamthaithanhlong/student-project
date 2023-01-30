@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,7 +28,7 @@ public class UserServiceTests {
 
         int index = (new Random()).nextInt(1000, Integer.MAX_VALUE);
 
-        user.setUserName("test-user" + index);
+        user.setUsername("test-user" + index);
         user.setFirstName("Unit-" + index);
         user.setLastName("Test-" + index);
         user.setEmail("test"+ index + "@test.com");
@@ -44,8 +45,8 @@ public class UserServiceTests {
 
         User savedUser = userService.saveUser(user);
 
-        User existUser = userService.getUserByUsername(user.getUserName());
+        UserDetails existUser = userService.loadUserByUsername(user.getUsername());
 
-        assert(user.getEmail()).equals(existUser.getEmail());
+        assert savedUser.getUsername().equals(existUser.getUsername());
     }
 }

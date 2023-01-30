@@ -1,5 +1,6 @@
 package mscs.hms.config;
 
+import mscs.hms.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -20,7 +20,7 @@ public class WebSecurityConfig {
     private AuthenticationHandler authenticationHandler;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private IUserService userService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(passwordEncoder);
 
         return authProvider;
@@ -36,7 +36,7 @@ public class WebSecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Bean
@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                 )
                 //.httpBasic(Customizer.withDefaults())
                 .formLogin((form) -> form.loginPage("/login")
-                                        .successHandler(authenticationHandler)
+                                        //.successHandler(authenticationHandler)
                                         .failureUrl("/login?error")
                                         .defaultSuccessUrl("/home")
                                         .permitAll())

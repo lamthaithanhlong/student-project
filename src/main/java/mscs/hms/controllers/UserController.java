@@ -52,7 +52,7 @@ public class UserController {
     public String listUsers(Model model) {
         List<User> users = userService.findAllUsers();
         for(User user : users) {
-            System.out.println("Username = " + user.getUserName());
+            System.out.println("Username = " + user.getUsername());
         }
         model.addAttribute("users", users);
 
