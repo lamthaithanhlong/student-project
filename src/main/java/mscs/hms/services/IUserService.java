@@ -9,6 +9,8 @@ public interface IUserService {
 
     public User saveUser(User user);
 
+    public User getUserByUsername(String userName);
+
     public List<User> findAllUsers();
 
     public List<Role> getAllRoles();

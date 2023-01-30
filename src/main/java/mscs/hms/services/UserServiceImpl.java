@@ -20,6 +20,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User getUserByUsername(String userName) {
+        return userRepository.getUserByUsername(userName);
+    }
+
+    @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
@@ -31,6 +36,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Role getRoleByName(String name) {
-        return userRepository.getAllRoleByName(name);
+        return userRepository.getRoleByName(name);
     }
 }

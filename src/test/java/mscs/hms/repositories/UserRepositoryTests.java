@@ -25,13 +25,13 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
-    //@Test
+    @Test
     public void testCreateUser() {
         User user = new User();
 
         int index = (new Random()).nextInt(1000, Integer.MAX_VALUE);
 
-        user.setUsername("test-user" + index);
+        user.setUserName("test-user" + index);
         user.setFirstName("Unit-" + index);
         user.setLastName("Test-" + index);
         user.setEmail("test" + index + "@test.com");
@@ -40,8 +40,7 @@ public class UserRepositoryTests {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode("123456"));
 
-        /*
-        Role role = userRepository.getAllRoleByName("Admin");
+        Role role = userRepository.getRoleByName("Admin");
         assert (role != null);
 
         user.getRoles().add(role);
@@ -51,7 +50,5 @@ public class UserRepositoryTests {
         User existUser = entityManager.find(User.class, savedUser.getId());
 
         assert(user.getEmail()).equals(existUser.getEmail());
-         */
-        assert (true);
     }
 }

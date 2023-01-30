@@ -2,6 +2,7 @@ package mscs.hms.controllers;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
+import mscs.hms.services.IUserService;
 import mscs.hms.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +17,10 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private IUserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -27,7 +31,6 @@ public class UserController {
     @PostMapping("/process_register")
     public String processRegister(User user) {
         System.out.println("Registration request received");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
@@ -49,7 +52,7 @@ public class UserController {
     public String listUsers(Model model) {
         List<User> users = userService.findAllUsers();
         for(User user : users) {
-            System.out.println("Username = " + user.getUsername());
+            System.out.println("Username = " + user.getUserName());
         }
         model.addAttribute("users", users);
 

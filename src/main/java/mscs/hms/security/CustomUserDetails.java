@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user == null ? "" : user.getUsername();
+        return user == null ? "" : user.getUserName();
     }
 
     @Override

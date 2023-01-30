@@ -8,19 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Qualifier("users")
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.username = ?1")
+    @Query("SELECT u FROM User u WHERE u.userName = ?1")
     public User getUserByUsername(String username);
 
     @Query("SELECT r FROM Role r")
     public List<Role> getAllRoles();
 
     @Query("SELECT r FROM Role r WHERE r.name = ?1")
-    public Role getAllRoleByName(String name);
+    public Role getRoleByName(String name);
 
 }
