@@ -1,12 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>House Rental Management System</title>
+    <meta charset="ISO-8859-1">
+    <title>Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <span th:text="${loggedInUserName}"></span>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    <div>
+        <h1>You are in the home page now</h1>
+    </div>
 
-<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
-
+    <div class="container text-center">
+        <h1>Welcome to House Rental Management System</h1>
+        <h3><a th:href="@{/users}">List of Users</a></h3>
+        <h3><a th:href="@{/register}">Register</a></h3>
+        <h3><a th:href="@{/login}">Login</a></h3>
+    </div>
+</div>
 </body>
 </html>

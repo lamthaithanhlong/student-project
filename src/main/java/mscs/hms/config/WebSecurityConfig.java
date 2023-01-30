@@ -43,14 +43,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().cors().and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/users", "/index", "/process_register", "/register", "/register_success").permitAll()
+                        .requestMatchers("/", "/index", "/process_register", "/register", "/register_success").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())
                 .formLogin((form) -> form.loginPage("/login")
                                         //.successHandler(authenticationHandler)
                                         .failureUrl("/login?error")
-                                        .defaultSuccessUrl("/home")
+                                        .defaultSuccessUrl("/home", true)
                                         .permitAll())
                 .logout((logout) -> logout.logoutSuccessUrl("/login?logout")
                 .permitAll());
