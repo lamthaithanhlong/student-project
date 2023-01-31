@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>HRMS Login</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-</head>
+<html lang="en">
+<head th:include="fragments/htmlhead :: head (title='Welcome')">
 <body>
+    <div class="container">
+        <header th:insert="fragments/header :: header"></header>
+        <div class="row">
+            <div th:insert="fragments/navigation :: navigation"></div>
+
+
+
+            
     <div th:if="${param.error}">
         Invalid username and password.
     </div>
@@ -27,5 +29,11 @@
             </p>
         </form>
     </div>
+
+
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+<div th:insert="fragments/scripts :: scripts"></div>
 </body>
 </html>

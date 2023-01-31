@@ -5,7 +5,7 @@
         <header th:insert="fragments/header :: header"></header>
         <div class="row">
             <div th:insert="fragments/navigation :: navigation"></div>
-            <div th:insert="fragments/content :: content"></div>               
+            <div th:replace="fragments/content :: content">Welcome</div>               
         </div>
         <div th:insert="fragments/footer :: footer"></div>
     </div>

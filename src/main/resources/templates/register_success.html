@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="ISO-8859-1">
-  <title>Registration Successful</title>
-  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-</head>
+<html lang="en">
+<head th:include="fragments/htmlhead :: head (title='Welcome')">
 <body>
-<div class="container text-center">
-  <h3>You have signed up successfully!</h3>
-  <h4><a th:href="@{/login}">Click here to Login</a></h4>
-</div>
+    <div class="container">
+        <header th:insert="fragments/header :: header"></header>
+        <div class="row">
+            <div th:insert="fragments/navigation :: navigation"></div>
+            
 
-</body>
-</html>
+            
+            <div>You have signed up successfully!</div>
+              <a th:href="@{/login}">Click here to Login</a>
+            </div>
+
+
+    
+          <div th:insert="fragments/footer :: footer"></div>
+      </div>
+      <div th:insert="fragments/scripts :: scripts"></div>
+      </body>
+      </html>
