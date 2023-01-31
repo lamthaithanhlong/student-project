@@ -1,14 +1,14 @@
 <html lang="en">
-<head th:include="fragments/htmlhead :: head (title='Welcome')">
+<head th:insert="~{fragments/htmlhead :: head (title='Welcome')}">
 <body>
     <div class="container">
-        <header th:insert="fragments/header :: header"></header>
+        <header th:insert="~{fragments/header :: header}"></header>
         <div class="row">
-            <div th:insert="fragments/navigation :: navigation"></div>
-            <div th:replace="fragments/content :: content">Welcome</div>               
+            <div th:insert="~{fragments/navigation :: navigation}"></div>
+            <div th:replace="~{fragments/content :: content}">Welcome</div>               
         </div>
-        <div th:insert="fragments/footer :: footer"></div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
     </div>
-    <div th:insert="fragments/scripts :: scripts"></div>
+    <div th:insert="~{fragments/scripts :: scripts}"></div>
 </body>
 </html>
