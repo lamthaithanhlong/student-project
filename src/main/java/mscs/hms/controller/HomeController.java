@@ -7,15 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 
 @Controller
-public class HomeController {
+public class HomeController extends AbsBaseController {
 
     @GetMapping({"/", "/index"})
     public String index() {
+        LOG.info("In index view");
         return "index";
     }
 
     @GetMapping("/home")
     public String home(Principal principal, Model model) {
+        LOG.info("In home view");
         model.addAttribute("loggedInUserName", principal.getName());
         return "home";
     }
