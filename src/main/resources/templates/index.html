@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Home Rental Management System</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-</head>
+<html lang="en">
+<head th:include="fragments/htmlhead :: head (title='Welcome')">
 <body>
-<div class="container text-center">
-    <h1>Welcome to House Rental Management System</h1>
-    <h3><a th:href="@{/users}">List of Users</a></h3>
-    <h3><a th:href="@{/register}">Register</a></h3>
-    <h3><a th:href="@{/login}">Login</a></h3>
-</div>
-
+    <div class="container">
+        <header th:insert="fragments/header :: header"></header>
+        <div class="row">
+            <div th:insert="fragments/navigation :: navigation"></div>
+            <div th:replace="fragments/content :: content">Welcome</div>               
+        </div>
+        <div th:insert="fragments/footer :: footer"></div>
+    </div>
+    <div th:insert="fragments/scripts :: scripts"></div>
 </body>
 </html>
