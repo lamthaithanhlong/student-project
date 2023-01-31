@@ -1,4 +1,4 @@
-package mscs.hms.models;
+package mscs.hms.model;
 
 import mscs.hms.entity.User;
 

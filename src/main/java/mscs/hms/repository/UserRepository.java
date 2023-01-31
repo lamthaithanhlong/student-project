@@ -1,4 +1,4 @@
-package mscs.hms.repositories;
+package mscs.hms.repository;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Qualifier("users")
@@ -21,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public List<Role> getAllRoles();
 
     @Query("SELECT r FROM Role r WHERE r.name = ?1")
-    public Role getAllRoleByName(String name);
+    public Role getRoleByName(String name);
 
 }

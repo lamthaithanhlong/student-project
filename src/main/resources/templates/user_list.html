@@ -12,7 +12,7 @@
   <div>
     <form th:action="@{/logout}" method="post">
       <p>
-        Welcome User
+        Welcome <span th:text="${loggedInUserName}"></span>
       </p>
       <input type="submit" value="Sign Out" />
     </form>

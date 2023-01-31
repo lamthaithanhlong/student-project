@@ -1,22 +1,28 @@
-package mscs.hms.controllers;
+package mscs.hms.controller;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
-import mscs.hms.services.UserServiceImpl;
+import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private IUserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -27,7 +33,6 @@ public class UserController {
     @PostMapping("/process_register")
     public String processRegister(User user) {
         System.out.println("Registration request received");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
@@ -46,13 +51,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String listUsers(Model model) {
+    public String listUsers(Principal principal, Model model) {
         List<User> users = userService.findAllUsers();
         for(User user : users) {
             System.out.println("Username = " + user.getUsername());
         }
         model.addAttribute("users", users);
-
+        model.addAttribute("loggedInUserName", principal.getName());
+        
         return "user_list";
     }
 }

@@ -1,4 +1,4 @@
-package mscs.hms.repositories;
+package mscs.hms.repository;
 
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
@@ -25,7 +25,7 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
-    //@Test
+    @Test
     public void testCreateUser() {
         User user = new User();
 
@@ -40,8 +40,7 @@ public class UserRepositoryTests {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode("123456"));
 
-        /*
-        Role role = userRepository.getAllRoleByName("Admin");
+        Role role = userRepository.getRoleByName("Admin");
         assert (role != null);
 
         user.getRoles().add(role);
@@ -51,7 +50,5 @@ public class UserRepositoryTests {
         User existUser = entityManager.find(User.class, savedUser.getId());
 
         assert(user.getEmail()).equals(existUser.getEmail());
-         */
-        assert (true);
     }
 }
