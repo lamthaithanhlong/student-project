@@ -1,8 +1,10 @@
 package mscs.hms.service;
 
+import mscs.hms.controller.AbsBaseController;
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
 import mscs.hms.repository.UserRepository;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,13 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends AbsBaseService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        LOG.info("Loading user with name " + username);
+
         User user = userRepository.getUserByUsername(username);
 
         if (user != null) {

@@ -4,8 +4,6 @@ import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class UserController {
+public class UserController extends AbsBaseController {
 
     @Autowired
     private IUserService userService;
@@ -26,13 +24,14 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
+        LOG.info("In register view");
         model.addAttribute("user", new User());
         return "signup";
     }
 
     @PostMapping("/process_register")
     public String processRegister(User user) {
-        System.out.println("Registration request received");
+        LOG.info("Registration request received");
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
@@ -52,9 +51,10 @@ public class UserController {
 
     @GetMapping("/users")
     public String listUsers(Principal principal, Model model) {
+        LOG.info("I am in user list view");
         List<User> users = userService.findAllUsers();
         for(User user : users) {
-            System.out.println("Username = " + user.getUsername());
+            LOG.info("Username = " + user.getUsername());
         }
         model.addAttribute("users", users);
         model.addAttribute("loggedInUserName", principal.getName());
