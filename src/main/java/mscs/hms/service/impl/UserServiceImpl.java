@@ -1,10 +1,9 @@
-package mscs.hms.service;
+package mscs.hms.service.impl;
 
-import mscs.hms.controller.AbsBaseController;
 import mscs.hms.entity.Role;
 import mscs.hms.entity.User;
 import mscs.hms.repository.UserRepository;
-import org.apache.commons.logging.Log;
+import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
