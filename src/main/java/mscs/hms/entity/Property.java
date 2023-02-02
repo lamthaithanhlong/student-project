@@ -1,11 +1,12 @@
 package mscs.hms.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="property_type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Property {
     @Id
     @GeneratedValue
@@ -39,5 +40,16 @@ public abstract class Property {
     }
     public void setNoOfBathRooms(Integer noOfBathRooms) {
         this.noOfBathRooms = noOfBathRooms;
-    }    
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @OneToOne
+    private Address address;
 }

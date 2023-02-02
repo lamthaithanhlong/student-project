@@ -1,9 +1,11 @@
 package mscs.hms.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
 
 @Entity
+@DiscriminatorValue("House")
 public class House extends Property {
     @PositiveNumberConstraint
     private double landExtent;

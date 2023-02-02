@@ -1,15 +1,13 @@
 package mscs.hms.entity;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import mscs.hms.entity.constraints.PhoneNumberConstraint;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="legalEntity_type", discriminatorType=DiscriminatorType.STRING)
 public abstract class LegalEntity {
     @Id
     @GeneratedValue
@@ -59,5 +57,8 @@ public abstract class LegalEntity {
     @Override
     public String toString() {
         return "LegalEntity [id=" + id + ", phoneNumber=" + phoneNumber + ", legalEntityName=" + legalEntityName + ", systemUser=" + systemUser + "]";
-    }    
+    }
+
+    @OneToOne
+    private Address address;
 }
