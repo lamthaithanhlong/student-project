@@ -1,19 +1,20 @@
-<div  th:fragment="edit (fields, listViewPath, newViewPath, editViewPath, crudPath, object)">
-<form th:action="${crudPath} + @{/} + ${action}" method="post"  th:object="${object}">
-    <div class="m-3">
-      <section th:each="field: ${fields}">
-        <div class="form-group row">
-            <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.initCaps(field.getName())}__}">Name: </label>
-            <div class="col-8">
-              <input th:name="${field.name}" th:data-type="${field.type}" class="form-control" required th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:placeholder="@{__${@viewFieldUtil.initCaps(field.getName())}__}"/>
+<div  th:fragment="edit (title, fields, listViewPath, newViewPath, editViewPath, crudPath, object, action)">
+    <div>
+        <h5 th:text="${title}">List</h5>
+    </div>    
+    <form th:action="${crudPath} + @{/} + ${action}" method="post"  th:object="${object}">
+        <div class="m-3">
+            <section th:each="field: ${fields}">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.initCaps(field.getName())}__}">Name: </label>
+                    <div class="col-8">
+                    <input th:name="${field.name}" th:data-type="${field.type}" class="form-control" required th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:placeholder="@{__${@viewFieldUtil.initCaps(field.getName())}__}"/>
+                    </div>
+                </div>
+            </section>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-          </div>
-      </section>
-
-      
-      <div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-</form>
+        </div>
+    </form>
 </div>

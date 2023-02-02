@@ -1,5 +1,8 @@
-<div th:fragment="list (fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
-<form th:action="${newViewPath}" method="get">
+<div th:fragment="list (title, fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
+  <div>
+    <h5 th:text="${title}">List</h5>
+  </div>      
+  <form th:action="${newViewPath}" method="get">
     <div>
       <button type="submit" class="btn btn-primary">New</button>
     </div>

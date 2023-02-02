@@ -1,0 +1,79 @@
+package mscs.hms.controller;
+
+import mscs.hms.entity.House;
+import mscs.hms.service.HouseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class HouseController extends AbsEntityController {
+    
+    @Autowired
+    private HouseService houseService;
+
+    @GetMapping("/houses")
+    public ModelAndView showHouses(Model model) {
+        LOG.info("In houses view");
+        return getListEntitiesModelView(houseService.findAll());
+    }    
+
+    @GetMapping("/house_new")
+    public ModelAndView newHouseForm() {
+        LOG.info("In houses new");
+        return getEditViewModel(new House(), "new");
+    }    
+
+    @GetMapping("/house_edit/{id}")
+    public ModelAndView editHouseForm(@PathVariable(value="id") final Integer houseId) {
+        LOG.info("In houses edit");
+        return getEditViewModel(houseService.get(houseId), "new");        
+    }
+
+    @PostMapping("/house/delete") 
+    public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
+        LOG.info("In houses delete");
+        houseService.delete(id);
+        return getListEntitiesModelView(houseService.findAll());
+    }
+
+    @PostMapping("/house/edit")
+    public ModelAndView processEdit(House house) {
+        LOG.info("In houses edit");
+        houseService.save(house);
+        return getListEntitiesModelView(houseService.findAll());
+    }
+
+    @PostMapping("/house/new")
+    public ModelAndView processNew(House house) {
+        LOG.info("In houses new");
+        houseService.save(house);
+        return getListEntitiesModelView(houseService.findAll());
+    } 
+    
+    @Override
+    protected Class<?> getClassType(){
+        return House.class;
+    }
+    @Override
+    protected String getEditViewPath(){
+        return "/house_edit";
+    }
+    @Override
+    protected String getListViewPath(){
+        return "/houses";
+    }
+    @Override
+    protected String getNewViewPath(){
+        return "/house_new";
+    }
+    @Override
+    protected String getCrudPath(){
+        return "/house";
+    }
+}
