@@ -1,0 +1,22 @@
+<html lang="en">
+<head th:insert="~{fragments/htmlhead :: head (title='User List')}">
+<body>
+    <div class="container">
+        <header th:insert="~{fragments/header :: header}"></header>
+        <div class="row">
+            <div th:insert="~{fragments/navigation :: navigation}"></div>
+            
+
+            
+          <div>
+            <h1>List of Companies</h1>
+          </div>
+          <div th:insert="~{fragments/entity_list :: list (fields = ${fields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, objects = ${objects})}"></div>
+
+
+    
+  <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+<div th:insert="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>
