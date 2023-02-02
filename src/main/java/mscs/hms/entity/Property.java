@@ -3,6 +3,7 @@ package mscs.hms.entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
 
 @MappedSuperclass
@@ -39,5 +40,8 @@ public abstract class Property {
     }
     public void setNoOfBathRooms(Integer noOfBathRooms) {
         this.noOfBathRooms = noOfBathRooms;
-    }    
+    }
+
+    @OneToOne
+    private Address address;
 }
