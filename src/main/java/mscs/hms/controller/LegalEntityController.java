@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class LegalEntityController extends AbsEntityController {
+public class LegalEntityController extends AbsEntityController<LegalEntity> {
     
     @Autowired
     private LegalEntityService legalentityService;
@@ -21,23 +21,23 @@ public class LegalEntityController extends AbsEntityController {
     }
 
     @Override
-    protected Class<?> getClassType(){
+    public Class<?> getClassType(){
         return LegalEntity.class;
     }
     @Override
-    protected String getEditViewPath(){
+    public String getEditViewPath(){
         return null;
     }
     @Override
-    protected String getListViewPath(){
+    public String getListViewPath(){
         return "/legal-entities";
     }
     @Override
-    protected String getNewViewPath(){
+    public String getNewViewPath(){
         return null;
     }
     @Override
-    protected String getCrudPath(){
+    public String getCrudPath(){
         return null;
     }
 }

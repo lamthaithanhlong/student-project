@@ -6,33 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.servlet.ModelAndView;
 
-public abstract class AbsEntityController extends AbsBaseController {
+public abstract class AbsEntityController<T> extends AbsBaseController {
     /**
      * 
      * @return type of the entity e.g. Company.class
      */
-    protected abstract Class<?> getClassType();
+    public abstract Class<?> getClassType();
 
     /***
      * 
      * @return the theymeleaf path of edit page. E.g. /company_edit
      */
-    protected abstract String getEditViewPath();
+    public abstract String getEditViewPath();
     /***
      * 
      * @return the theymeleaf path of list page. E.g. /companies
      */
-    protected abstract String getListViewPath();
+    public abstract String getListViewPath();
     /***
      * 
      * @return the theymeleaf path of new page. E.g. /company_new
      */
-    protected abstract String getNewViewPath();
+    public abstract String getNewViewPath();
     /***
      * 
      * @return the controller path of crud actions. E.g. /company
      */
-    protected abstract String getCrudPath();
+    public abstract String getCrudPath();
 
     protected List<ViewField> getPrivateFields(Class<?> classType) {
         List<ViewField> list = new ArrayList<>();

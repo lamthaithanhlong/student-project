@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ApartmentController extends AbsEntityController {
+public class ApartmentController extends AbsEntityController<Apartment> {
     
     @Autowired
     private ApartmentService apartmentService;
@@ -57,23 +57,23 @@ public class ApartmentController extends AbsEntityController {
     } 
     
     @Override
-    protected Class<?> getClassType(){
+    public Class<?> getClassType(){
         return Apartment.class;
     }
     @Override
-    protected String getEditViewPath(){
+    public String getEditViewPath(){
         return "/apartment_edit";
     }
     @Override
-    protected String getListViewPath(){
+    public String getListViewPath(){
         return "/apartments";
     }
     @Override
-    protected String getNewViewPath(){
+    public String getNewViewPath(){
         return "/apartment_new";
     }
     @Override
-    protected String getCrudPath(){
+    public String getCrudPath(){
         return "/apartment";
     }
 }
