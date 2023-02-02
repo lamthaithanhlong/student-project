@@ -10,12 +10,12 @@ public class Landlord {
     @GeneratedValue
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Inquiry> inquiries;
 
     @ManyToMany
     private List<RentalAgreement> rentalAgreements;
 
-//    @OneToMany
-//    private List<Property> properties;
+    @OneToMany
+    private List<Property> properties;
 }

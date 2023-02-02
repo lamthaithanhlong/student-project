@@ -1,5 +1,8 @@
-<div th:fragment="list (fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
-<form th:action="${newViewPath}" method="get">
+<div th:fragment="list (title, fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
+  <div>
+    <h5 th:text="${title}">List</h5>
+  </div>      
+  <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">
     <div>
       <button type="submit" class="btn btn-primary">New</button>
     </div>
@@ -10,10 +13,10 @@
         <tr>
           <th>#</th>
           <section th:each="field: ${fields}">
-            <th th:text="@{__${@viewFieldUtil.initCaps(field.name)}__}"></th>
+            <th th:text="@{__${@viewFieldUtil.getDisplayName(field.name)}__}"></th>
           </section>
-          <td></td>
-          <td></td>
+          <td th:if="${not #strings.isEmpty(editViewPath)}"></td>
+          <td th:if="${not #strings.isEmpty(crudPath)}"></td>
         </tr>
       </thead>
       <tbody>
@@ -22,14 +25,14 @@
           <section th:each="field: ${fields}">
             <td th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
           </section>
-          <td>
+          <td th:if="${not #strings.isEmpty(editViewPath)}">
             <form th:action="${editViewPath} +  @{/} + ${object.id}" method="get">
               <div>
                 <button type="submit" class="btn btn-primary">Edit</button>
               </div>
             </form>
          </td>
-         <td>
+         <td th:if="${not #strings.isEmpty(crudPath)}">
             <form th:action="${crudPath} + @{/delete?id=} + ${object.id}" method="post">
               <div>
                 <button type="submit" class="btn btn-primary">Delete</button>

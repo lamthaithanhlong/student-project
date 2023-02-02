@@ -16,6 +16,6 @@ public class Preferences {
     @PositiveNumberConstraint
     private Integer noOfBathRooms;
 
-//    @OneToOne
-//    private Tenant tenant;
+    @OneToOne
+    private Tenant tenant;
 }

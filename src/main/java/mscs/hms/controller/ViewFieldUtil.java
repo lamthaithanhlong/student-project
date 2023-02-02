@@ -11,8 +11,10 @@ public class ViewFieldUtil {
       return getter.invoke(ob);
    }
 
-   public String initCaps(String fieldName) throws Exception{
-      return fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+   public String getDisplayName(String fieldName) throws Exception{
+      String displayName = fieldName.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
+      displayName = fieldName.substring(0, 1).toUpperCase() + displayName.substring(1);      
+      return displayName;
    }
 
    public String getDeleteCrudPath(String crudPathMain, String idFieldName, Object ob) throws Exception{

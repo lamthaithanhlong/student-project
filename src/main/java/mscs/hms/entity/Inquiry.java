@@ -19,6 +19,6 @@ public class Inquiry {
     @ManyToOne
     private Landlord landlord;
 
-//    @OneToOne
-//    private Property property;
+    @OneToOne
+    private Property property;
 }

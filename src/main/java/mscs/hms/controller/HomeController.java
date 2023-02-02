@@ -3,7 +3,6 @@ package mscs.hms.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
@@ -22,7 +21,4 @@ public class HomeController extends AbsBaseController {
         model.addAttribute("loggedInUserName", principal.getName());
         return "home";
     }
-
-    @Override
-    protected void addViewGenerationProperties(ModelAndView modelAndView) {}
 }

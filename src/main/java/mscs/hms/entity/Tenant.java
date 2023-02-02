@@ -13,8 +13,8 @@ public class Tenant {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Inquiry> inquiries;
 
-//    @ManyToMany
-//    private List<Property> property;
+    @ManyToMany
+    private List<Property> property;
 
     @OneToMany
     private List<RentApplication> rentApplication;

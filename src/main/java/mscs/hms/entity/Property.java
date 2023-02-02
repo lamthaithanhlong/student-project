@@ -1,12 +1,12 @@
 package mscs.hms.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="property_type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Property {
     @Id
     @GeneratedValue

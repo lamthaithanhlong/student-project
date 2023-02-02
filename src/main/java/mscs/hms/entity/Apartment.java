@@ -1,8 +1,10 @@
 package mscs.hms.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("Apartment")
 public class Apartment extends Property{
     private String name;
 

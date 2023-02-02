@@ -17,8 +17,8 @@ public class RentalAgreement {
     private LocalDate preparedDate;
     private String contract;
 
-//    @OneToOne
-//    private Property property;
+    @OneToOne
+    private Property property;
 
     @OneToOne
     private Tenant tenant;
