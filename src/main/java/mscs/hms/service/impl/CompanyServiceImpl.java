@@ -34,7 +34,6 @@ public class CompanyServiceImpl extends AbsBaseService implements CompanyService
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
         companyRepository.deleteById(id);
     }
 }

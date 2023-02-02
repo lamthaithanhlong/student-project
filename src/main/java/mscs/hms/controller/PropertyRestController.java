@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import mscs.hms.entity.Property;
 import mscs.hms.entity.paging.Page;
@@ -33,7 +32,4 @@ public class PropertyRestController extends AbsBaseController {
     public PageArray array(@RequestBody PagingRequest pagingRequest) {
         return propertyService.getPropertyArray(pagingRequest);
     }
-
-    @Override
-    protected void addViewGenerationProperties(ModelAndView modelAndView) {}
 }
