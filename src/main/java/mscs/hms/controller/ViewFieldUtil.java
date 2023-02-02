@@ -6,7 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
-
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -14,7 +16,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Dictionary;
+import java.util.Enumeration;
 @Configuration
 public class ViewFieldUtil {
    public static List<ViewField> getPrivateFields(Class<?> classType) {
@@ -36,6 +39,7 @@ public class ViewFieldUtil {
               viewField.setRequired(!viewField.getValidationMessage().isBlank());
               viewField.setIdColumn(isIdColumn(field));
               viewField.setGeneratedColumn(isGeneratedColumn(field));
+              viewField.setAssociationField(isAssociationField(field));
               list.add(viewField);
           }
       }
@@ -112,6 +116,19 @@ private static boolean isGeneratedColumn(Field field){
    return false;
 }
 
+private static boolean isAssociationField(Field field){
+   Annotation[] annotations = field.getAnnotations();
+   for(Annotation annotation: annotations){
+       if(annotation.annotationType() == ManyToMany.class ||
+          annotation.annotationType() == OneToOne.class ||
+          annotation.annotationType() == OneToMany.class)
+         {
+            return true;            
+         }            
+   }
+   return false;
+}
+
   public Object getFieldValue(Object ob, String fieldName) throws Exception{
       PropertyDescriptor pd = new PropertyDescriptor(fieldName, ob.getClass());
       Method getter = pd.getReadMethod();
@@ -126,5 +143,17 @@ private static boolean isGeneratedColumn(Field field){
 
    public String getDeleteCrudPath(String crudPathMain, String idFieldName, Object ob) throws Exception{
       return crudPathMain + "delete?" + idFieldName + "=" + getFieldValue(ob, idFieldName);
+   }
+
+   public boolean isAssociationFieldAndListAvailableAndNotNullOrEmpty(ViewField field, Dictionary<String, Iterable<?>> lists, Object mappedObject) throws Exception{
+      if( field.isAssociationField() && mappedObject != null && lists != null){
+         Enumeration<String> names = lists.keys();
+         while(names.hasMoreElements()){
+            if(field.getName().equals(lists.keys().nextElement())){
+               return true;
+            }
+         }
+      }
+      return false;
    }
 }

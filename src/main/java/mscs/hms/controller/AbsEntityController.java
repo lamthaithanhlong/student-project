@@ -2,8 +2,9 @@ package mscs.hms.controller;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Dictionary;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class AbsEntityController<T> extends AbsBaseController {
@@ -37,7 +38,12 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
     protected List<ViewField> getPrivateFields(Class<?> classType) {
         return ViewFieldUtil.getPrivateFields(classType);
     }
-
+    /**
+     * 
+     * @return the lists for drop down creation. e.g. Company should have a list for Users, since user is an association of Company
+     * It is requried to use the same attributeName when registering
+     */
+    public abstract Dictionary<String, Iterable<?>> getSelectLists();
     
 
     protected void addViewGenerationProperties(ModelAndView modelAndView) {
@@ -60,6 +66,7 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("object", object);
         modelAndView.addObject("action", action);
+        modelAndView.addObject("listObjects", getSelectLists());        
         modelAndView.setViewName(getEditViewPath());
         addViewGenerationProperties(modelAndView);
         return modelAndView;

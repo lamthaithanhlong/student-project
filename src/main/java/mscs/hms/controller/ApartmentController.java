@@ -2,6 +2,10 @@ package mscs.hms.controller;
 
 import mscs.hms.entity.Apartment;
 import mscs.hms.service.ApartmentService;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,4 +80,10 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     public String getCrudPath(){
         return "/apartment";
     }
+    @Override
+    public Dictionary<String, Iterable<?>> getSelectLists(){
+        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        return dictionary;
+    }
 }
+

@@ -10,6 +10,7 @@ public class ViewField {
     private boolean required;
     private boolean idColumn;
     private boolean generatedColumn;
+    private boolean associationField;
     public ViewField() {
     }
     public String getName() {
@@ -65,5 +66,11 @@ public class ViewField {
     }
     public void setGeneratedColumn(boolean generatedColumn) {
         this.generatedColumn = generatedColumn;
-    }       
+    }
+    public boolean isAssociationField() {
+        return associationField;
+    }
+    public void setAssociationField(boolean associationField) {
+        this.associationField = associationField;
+    }  
 }
