@@ -6,9 +6,9 @@
         <div class="m-3">
             <section th:each="field: ${fields}">
                 <div class="form-group row">
-                    <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.initCaps(field.getName())}__}">Name: </label>
+                    <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}">Name: </label>
                     <div class="col-8">
-                    <input th:name="${field.name}" th:data-type="${field.type}" class="form-control" required th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:placeholder="@{__${@viewFieldUtil.initCaps(field.getName())}__}"/>
+                    <input th:name="${field.name}" th:data-type="${field.type}" class="form-control" required th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:placeholder="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}"/>
                     </div>
                 </div>
             </section>
