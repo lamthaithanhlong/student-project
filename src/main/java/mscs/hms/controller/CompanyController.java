@@ -20,27 +20,30 @@ public class CompanyController extends AbsBaseController {
     @GetMapping("/companies")
     public ModelAndView showCompanies(Model model) {
         LOG.info("In companies view");
-        ModelAndView modelAndView = getListCompaniesModelView();
+        ModelAndView modelAndView = getListCompaniesModelView();        
+        addViewGenerationProperties(modelAndView);
         return modelAndView;
-    }
+    }    
 
     @GetMapping("/company_new")
     public ModelAndView newCompanyForm() {
         LOG.info("In companies new");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("company", new Company());
+        modelAndView.addObject("object", new Company());
         modelAndView.addObject("action", "new");
         modelAndView.setViewName("company_edit");
+        addViewGenerationProperties(modelAndView);
         return modelAndView;
     }
 
-    @GetMapping("/company_edit/{companyId}")
-    public ModelAndView editCompanyForm(@PathVariable(value="companyId") final Integer companyId) {
+    @GetMapping("/company_edit/{id}")
+    public ModelAndView editCompanyForm(@PathVariable(value="id") final Integer companyId) {
         LOG.info("In companies edit");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("company", companyService.get(companyId));        
+        modelAndView.addObject("object", companyService.get(companyId));        
         modelAndView.addObject("action", "edit");
         modelAndView.setViewName("company_edit");
+        addViewGenerationProperties(modelAndView);
         return modelAndView;
     }
 
@@ -48,26 +51,40 @@ public class CompanyController extends AbsBaseController {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In companies delete");
         companyService.delete(id);
-        return getListCompaniesModelView();
+        ModelAndView modelAndView =  getListCompaniesModelView();
+        addViewGenerationProperties(modelAndView);
+        return modelAndView;
     }
 
     @PostMapping("/company/edit")
     public ModelAndView processEdit(Company company) {
         LOG.info("In companies edit");
         companyService.save(company);
-        return getListCompaniesModelView();
+        ModelAndView modelAndView =  getListCompaniesModelView();
+        addViewGenerationProperties(modelAndView);
+        return modelAndView;
     }
 
     @PostMapping("/company/new")
     public ModelAndView processNew(Company company) {
         LOG.info("In companies new");
         companyService.save(company);
-        return getListCompaniesModelView();
+        ModelAndView modelAndView =  getListCompaniesModelView();
+        addViewGenerationProperties(modelAndView);
+        return modelAndView;
     }
 
+    protected void addViewGenerationProperties(ModelAndView modelAndView) {
+        modelAndView.addObject("fields", getPrivateFields(Company.class));
+        modelAndView.addObject("listViewPath", "/companies");
+        modelAndView.addObject("newViewPath", "/company_new");
+        modelAndView.addObject("editViewPath", "/company_edit");
+        modelAndView.addObject("crudPath", "/company");
+    }
+    
     private ModelAndView getListCompaniesModelView() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("companies", companyService.findAll());
+        modelAndView.addObject("objects", companyService.findAll());
         modelAndView.setViewName("company_list");
         return modelAndView;
     }

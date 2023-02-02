@@ -11,26 +11,7 @@
           <div>
             <h1>Add/Modify Company</h1>
           </div>
-          <form th:action="${'/company/'} + ${action}" method="post"  th:object="${company}">
-            <div class="m-3">
-              <div class="form-group row">
-                <label class="col-4 col-form-label">ID: </label>
-                <div class="col-8">
-                  <input type="number" th:field="*{id}" class="form-control" required value="{id}" placeholder="ID"/>
-                </div>
-              </div>
-        
-              <div class="form-group row">
-                <label class="col-4 col-form-label">Name: </label>
-                <div class="col-8">
-                  <input type="text" th:field="*{name}" class="form-control" required value="*{name}" placeholder="Name"/>
-                </div>
-              </div>
-              <div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </div>
-          </form>
+          <div th:insert="~{fragments/entity_edit :: edit (fields = ${fields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, object = ${object})}"></div>
     
   <div th:insert="~{fragments/footer :: footer}"></div>
 </div>
