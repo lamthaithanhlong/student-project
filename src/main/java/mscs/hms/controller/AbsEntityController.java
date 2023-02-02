@@ -35,23 +35,10 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
     public abstract String getCrudPath();
 
     protected List<ViewField> getPrivateFields(Class<?> classType) {
-        List<ViewField> list = new ArrayList<>();
-        Field[] fields = classType.getDeclaredFields();
-        for (Field field : fields) {
-            String modifiers = Modifier.toString(field.getModifiers());
-            if(modifiers.contains("private") &&
-               !modifiers.contains("static")){
-                ViewField viewField = new ViewField();
-                viewField.setName(field.getName());
-                viewField.setType(field.getType().getSimpleName());
-                list.add(viewField);
-            }
-        }
-        if (classType.getSuperclass() != null) {
-            list.addAll(getPrivateFields(classType.getSuperclass()));
-        }
-        return list;
+        return ViewFieldUtil.getPrivateFields(classType);
     }
+
+    
 
     protected void addViewGenerationProperties(ModelAndView modelAndView) {
         modelAndView.addObject("fields", getPrivateFields(getClassType()));
