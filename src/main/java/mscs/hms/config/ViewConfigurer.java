@@ -17,5 +17,15 @@ public class ViewConfigurer implements WebMvcConfigurer {
         registry.addViewController("/users").setViewName("user_list");
         registry.addViewController("/register").setViewName("signup");
         registry.addViewController("/register_success").setViewName("register_success");
+        registry.addViewController("/property_list").setViewName("property_list");
+        registry.addViewController("/company_list").setViewName("company_list");        
+        registry.addViewController("/company_edit").setViewName("company_edit");
+        registry.addViewController("/house_list").setViewName("house_list");
+        registry.addViewController("/house_edit").setViewName("house_edit");
+        registry.addViewController("/apartment_list").setViewName("apartment_list");
+        registry.addViewController("/apartment_edit").setViewName("apartment_edit");
+        registry.addViewController("/legal_entity_list").setViewName("legal_entity_list");
+        registry.addViewController("/person_list").setViewName("person_list");
+        registry.addViewController("/person_edit").setViewName("person_edit");
     }
 }

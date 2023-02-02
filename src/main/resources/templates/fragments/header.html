@@ -1,0 +1,18 @@
+<div th:fragment="header">
+    <div class="row bg-primary">
+        <div class="d-flex col">
+            <div class="d-inline p-2 bg-primary text-white flex-grow-1">Home Rental System</div>
+        </div>
+        <div class="d-flex col">
+            <div class="box"></div>
+        </div>        
+        <div class="d-flex col">
+            <div class="d-inline p-2 bg-primary text-white flex-grow-1 text-end">Welcome, <span th:text="${#strings.isEmpty(loggedInUserName) ? 'Guest' : loggedInUserName}"> </span></div>
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="box"></div>
+        </div>
+    </div>
+</div>  

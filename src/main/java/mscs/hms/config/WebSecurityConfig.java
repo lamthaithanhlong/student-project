@@ -43,7 +43,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().cors().and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/index", "/process_register", "/register", "/register_success").permitAll()
+                        .requestMatchers("/", "/index", "/process_register", "/register", "/register_success", "/webjars/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())
