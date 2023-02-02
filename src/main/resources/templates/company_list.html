@@ -1,22 +1,12 @@
 <html lang="en">
-<head th:insert="~{fragments/htmlhead :: head (title='User List')}">
+<head th:replace="~{fragments/htmlhead :: head (title='Companies List')}">
 <body>
     <div class="container">
-        <header th:insert="~{fragments/header :: header}"></header>
-        <div class="row">
-            <div th:insert="~{fragments/navigation :: navigation}"></div>
-            
-
-            
-          <div>
-            <h1>List of Companies</h1>
-          </div>
-          <div th:insert="~{fragments/entity_list :: list (fields = ${fields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, objects = ${objects})}"></div>
-
-
-    
-  <div th:insert="~{fragments/footer :: footer}"></div>
-</div>
-<div th:insert="~{fragments/scripts :: scripts}"></div>
+      <header th:replace="~{fragments/header :: header}"></header>
+      <div th:replace="~{fragments/navigation :: navigation}"></div>
+      <div th:replace="~{fragments/entity_list :: list (title='Companies List', fields = ${fields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, objects = ${objects})}"></div>
+      <div th:replace="~{fragments/footer :: footer}"></div>
+      <div th:replace="~{fragments/scripts :: scripts}"></div>
+    </div>
 </body>
 </html>
