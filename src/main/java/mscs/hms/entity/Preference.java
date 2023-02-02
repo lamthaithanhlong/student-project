@@ -7,7 +7,7 @@ import jakarta.persistence.OneToOne;
 import mscs.hms.entity.constraints.PositiveNumberConstraint;
 
 @Entity
-public class Preferences {
+public class Preference {
     @Id
     @GeneratedValue
     private Long id;

@@ -20,7 +20,7 @@ public class Tenant {
     private List<RentApplication> rentApplication;
 
     @OneToOne
-    private Preferences preferences;
+    private Preference preference;
 
     @OneToOne
     private RentalAgreement rentalAgreement;

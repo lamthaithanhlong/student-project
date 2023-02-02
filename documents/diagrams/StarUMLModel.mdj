@@ -17698,7 +17698,7 @@
 														"$ref": "AAAAAAGF9jicuF/yUBA="
 													},
 													"edgePosition": 1,
-													"text": "2 : filteredProperties = getProperties(preferences)"
+													"text": "2 : filteredProperties = getProperties(preference)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -17809,7 +17809,7 @@
 														"$ref": "AAAAAAGF6XB6t1L60Sw="
 													},
 													"edgePosition": 1,
-													"text": "3 : filteredProperties = getProperties(preferences)"
+													"text": "3 : filteredProperties = getProperties(preference)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -19151,7 +19151,7 @@
 									"target": {
 										"$ref": "AAAAAAGF9jhd5l/Qn3s="
 									},
-									"arguments": "preferences",
+									"arguments": "preference",
 									"assignmentTarget": "filteredProperties"
 								},
 								{
@@ -19167,7 +19167,7 @@
 									"target": {
 										"$ref": "AAAAAAGF6W/TGVLWQCc="
 									},
-									"arguments": "preferences",
+									"arguments": "preference",
 									"assignmentTarget": "filteredProperties"
 								},
 								{

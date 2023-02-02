@@ -1,9 +1,11 @@
 package mscs.hms.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
+@DiscriminatorValue("Company")
 public class Company extends LegalEntity{
     @NotEmpty
     private String companyName;

@@ -42,6 +42,14 @@ public abstract class Property {
         this.noOfBathRooms = noOfBathRooms;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @OneToOne
     private Address address;
 }

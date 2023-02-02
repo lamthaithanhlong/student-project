@@ -1,12 +1,10 @@
 package mscs.hms.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
+@DiscriminatorValue("Person")
 public class Person extends LegalEntity{
     @NotEmpty
     private String firstName;
