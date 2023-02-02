@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class CompanyController extends AbsEntityController {
+public class CompanyController extends AbsEntityController<Company> {
     
     @Autowired
     private CompanyService companyService;
@@ -57,23 +57,23 @@ public class CompanyController extends AbsEntityController {
     } 
     
     @Override
-    protected Class<?> getClassType(){
+    public Class<?> getClassType(){
         return Company.class;
     }
     @Override
-    protected String getEditViewPath(){
+    public String getEditViewPath(){
         return "/company_edit";
     }
     @Override
-    protected String getListViewPath(){
+    public String getListViewPath(){
         return "/companies";
     }
     @Override
-    protected String getNewViewPath(){
+    public String getNewViewPath(){
         return "/company_new";
     }
     @Override
-    protected String getCrudPath(){
+    public String getCrudPath(){
         return "/company";
     }
 }
