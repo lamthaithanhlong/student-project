@@ -1,34 +1,31 @@
 package mscs.hms.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-public class Company {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Company extends LegalEntity{
     @NotEmpty
-    private String name;
+    private String companyName;
     public Company() {
+    }    
+    public Company(Integer id, String phoneNumber, @NotEmpty String companyName) {
+        super(id, phoneNumber);
+        this.companyName = companyName;
     }
-    public Company(Integer id, @NotEmpty String name) {
-        this.id = id;
-        this.name = name;
+
+    public String getCompanyName() {
+        return companyName;
     }
-    public Integer getId() {
-        return id;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public String getLegalEntityName() {
+        return getCompanyName();
     }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-      
+    @Override
+    public String toString() {
+        return "Company [Legal Entity=" + super.toString() +  ", companyName=" + companyName + "]";
+    } 
 }
