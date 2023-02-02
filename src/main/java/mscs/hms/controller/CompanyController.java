@@ -2,6 +2,9 @@ package mscs.hms.controller;
 
 import mscs.hms.entity.Company;
 import mscs.hms.service.CompanyService;
+import mscs.hms.service.IUserService;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
+import jakarta.persistence.Entity;
 @Controller
 public class CompanyController extends AbsEntityController<Company> {
     
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("/companies")
     public ModelAndView showCompanies(Model model) {
@@ -26,7 +32,8 @@ public class CompanyController extends AbsEntityController<Company> {
     @GetMapping("/company_new")
     public ModelAndView newCompanyForm() {
         LOG.info("In companies new");
-        return getEditViewModel(new Company(), "new");
+        ModelAndView modelAndView = getEditViewModel(new Company(), "new");
+        return modelAndView;
     }    
 
     @GetMapping("/company_edit/{id}")
@@ -75,5 +82,12 @@ public class CompanyController extends AbsEntityController<Company> {
     @Override
     public String getCrudPath(){
         return "/company";
+    }
+    @Override
+    public Dictionary<String, Iterable<?>> getSelectLists(){
+        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        //Note used same attributeName "systemUser"
+        dictionary.put("systemUser", userService.findAllUsers());
+        return dictionary;
     }
 }

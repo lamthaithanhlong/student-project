@@ -2,6 +2,10 @@ package mscs.hms.controller;
 
 import mscs.hms.entity.LegalEntity;
 import mscs.hms.service.LegalEntityService;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,5 +43,10 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
     @Override
     public String getCrudPath(){
         return null;
+    }
+    @Override
+    public Dictionary<String, Iterable<?>> getSelectLists(){
+        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        return dictionary;
     }
 }

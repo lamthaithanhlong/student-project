@@ -2,14 +2,21 @@
     <div>
         <h5 th:text="${title}">List</h5>
     </div>    
-    <form th:action="${crudPath} + @{/} + ${action}" method="post"  th:object="${object}">
+    <form th:action="${crudPath} + @{/} + ${action} " method="post"  th:object="${object}">
         <div class="m-3">
             <section th:each="field: ${fields}">
                 <div class="form-group row">
                     <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}">Name: </label>
                     <div class="col-8">
-                    <input th:name="${field.name}" th:data-type="${field.type}" class="form-control" th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:placeholder="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}"/>
+                        <input th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:disabled="${field.generatedColumn}" th:name="${field.name}" th:data-type="${field.viewType}" class="form-control" th:value="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}" th:required="${field.required}" th:placeholder="${field.placeHolder}"/>
+                        
+                        <select th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" class="form-select" multiple aria-label="multiple select example">
+                            <div th:each="objectValue: ${listObjects.remove(field.getName())}">
+                                <option th:value="${objectValue.id}"  th:text="${objectValue}">Value</option>
+                            </div>
+                        </select>
                     </div>
+                    
                 </div>
             </section>
             <div>

@@ -2,6 +2,10 @@ package mscs.hms.controller;
 
 import mscs.hms.entity.Person;
 import mscs.hms.service.PersonService;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,5 +79,10 @@ public class PersonController extends AbsEntityController<Person> {
     @Override
     public String getCrudPath(){
         return "/person";
+    }
+    @Override
+    public Dictionary<String, Iterable<?>> getSelectLists(){
+        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        return dictionary;
     }
 }
