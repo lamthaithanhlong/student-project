@@ -1,10 +1,10 @@
-package mscs.hms.dto.constraints.Validators;
+package mscs.hms.model.constraints.Validators;
 
 import java.util.regex.Pattern;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import mscs.hms.dto.constraints.PhoneNumberConstraint;
+import mscs.hms.model.constraints.PhoneNumberConstraint;
 
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberConstraint, String> {
 

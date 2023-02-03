@@ -1,8 +1,8 @@
-package mscs.hms.dto.constraints.Validators;
+package mscs.hms.model.constraints.Validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import mscs.hms.dto.constraints.PositiveNumberConstraint;
+import mscs.hms.model.constraints.PositiveNumberConstraint;
 
 public class PositiveNumberValidator implements ConstraintValidator<PositiveNumberConstraint, Number> {
 

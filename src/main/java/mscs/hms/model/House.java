@@ -2,7 +2,7 @@ package mscs.hms.model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import mscs.hms.dto.constraints.PositiveNumberConstraint;
+import mscs.hms.model.constraints.PositiveNumberConstraint;
 
 @Entity
 @DiscriminatorValue("House")

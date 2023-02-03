@@ -2,7 +2,7 @@ package mscs.hms.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import mscs.hms.dto.constraints.PhoneNumberConstraint;
+import mscs.hms.model.constraints.PhoneNumberConstraint;
 
 //@MappedSuperclass
 @Entity

@@ -1,7 +1,7 @@
 package mscs.hms.model;
 
 import jakarta.persistence.*;
-import mscs.hms.dto.constraints.PositiveNumberConstraint;
+import mscs.hms.model.constraints.PositiveNumberConstraint;
 
 //@MappedSuperclass
 @Entity
