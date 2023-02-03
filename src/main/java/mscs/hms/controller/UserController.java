@@ -1,7 +1,7 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.Role;
-import mscs.hms.entity.User;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

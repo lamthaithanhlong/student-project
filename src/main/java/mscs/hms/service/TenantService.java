@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Tenant;
+import mscs.hms.model.Tenant;
 
 public interface TenantService {
     public Tenant save(Tenant tenant);

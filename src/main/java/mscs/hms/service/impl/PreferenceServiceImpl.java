@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.entity.Preference;
+import mscs.hms.model.Preference;
 import mscs.hms.repository.PreferenceRepository;
 import mscs.hms.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;

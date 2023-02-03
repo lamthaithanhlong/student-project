@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.entity.Inquiry;
+import mscs.hms.model.Inquiry;
 import mscs.hms.repository.InquiryRepository;
 import mscs.hms.service.InquiryService;
 import org.springframework.beans.factory.annotation.Autowired;

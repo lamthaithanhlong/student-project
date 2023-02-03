@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.Apartment;
+import mscs.hms.model.Apartment;
 import mscs.hms.service.ApartmentService;
 
 import java.util.Dictionary;

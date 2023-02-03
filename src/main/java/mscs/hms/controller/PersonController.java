@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.Person;
+import mscs.hms.model.Person;
 import mscs.hms.service.PersonService;
 
 import java.util.Dictionary;

@@ -1,7 +1,7 @@
 package mscs.hms.repository;
 
-import mscs.hms.entity.Role;
-import mscs.hms.entity.User;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

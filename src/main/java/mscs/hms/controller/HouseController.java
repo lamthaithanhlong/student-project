@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.House;
+import mscs.hms.model.House;
 import mscs.hms.service.HouseService;
 
 import java.util.Dictionary;

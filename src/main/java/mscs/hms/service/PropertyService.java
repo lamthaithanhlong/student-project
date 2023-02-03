@@ -1,9 +1,9 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Property;
-import mscs.hms.entity.paging.Page;
-import mscs.hms.entity.paging.PageArray;
-import mscs.hms.entity.paging.PagingRequest;
+import mscs.hms.model.Property;
+import mscs.hms.dto.paging.Page;
+import mscs.hms.dto.paging.PageArray;
+import mscs.hms.dto.paging.PagingRequest;
 
 public interface PropertyService {
     public Property saveProperty(Property property);

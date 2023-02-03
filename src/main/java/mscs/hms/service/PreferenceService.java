@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Preference;
+import mscs.hms.model.Preference;
 
 public interface PreferenceService {
     public Preference save(Preference preference);

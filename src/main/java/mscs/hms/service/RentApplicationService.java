@@ -1,7 +1,7 @@
 package mscs.hms.service;
 
 
-import mscs.hms.entity.RentApplication;
+import mscs.hms.model.RentApplication;
 
 public interface RentApplicationService {
     public RentApplication save(RentApplication rentApplication);

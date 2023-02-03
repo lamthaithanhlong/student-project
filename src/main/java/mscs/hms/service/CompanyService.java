@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Company;
+import mscs.hms.model.Company;
 
 public interface CompanyService {
     public Company saveCompany(Company company);

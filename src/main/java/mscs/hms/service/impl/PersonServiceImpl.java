@@ -2,7 +2,7 @@ package mscs.hms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import mscs.hms.entity.Person;
+import mscs.hms.model.Person;
 import mscs.hms.repository.PersonRepository;
 import mscs.hms.service.PersonService;
 

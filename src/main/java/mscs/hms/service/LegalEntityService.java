@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.LegalEntity;
+import mscs.hms.model.LegalEntity;
 
 public interface LegalEntityService {
     public LegalEntity get(Integer id);
