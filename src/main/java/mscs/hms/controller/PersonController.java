@@ -1,6 +1,7 @@
 package mscs.hms.controller;
 
 import mscs.hms.model.Person;
+import mscs.hms.service.AddressService;
 import mscs.hms.service.PersonService;
 
 import java.util.Dictionary;
@@ -20,6 +21,9 @@ public class PersonController extends AbsEntityController<Person> {
     
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping("/persons")
     public ModelAndView showPersons(Model model) {
@@ -83,6 +87,7 @@ public class PersonController extends AbsEntityController<Person> {
     @Override
     public Dictionary<String, Iterable<?>> getSelectLists(){
         Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        dictionary.put("address", addressService.findAll());
         return dictionary;
     }
 }

@@ -1,6 +1,7 @@
 package mscs.hms.controller;
 
 import mscs.hms.model.Company;
+import mscs.hms.service.AddressService;
 import mscs.hms.service.CompanyService;
 import mscs.hms.service.IUserService;
 import java.util.Dictionary;
@@ -22,6 +23,9 @@ public class CompanyController extends AbsEntityController<Company> {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping("/companies")
     public ModelAndView showCompanies(Model model) {
@@ -88,6 +92,7 @@ public class CompanyController extends AbsEntityController<Company> {
         Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
         //Note used same attributeName "systemUser"
         dictionary.put("systemUser", userService.findAllUsers());
+        dictionary.put("address", addressService.findAll());
         return dictionary;
     }
 }

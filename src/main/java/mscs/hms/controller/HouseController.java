@@ -1,6 +1,7 @@
 package mscs.hms.controller;
 
 import mscs.hms.model.House;
+import mscs.hms.service.AddressService;
 import mscs.hms.service.HouseService;
 
 import java.util.Dictionary;
@@ -20,6 +21,9 @@ public class HouseController extends AbsEntityController<House> {
     
     @Autowired
     private HouseService houseService;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping("/houses")
     public ModelAndView showHouses(Model model) {
@@ -83,6 +87,7 @@ public class HouseController extends AbsEntityController<House> {
     @Override
     public Dictionary<String, Iterable<?>> getSelectLists(){
         Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+        dictionary.put("address", addressService.findAll());
         return dictionary;
     }
 }

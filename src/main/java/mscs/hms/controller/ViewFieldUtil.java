@@ -149,7 +149,7 @@ private static boolean isAssociationField(Field field){
       if( field.isAssociationField() && mappedObject != null && lists != null){
          Enumeration<String> names = lists.keys();
          while(names.hasMoreElements()){
-            if(field.getName().equals(lists.keys().nextElement())){
+            if(field.getName().equals(names.nextElement())){
                return true;
             }
          }
