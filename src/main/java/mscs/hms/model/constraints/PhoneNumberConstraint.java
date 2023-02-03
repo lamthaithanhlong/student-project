@@ -1,4 +1,4 @@
-package mscs.hms.dto.constraints;
+package mscs.hms.model.constraints;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import mscs.hms.dto.constraints.Validators.PhoneNumberValidator;
+import mscs.hms.model.constraints.Validators.PhoneNumberValidator;
 
 @Documented
 @Constraint(validatedBy = PhoneNumberValidator.class)

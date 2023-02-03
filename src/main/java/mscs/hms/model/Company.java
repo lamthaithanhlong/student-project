@@ -3,25 +3,17 @@ package mscs.hms.model;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Entity
 @DiscriminatorValue("Company")
 public class Company extends LegalEntity{
     @NotEmpty
     private String companyName;
-    public Company() {
-    }    
-    public Company(Integer id, String phoneNumber, @NotEmpty String companyName) {
-        super(id, phoneNumber);
-        this.companyName = companyName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
     @Override
     public String getLegalEntityName() {
         return getCompanyName();

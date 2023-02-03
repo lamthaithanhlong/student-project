@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import mscs.hms.dto.constraints.PositiveNumberConstraint;
+import mscs.hms.model.constraints.PositiveNumberConstraint;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
