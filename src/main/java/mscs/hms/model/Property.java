@@ -2,7 +2,12 @@ package mscs.hms.model;
 
 import jakarta.persistence.*;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 //@MappedSuperclass
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -15,41 +20,6 @@ public abstract class Property {
     private Integer noOfRooms;
     @PositiveNumberConstraint
     private Integer noOfBathRooms;
-    
-    public Property() {
-    }
-    public Property(Integer id, Integer noOfRooms, Integer noOfBathRooms) {
-        this.id = id;
-        this.noOfRooms = noOfRooms;
-        this.noOfBathRooms = noOfBathRooms;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public Integer getNoOfRooms() {
-        return noOfRooms;
-    }
-    public void setNoOfRooms(Integer noOfRooms) {
-        this.noOfRooms = noOfRooms;
-    }
-    public Integer getNoOfBathRooms() {
-        return noOfBathRooms;
-    }
-    public void setNoOfBathRooms(Integer noOfBathRooms) {
-        this.noOfBathRooms = noOfBathRooms;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     @OneToOne
     private Address address;
 }

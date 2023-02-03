@@ -2,7 +2,12 @@ package mscs.hms.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Entity
 @DiscriminatorValue("Person")
 public class Person extends LegalEntity{
@@ -10,25 +15,6 @@ public class Person extends LegalEntity{
     private String firstName;
     @NotEmpty
     private String lastName;
-    public Person() {
-    }
-    public Person(Integer id, String phoneNumber, @NotEmpty String firstName, @NotEmpty String lastName) {
-        super(id, phoneNumber);
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
     @Override
     public String getLegalEntityName() {
         return lastName + ", " + firstName;
