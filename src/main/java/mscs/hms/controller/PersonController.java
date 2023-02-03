@@ -40,7 +40,7 @@ public class PersonController extends AbsEntityController<Person> {
     @GetMapping("/person_edit/{id}")
     public ModelAndView editPersonForm(@PathVariable(value="id") final Integer personId) {
         LOG.info("In persons edit");
-        return getEditViewModel(personService.get(personId), "new");        
+        return getEditViewModel(personService.get(personId), "edit");        
     }
 
     @PostMapping("/person/delete") 

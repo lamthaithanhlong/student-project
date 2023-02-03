@@ -43,7 +43,7 @@ public class CompanyController extends AbsEntityController<Company> {
     @GetMapping("/company_edit/{id}")
     public ModelAndView editCompanyForm(@PathVariable(value="id") final Integer companyId) {
         LOG.info("In companies edit");
-        return getEditViewModel(companyService.get(companyId), "new");        
+        return getEditViewModel(companyService.get(companyId), "edit");        
     }
 
     @PostMapping("/company/delete") 

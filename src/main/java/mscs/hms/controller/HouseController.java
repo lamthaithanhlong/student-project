@@ -40,7 +40,7 @@ public class HouseController extends AbsEntityController<House> {
     @GetMapping("/house_edit/{id}")
     public ModelAndView editHouseForm(@PathVariable(value="id") final Integer houseId) {
         LOG.info("In houses edit");
-        return getEditViewModel(houseService.get(houseId), "new");        
+        return getEditViewModel(houseService.get(houseId), "edit");        
     }
 
     @PostMapping("/house/delete") 

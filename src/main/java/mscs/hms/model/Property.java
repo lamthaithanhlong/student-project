@@ -21,5 +21,6 @@ public abstract class Property {
     @PositiveNumberConstraint
     private Integer noOfBathRooms;
     @OneToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
 }
