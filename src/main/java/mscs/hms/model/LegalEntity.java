@@ -27,6 +27,7 @@ public abstract class LegalEntity {
     private User systemUser;
 
     @OneToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;    
     
     @Override

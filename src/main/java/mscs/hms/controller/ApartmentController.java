@@ -40,7 +40,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     @GetMapping("/apartment_edit/{id}")
     public ModelAndView editApartmentForm(@PathVariable(value="id") final Integer apartmentId) {
         LOG.info("In apartments edit");
-        return getEditViewModel(apartmentService.get(apartmentId), "new");        
+        return getEditViewModel(apartmentService.get(apartmentId), "edit");        
     }
 
     @PostMapping("/apartment/delete") 

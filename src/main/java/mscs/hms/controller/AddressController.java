@@ -36,7 +36,7 @@ public class AddressController extends AbsEntityController<Address> {
     @GetMapping("/address_edit/{id}")
     public ModelAndView editAddressForm(@PathVariable(value="id") final Integer addressId) {
         LOG.info("In addresses edit");
-        return getEditViewModel(addressService.get(addressId), "new");        
+        return getEditViewModel(addressService.get(addressId), "edit");        
     }
 
     @PostMapping("/address/delete") 
