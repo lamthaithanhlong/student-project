@@ -1,9 +1,9 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Apartment;
-import mscs.hms.entity.House;
-import mscs.hms.entity.PropertyFactory;
-import mscs.hms.entity.PropertyType;
+import mscs.hms.model.Apartment;
+import mscs.hms.model.House;
+import mscs.hms.helper.PropertyFactory;
+import mscs.hms.helper.PropertyType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.LegalEntity;
+import mscs.hms.model.LegalEntity;
 import mscs.hms.service.LegalEntityService;
 
 import java.util.Dictionary;

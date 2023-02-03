@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Person;
+import mscs.hms.model.Person;
 
 public interface PersonService {
     public Person savePerson(Person person);

@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Apartment;
+import mscs.hms.model.Apartment;
 
 public interface ApartmentService {
     public Apartment saveApartment(Apartment apartment);

@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.entity.Landlord;
+import mscs.hms.model.Landlord;
 import mscs.hms.repository.LandlordRepository;
 import mscs.hms.service.LandlordService;
 import org.springframework.beans.factory.annotation.Autowired;

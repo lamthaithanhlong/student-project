@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Inquiry;
+import mscs.hms.model.Inquiry;
 
 public interface InquiryService {
     public Inquiry save(Inquiry inquiry);

@@ -2,7 +2,7 @@ package mscs.hms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import mscs.hms.entity.Company;
+import mscs.hms.model.Company;
 import mscs.hms.repository.CompanyRepository;
 import mscs.hms.service.CompanyService;
 

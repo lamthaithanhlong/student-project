@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.House;
+import mscs.hms.model.House;
 
 public interface HouseService {
     public House saveHouse(House house);

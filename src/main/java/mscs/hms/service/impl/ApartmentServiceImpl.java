@@ -2,7 +2,7 @@ package mscs.hms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import mscs.hms.entity.Apartment;
+import mscs.hms.model.Apartment;
 import mscs.hms.repository.ApartmentRepository;
 import mscs.hms.service.ApartmentService;
 

@@ -1,6 +1,6 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.RentalAgreement;
+import mscs.hms.model.RentalAgreement;
 
 public interface RentalAgreementService {
     public RentalAgreement save(RentalAgreement rentalAgreement);

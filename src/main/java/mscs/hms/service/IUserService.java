@@ -1,7 +1,7 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Role;
-import mscs.hms.entity.User;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

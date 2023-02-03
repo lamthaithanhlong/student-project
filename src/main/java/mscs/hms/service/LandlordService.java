@@ -1,7 +1,7 @@
 package mscs.hms.service;
 
 
-import mscs.hms.entity.Landlord;
+import mscs.hms.model.Landlord;
 
 public interface LandlordService {
     public Landlord save(Landlord landlord);

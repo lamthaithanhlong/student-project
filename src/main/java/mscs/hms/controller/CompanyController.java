@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.Company;
+import mscs.hms.model.Company;
 import mscs.hms.service.CompanyService;
 import mscs.hms.service.IUserService;
 import java.util.Dictionary;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import jakarta.persistence.Entity;
+
 @Controller
 public class CompanyController extends AbsEntityController<Company> {
     

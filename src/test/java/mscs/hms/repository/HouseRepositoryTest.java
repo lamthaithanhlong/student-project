@@ -8,9 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import mscs.hms.entity.House;
-import mscs.hms.entity.PropertyFactory;
-import mscs.hms.entity.PropertyType;
+import mscs.hms.model.House;
+import mscs.hms.helper.PropertyFactory;
+import mscs.hms.helper.PropertyType;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

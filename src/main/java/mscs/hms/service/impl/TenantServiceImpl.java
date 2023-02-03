@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.entity.Tenant;
+import mscs.hms.model.Tenant;
 import mscs.hms.repository.TenantRepository;
 import mscs.hms.service.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;

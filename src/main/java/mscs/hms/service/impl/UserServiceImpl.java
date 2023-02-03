@@ -1,7 +1,7 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.entity.Role;
-import mscs.hms.entity.User;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
 import mscs.hms.repository.UserRepository;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
