@@ -129,11 +129,31 @@ private static boolean isAssociationField(Field field){
    return false;
 }
 
-  public Object getFieldValue(Object ob, String fieldName) throws Exception{
+   public Object getFieldValue(Object ob, String fieldName) throws Exception{
       PropertyDescriptor pd = new PropertyDescriptor(fieldName, ob.getClass());
       Method getter = pd.getReadMethod();
       return getter.invoke(ob);
-   }
+   }   
+
+   public Object getFieldValueFromSelectList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null)
+         return null;
+      if(lists == null || lists.isEmpty() )
+         return fieldValue;
+      Enumeration<String> names = lists.keys();
+      while(names.hasMoreElements()){
+         if(fieldName.equals(names.nextElement())){
+            List<?> values = (List<?>)lists.get(fieldName);
+            for (Object object : values) {
+               if(object.equals(fieldValue)){
+                  return object;
+               }
+            }
+         }
+      }
+      return fieldValue;
+   }  
 
    public static String getDisplayName(String fieldName) throws Exception{
       String displayName = fieldName.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
@@ -146,7 +166,7 @@ private static boolean isAssociationField(Field field){
    }
 
    public boolean isAssociationFieldAndListAvailableAndNotNullOrEmpty(ViewField field, Dictionary<String, Iterable<?>> lists, Object mappedObject) throws Exception{
-      if( field.isAssociationField() && mappedObject != null && lists != null){
+      if( field.isAssociationField() && mappedObject != null && lists != null && lists.size() > 0){
          Enumeration<String> names = lists.keys();
          while(names.hasMoreElements()){
             if(field.getName().equals(names.nextElement())){

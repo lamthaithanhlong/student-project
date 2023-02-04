@@ -17,6 +17,17 @@ public class Person extends LegalEntity{
     private String lastName;
     @Override
     public String getLegalEntityName() {
+        if(lastName == null || lastName.isBlank()){
+            if(firstName == null || firstName.isBlank()){
+                return null;   
+            }
+            else {
+                return firstName; 
+            }
+        }
+        else if(firstName == null || firstName.isBlank()){
+            return lastName;
+        }
         return lastName + ", " + firstName;
     }
     @Override

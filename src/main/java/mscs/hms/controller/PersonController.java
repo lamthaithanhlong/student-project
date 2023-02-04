@@ -3,9 +3,14 @@ package mscs.hms.controller;
 import mscs.hms.model.Person;
 import mscs.hms.service.AddressService;
 import mscs.hms.service.PersonService;
+import mscs.hms.service.IUserService;
+import mscs.hms.dto.selectors.UserSelectorDTO;
+import mscs.hms.dto.selectors.AddressSelectorDTO;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +26,9 @@ public class PersonController extends AbsEntityController<Person> {
     
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private AddressService addressService;
@@ -85,9 +93,11 @@ public class PersonController extends AbsEntityController<Person> {
         return "/person";
     }
     @Override
-    public Dictionary<String, Iterable<?>> getSelectLists(){
-        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
-        dictionary.put("address", addressService.findAll());
-        return dictionary;
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
+        //Note used same attributeName "systemUser"
+        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
+       return dictionary;
     }
 }
