@@ -2,9 +2,15 @@ package mscs.hms.controller;
 
 import mscs.hms.model.LegalEntity;
 import mscs.hms.service.LegalEntityService;
+import mscs.hms.service.IUserService;
+import mscs.hms.service.AddressService;
+import mscs.hms.dto.selectors.UserSelectorDTO;
+import mscs.hms.dto.selectors.AddressSelectorDTO;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,12 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
     
     @Autowired
     private LegalEntityService legalentityService;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping("/legal-entities")
     public ModelAndView showCompanies(Model model) {
@@ -45,8 +57,11 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
         return null;
     }
     @Override
-    public Dictionary<String, Iterable<?>> getSelectLists(){
-        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
+        //Note used same attributeName "systemUser"
+        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
 }

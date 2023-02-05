@@ -3,9 +3,12 @@ package mscs.hms.controller;
 import mscs.hms.model.House;
 import mscs.hms.service.AddressService;
 import mscs.hms.service.HouseService;
+import mscs.hms.dto.selectors.AddressSelectorDTO;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,9 +88,9 @@ public class HouseController extends AbsEntityController<House> {
         return "/house";
     }
     @Override
-    public Dictionary<String, Iterable<?>> getSelectLists(){
-        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
-        dictionary.put("address", addressService.findAll());
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
+        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));        
         return dictionary;
     }
 }

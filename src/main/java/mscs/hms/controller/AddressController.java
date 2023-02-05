@@ -2,9 +2,9 @@ package mscs.hms.controller;
 
 import mscs.hms.model.Address;
 import mscs.hms.service.AddressService;
-import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,8 +81,8 @@ public class AddressController extends AbsEntityController<Address> {
         return "/address";
     }
     @Override
-    public Dictionary<String, Iterable<?>> getSelectLists(){
-        Dictionary<String, Iterable<?>> dictionary = new Hashtable<>();
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
         return dictionary;
     }
 }

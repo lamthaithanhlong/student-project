@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import mscs.hms.model.Address;
 import mscs.hms.repository.AddressRepository;
 import mscs.hms.service.AddressService;
+import java.util.List;
 
 @Service
 public class AddressServiceImpl extends AbsBaseService implements AddressService {
@@ -18,7 +19,7 @@ public class AddressServiceImpl extends AbsBaseService implements AddressService
     }
 
     @Override
-    public Iterable<Address> findAll() {
+    public List<Address> findAll() {
         return addressRepository.findAll();
     }
 
