@@ -2,12 +2,14 @@ package mscs.hms.controller;
 
 import mscs.hms.model.Address;
 import mscs.hms.service.AddressService;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,14 +51,24 @@ public class AddressController extends AbsEntityController<Address> {
     @PostMapping("/address/edit")
     public ModelAndView processEdit(Address address) {
         LOG.info("In addresses edit");
-        addressService.save(address);
+        try{
+            addressService.save(address);
+        }
+        catch(Exception ex){
+            return getEditViewModel(address, getObjectErrorList(ex), "edit");
+        }        
         return getListEntitiesModelView(addressService.findAll());
     }
 
     @PostMapping("/address/new")
     public ModelAndView processNew(Address address) {
         LOG.info("In addresses new");
-        addressService.save(address);
+        try{
+            addressService.save(address);
+        }
+        catch(Exception ex){
+            return getEditViewModel(address, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(addressService.findAll());
     } 
     
@@ -70,7 +82,7 @@ public class AddressController extends AbsEntityController<Address> {
     }
     @Override
     public String getListViewPath(){
-        return "/addresses";
+        return "/address_list";
     }
     @Override
     public String getNewViewPath(){

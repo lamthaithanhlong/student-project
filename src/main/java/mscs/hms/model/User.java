@@ -55,6 +55,10 @@ public class User implements UserDetails {
         return this.getRoles().stream().map((role) -> role.getName()).collect(Collectors.joining(","));
     }
 
+    // Transient Property Not updated
+    public void setRoleNames(String roleNames) {
+    }
+
     public long getId() {
         return id;
     }

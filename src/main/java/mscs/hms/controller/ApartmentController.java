@@ -12,11 +12,15 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ApartmentController extends AbsEntityController<Apartment> {
@@ -53,16 +57,29 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     }
 
     @PostMapping("/apartment/edit")
-    public ModelAndView processEdit(Apartment apartment) {
+    public ModelAndView processEdit(@Valid @ModelAttribute("apartment") Apartment apartment, BindingResult bindingResult) {
         LOG.info("In apartments edit");
-        apartmentService.save(apartment);
+        if(bindingResult.hasErrors()) {
+            return getEditViewModel(apartment, bindingResult.getAllErrors(), "edit");            
+        }
+        try{
+            apartmentService.save(apartment);
+        }
+        catch(Exception ex){
+            return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
+        }                
         return getListEntitiesModelView(apartmentService.findAll());
     }
 
     @PostMapping("/apartment/new")
     public ModelAndView processNew(Apartment apartment) {
         LOG.info("In apartments new");
-        apartmentService.save(apartment);
+        try{
+            apartmentService.save(apartment);
+        }
+        catch(Exception ex){
+            return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(apartmentService.findAll());
     } 
     
@@ -76,7 +93,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     }
     @Override
     public String getListViewPath(){
-        return "/apartments";
+        return "/apartment_list";
     }
     @Override
     public String getNewViewPath(){

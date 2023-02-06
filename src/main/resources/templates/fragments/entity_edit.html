@@ -1,10 +1,15 @@
-<div  th:fragment="edit (title, fields, listViewPath, newViewPath, editViewPath, crudPath, object, action)">
+<div  th:fragment="edit (title, entityFields, listViewPath, newViewPath, editViewPath, crudPath, object, action)">
     <div>
         <h5 th:text="${title}">List</h5>
     </div>    
     <form th:action="${crudPath} + @{/} + ${action} " method="post"  th:object="${object}">
         <div class="m-3">
-            <section th:each="field: ${fields}">
+            <span>
+                <ul>
+                    <li th:each="err : ${errors}" th:text="${err}" class="error">
+                </ul>
+            </span>            
+            <section th:each="field: ${entityFields}">
                 <div class="form-group row">
                     <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}">Name: </label>
                     <div class="col-8">

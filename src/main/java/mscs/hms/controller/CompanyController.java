@@ -61,14 +61,24 @@ public class CompanyController extends AbsEntityController<Company> {
     @PostMapping("/company/edit")
     public ModelAndView processEdit(Company company) {
         LOG.info("In companies edit");
-        companyService.save(company);
+        try{
+            companyService.save(company);
+        }
+        catch(Exception ex){
+            return getEditViewModel(company, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(companyService.findAll());
     }
 
     @PostMapping("/company/new")
     public ModelAndView processNew(Company company) {
         LOG.info("In companies new");
-        companyService.save(company);
+        try{
+            companyService.save(company);
+        }
+        catch(Exception ex){
+            return getEditViewModel(company, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(companyService.findAll());
     } 
     
@@ -82,7 +92,7 @@ public class CompanyController extends AbsEntityController<Company> {
     }
     @Override
     public String getListViewPath(){
-        return "/companies";
+        return "/company_list";
     }
     @Override
     public String getNewViewPath(){

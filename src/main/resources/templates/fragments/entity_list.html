@@ -1,4 +1,4 @@
-<div th:fragment="list (title, fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
+<div th:fragment="list (title, entityFields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
   <div>
     <h5 th:text="${title}">List</h5>
   </div>      
@@ -12,7 +12,7 @@
       <thead class="thead-dark">
         <tr>
           <th>#</th>
-          <section th:each="field: ${fields}">
+          <section th:each="field: ${entityFields}">
             <th th:text="@{__${@viewFieldUtil.getDisplayName(field.name)}__}"></th>
           </section>
           <td th:if="${not #strings.isEmpty(editViewPath)}"></td>
@@ -22,10 +22,23 @@
       <tbody>
         <tr th:each="object, counter: ${objects}">
           <td th:text="${counter.count}"></td>
-          <section th:each="field: ${fields}">
-            <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
-            <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__}"></td>            
-          </section>
+            <section th:each="field: ${entityFields}">
+              <div th:if="${not field.manyAssociation}">
+                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
+                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__}"></td>            
+              </div>          
+              <div th:if="${field.manyAssociation}">
+                <td>
+                  <table>
+                    <tbody th:with="listObjectArray=@{__${@viewFieldUtil.getFieldSelectedList(object, field.getName(), listObjects)}__}">
+                      <section th:each="listObject: ${listObjectArray}">
+                        <tr th:text="${listObject}"></tr>
+                      </section>
+                    </tbody>
+                  </table>
+                </td>
+              </div>
+            </section>
           <td th:if="${not #strings.isEmpty(editViewPath)}">
             <form th:action="${editViewPath} +  @{/} + ${object.id}" method="get">
               <div>

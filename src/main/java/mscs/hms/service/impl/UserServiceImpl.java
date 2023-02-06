@@ -48,4 +48,19 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
     public Role getRoleByName(String name) {
         return userRepository.getRoleByName(name);
     }
+
+    @Override
+    public User get(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public Role getRoleById(Integer id) {
+        return userRepository.getAllRoles().stream().filter(x-> x.getId().equals(id)).findAny().orElse(null);
+    }
 }

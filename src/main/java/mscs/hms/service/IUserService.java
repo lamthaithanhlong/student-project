@@ -15,4 +15,10 @@ public interface IUserService extends UserDetailsService {
     public List<Role> getAllRoles();
 
     public Role getRoleByName(String name);
+
+    public Role getRoleById(Integer name);
+
+    public User get(Long id);
+
+    public void delete(Long id);
 }
