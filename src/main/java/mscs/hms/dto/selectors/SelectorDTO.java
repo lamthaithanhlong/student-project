@@ -18,6 +18,7 @@ public abstract class SelectorDTO<I, E> {
     public abstract SelectorDTO<I,E> createDTOObject(E entityObject);
     
     @Override
+    /** Note this will not work bothways */
     public abstract boolean equals(Object obj);
     
 }

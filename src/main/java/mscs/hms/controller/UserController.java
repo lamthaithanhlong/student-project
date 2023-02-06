@@ -1,20 +1,29 @@
 package mscs.hms.controller;
 
+import mscs.hms.dto.selectors.RoleSelectorDTO;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
-public class UserController extends AbsBaseController {
+public class UserController extends AbsEntityController<User> {
 
     @Autowired
     private IUserService userService;
@@ -22,6 +31,12 @@ public class UserController extends AbsBaseController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @InitBinder
+    public void customizeBinding (WebDataBinder binder) {
+        binder.registerCustomEditor(List.class, "roles", 
+                                    new RolesEditor(userService, true));
+    }
+    
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         LOG.info("In register view");
@@ -50,15 +65,72 @@ public class UserController extends AbsBaseController {
     }
 
     @GetMapping("/users")
-    public String listUsers(Principal principal, Model model) {
-        LOG.info("I am in user list view");
-        List<User> users = userService.findAllUsers();
-        for(User user : users) {
-            LOG.info("Username = " + user.getUsername());
-        }
-        model.addAttribute("users", users);
-        model.addAttribute("loggedInUserName", principal.getName());
-        
-        return "user_list";
+    public ModelAndView showCompanies(Model model) {
+        LOG.info("In users view");
+        return getListEntitiesModelView(userService.findAllUsers());
+    }    
+
+    @GetMapping("/user_new")
+    public ModelAndView newUserForm() {
+        LOG.info("In users new");
+        ModelAndView modelAndView = getEditViewModel(new User(), "new");
+        return modelAndView;
+    }    
+
+    @GetMapping("/user_edit/{id}")
+    public ModelAndView editUserForm(@PathVariable(value="id") final Long userId) {
+        LOG.info("In users edit");
+        return getEditViewModel(userService.get(userId), "edit");        
+    }
+
+    @PostMapping("/user/delete") 
+    public ModelAndView requestOTP( @RequestParam(value="id") Long id) {
+        LOG.info("In users delete");
+        userService.delete(id);
+        return getListEntitiesModelView(userService.findAllUsers());
+    }
+
+    @PostMapping("/user/edit")
+    public ModelAndView processEdit(User user) {
+        LOG.info("In users edit");
+        userService.saveUser(user);
+        return getListEntitiesModelView(userService.findAllUsers());
+    }
+
+    @PostMapping("/user/new")
+    public ModelAndView processNew(User user) {
+        LOG.info("In users new");
+        userService.saveUser(user);
+        return getListEntitiesModelView(userService.findAllUsers());
+    } 
+
+    @Override
+    public Class<?> getClassType() {
+        return User.class;
+    }
+
+    @Override
+    public String getEditViewPath() {
+        return "user_edit";
+    }
+
+    @Override
+    public String getListViewPath(){
+        return "/users";
+    }
+    @Override
+    public String getNewViewPath(){
+        return "/user_new";
+    }
+    @Override
+    public String getCrudPath(){
+        return "/user";
+    }
+    @Override
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
+        //Note used same attribute name as the many to many relationship "roles"
+        dictionary.put("roles", userService.getAllRoles().stream().map(RoleSelectorDTO::new).collect(Collectors.toList()));
+        return dictionary;
     }
 }

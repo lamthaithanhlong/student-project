@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.beans.PropertyDescriptor;
@@ -18,8 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Dictionary;
 import java.util.Enumeration;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Configuration
 public class ViewFieldUtil {
+   static final Logger LOG = LoggerFactory.getLogger(ViewFieldUtil.class);
    public static List<ViewField> getPrivateFields(Class<?> classType) {
       List<ViewField> list = new ArrayList<>();
       Field[] fields = classType.getDeclaredFields();
@@ -29,7 +35,8 @@ public class ViewFieldUtil {
       for (Field field : fields) {
           String modifiers = Modifier.toString(field.getModifiers());
           if(modifiers.contains("private") &&
-             !modifiers.contains("static")){
+             !modifiers.contains("static") &&
+             !isTransient(field)){
               ViewField viewField = new ViewField();
               viewField.setName(field.getName());
               viewField.setType(field.getType().getSimpleName());
@@ -40,6 +47,7 @@ public class ViewFieldUtil {
               viewField.setIdColumn(isIdColumn(field));
               viewField.setGeneratedColumn(isGeneratedColumn(field));
               viewField.setAssociationField(isAssociationField(field));
+              viewField.setManyAssociation(isManyToManyField(field));
               list.add(viewField);
           }
       }
@@ -105,6 +113,17 @@ private static boolean isIdColumn(Field field){
    return false;
 }
 
+private static boolean isTransient(Field field){
+   Annotation[] annotations = field.getAnnotations();
+   for(Annotation annotation: annotations){
+       if(annotation.annotationType() == Transient.class)
+         {
+            return true;            
+         }            
+   }
+   return false;
+}
+
 private static boolean isGeneratedColumn(Field field){
    Annotation[] annotations = field.getAnnotations();
    for(Annotation annotation: annotations){
@@ -129,10 +148,28 @@ private static boolean isAssociationField(Field field){
    return false;
 }
 
-   public Object getFieldValue(Object ob, String fieldName) throws Exception{
-      PropertyDescriptor pd = new PropertyDescriptor(fieldName, ob.getClass());
-      Method getter = pd.getReadMethod();
-      return getter.invoke(ob);
+private static boolean isManyToManyField(Field field){
+   Annotation[] annotations = field.getAnnotations();
+   for(Annotation annotation: annotations){
+       if(annotation.annotationType() == ManyToMany.class ||
+          annotation.annotationType() == OneToMany.class)
+         {
+            return true;            
+         }            
+   }
+   return false;
+}
+
+   public static Object getFieldValue(Object ob, String fieldName) throws Exception{
+      try{
+         PropertyDescriptor pd = new PropertyDescriptor(fieldName, ob.getClass());
+         Method getter = pd.getReadMethod();
+         return getter.invoke(ob);
+      }
+      catch(Exception ex){
+         LOG.error(String.format("Error fetching value for field %s",fieldName), ex);
+         return null;
+      }
    }   
 
    public Object getFieldValueFromSelectList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
@@ -153,7 +190,31 @@ private static boolean isAssociationField(Field field){
          }
       }
       return fieldValue;
-   }  
+   }
+   
+   public static List<Object> getFieldSelectedList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
+      List<Object> values = new ArrayList<>();
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null)
+         return values;
+      if(lists == null || lists.isEmpty() )
+         return values;
+      Enumeration<String> names = lists.keys();
+      while(names.hasMoreElements()){
+         if(fieldName.equals(names.nextElement())){
+            List<?> listValues = (List<?>)lists.get(fieldName);
+            for (Object object : (List<?>)listValues) {
+               for(Object selectedEntityObject : (List<?>)fieldValue)
+               {
+                  if(object.equals(selectedEntityObject)){
+                     values.add(object);
+                  }
+               }
+            }
+         }
+      }
+      return values;
+   }
 
    public static String getDisplayName(String fieldName) throws Exception{
       String displayName = fieldName.replaceAll("\\d+", "").replaceAll("(.)([A-Z])", "$1 $2");
@@ -161,11 +222,11 @@ private static boolean isAssociationField(Field field){
       return displayName;
    }
 
-   public String getDeleteCrudPath(String crudPathMain, String idFieldName, Object ob) throws Exception{
+   public static String getDeleteCrudPath(String crudPathMain, String idFieldName, Object ob) throws Exception{
       return crudPathMain + "delete?" + idFieldName + "=" + getFieldValue(ob, idFieldName);
    }
 
-   public boolean isAssociationFieldAndListAvailableAndNotNullOrEmpty(ViewField field, Dictionary<String, Iterable<?>> lists, Object mappedObject) throws Exception{
+   public static boolean isAssociationFieldAndListAvailableAndNotNullOrEmpty(ViewField field, Dictionary<String, Iterable<?>> lists, Object mappedObject) throws Exception{
       if( field.isAssociationField() && mappedObject != null && lists != null && lists.size() > 0){
          Enumeration<String> names = lists.keys();
          while(names.hasMoreElements()){
