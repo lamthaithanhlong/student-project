@@ -61,14 +61,24 @@ public class PersonController extends AbsEntityController<Person> {
     @PostMapping("/person/edit")
     public ModelAndView processEdit(Person person) {
         LOG.info("In persons edit");
-        personService.save(person);
+        try{
+            personService.save(person);
+        }
+        catch(Exception ex){
+            return getEditViewModel(person, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(personService.findAll());
     }
 
     @PostMapping("/person/new")
     public ModelAndView processNew(Person person) {
         LOG.info("In persons new");
-        personService.save(person);
+        try{
+            personService.save(person);
+        }
+        catch(Exception ex){
+            return getEditViewModel(person, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(personService.findAll());
     } 
     
@@ -82,7 +92,7 @@ public class PersonController extends AbsEntityController<Person> {
     }
     @Override
     public String getListViewPath(){
-        return "/persons";
+        return "/person_list";
     }
     @Override
     public String getNewViewPath(){

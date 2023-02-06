@@ -56,14 +56,24 @@ public class HouseController extends AbsEntityController<House> {
     @PostMapping("/house/edit")
     public ModelAndView processEdit(House house) {
         LOG.info("In houses edit");
-        houseService.save(house);
+        try{
+            houseService.save(house);
+        }
+        catch(Exception ex){
+            return getEditViewModel(house, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(houseService.findAll());
     }
 
     @PostMapping("/house/new")
     public ModelAndView processNew(House house) {
         LOG.info("In houses new");
-        houseService.save(house);
+        try{
+            houseService.save(house);
+        }
+        catch(Exception ex){
+            return getEditViewModel(house, getObjectErrorList(ex), "edit");
+        }
         return getListEntitiesModelView(houseService.findAll());
     } 
     
@@ -77,7 +87,7 @@ public class HouseController extends AbsEntityController<House> {
     }
     @Override
     public String getListViewPath(){
-        return "/houses";
+        return "/house_list";
     }
     @Override
     public String getNewViewPath(){

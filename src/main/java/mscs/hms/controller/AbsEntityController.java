@@ -1,8 +1,11 @@
 package mscs.hms.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Dictionary;
+
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.ObjectError;
 
 public abstract class AbsEntityController<T> extends AbsBaseController {
     /**
@@ -44,7 +47,7 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
     
 
     protected void addViewGenerationProperties(ModelAndView modelAndView) {
-        modelAndView.addObject("fields", getPrivateFields(getClassType()));
+        modelAndView.addObject("entityFields", getPrivateFields(getClassType()));
         modelAndView.addObject("listViewPath", getListViewPath());
         modelAndView.addObject("newViewPath", getNewViewPath());
         modelAndView.addObject("editViewPath", getEditViewPath());
@@ -55,7 +58,7 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
     protected ModelAndView getListEntitiesModelView(Iterable<? extends Object> objects) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("objects", objects);        
-        modelAndView.setViewName("company_list");
+        modelAndView.setViewName(getListViewPath());
         addViewGenerationProperties(modelAndView);
         return modelAndView;
     }
@@ -67,5 +70,27 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
         modelAndView.setViewName(getEditViewPath());
         addViewGenerationProperties(modelAndView);
         return modelAndView;
+    }
+
+    protected ModelAndView getEditViewModel(Object object, List<ObjectError> errors, String action) {
+        ModelAndView modelAndView = getEditViewModel(object, action);
+        modelAndView.addObject("errors", errors);
+        return modelAndView;
+    }    
+
+    protected List<ObjectError> getObjectErrorList(Exception ex) {
+        LOG.error("CRUD Error", ex);
+        List<ObjectError> errors = new ArrayList<>();
+        errors.add(new ObjectError("object", getError(ex)));
+        return errors;
+    }
+
+    private String getError(Throwable ex){
+        if(ex.getCause() == null){
+            return ex.getMessage();
+        }
+        else {
+            return getError(ex.getCause());
+        }
     }
 }

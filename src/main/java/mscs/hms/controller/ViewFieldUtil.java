@@ -28,11 +28,11 @@ public class ViewFieldUtil {
    static final Logger LOG = LoggerFactory.getLogger(ViewFieldUtil.class);
    public static List<ViewField> getPrivateFields(Class<?> classType) {
       List<ViewField> list = new ArrayList<>();
-      Field[] fields = classType.getDeclaredFields();
+      Field[] entityFields = classType.getDeclaredFields();
       if (classType.getSuperclass() != null) {
          list.addAll(getPrivateFields(classType.getSuperclass()));
       }
-      for (Field field : fields) {
+      for (Field field : entityFields) {
           String modifiers = Modifier.toString(field.getModifiers());
           if(modifiers.contains("private") &&
              !modifiers.contains("static") &&

@@ -116,7 +116,7 @@ public class UserController extends AbsEntityController<User> {
 
     @Override
     public String getListViewPath(){
-        return "/users";
+        return "/user_list";
     }
     @Override
     public String getNewViewPath(){
