@@ -19,14 +19,17 @@ public class Tenant {
     private List<Inquiry> inquiries;
 
     @ManyToMany
-    private List<Property> property;
+    private List<Property> properties;
 
     @OneToMany
-    private List<RentApplication> rentApplication;
+    private List<RentApplication> rentApplications;
 
     @OneToOne
-    private Preference preference;
+    private Preference preferences;
 
     @OneToOne
-    private RentalAgreement rentalAgreement;
+    private LegalEntity legalEntity;
+
+    @ManyToMany
+    private List<RentalAgreement> rentalAgreements;
 }

@@ -4,7 +4,10 @@ import mscs.hms.model.RentApplication;
 import mscs.hms.repository.RentApplicationRepository;
 import mscs.hms.service.RentApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RentApplicationServiceImpl implements RentApplicationService {
     @Autowired
     RentApplicationRepository rentApplicationRepository;
@@ -25,7 +28,7 @@ public class RentApplicationServiceImpl implements RentApplicationService {
     }
 
     @Override
-    public Iterable<RentApplication> findAll() {
+    public List<RentApplication> findAll() {
         return rentApplicationRepository.findAll();
     }
 }

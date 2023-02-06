@@ -1,11 +1,11 @@
 package mscs.hms.controller;
 
+import mscs.hms.controller.editors.RolesEditor;
 import mscs.hms.dto.selectors.RoleSelectorDTO;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

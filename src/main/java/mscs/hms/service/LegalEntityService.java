@@ -1,8 +1,9 @@
 package mscs.hms.service;
 
 import mscs.hms.model.LegalEntity;
+import java.util.List;
 
 public interface LegalEntityService {
     public LegalEntity get(Integer id);
-    public Iterable<? extends LegalEntity> findAll();
+    public List<? extends LegalEntity> findAll();
 }

@@ -3,8 +3,13 @@ package mscs.hms.service.impl;
 import mscs.hms.model.Inquiry;
 import mscs.hms.repository.InquiryRepository;
 import mscs.hms.service.InquiryService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Service
 public class InquiryServiceImpl implements InquiryService {
 
     @Autowired
@@ -26,7 +31,7 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
-    public Iterable<Inquiry> findAll() {
+    public List<Inquiry> findAll() {
         return inquiryRepository.findAll();
     }
 }

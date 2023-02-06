@@ -1,7 +1,7 @@
 package mscs.hms.repository;
 
 import mscs.hms.model.RentApplication;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RentApplicationRepository extends CrudRepository<RentApplication, Integer> {
+public interface RentApplicationRepository extends JpaRepository<RentApplication, Integer> {
 }

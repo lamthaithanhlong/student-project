@@ -4,7 +4,10 @@ import mscs.hms.model.Preference;
 import mscs.hms.repository.PreferenceRepository;
 import mscs.hms.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PreferenceServiceImpl implements PreferenceService {
 
     @Autowired
@@ -26,7 +29,7 @@ public class PreferenceServiceImpl implements PreferenceService {
     }
 
     @Override
-    public Iterable<Preference> findAll() {
+    public List<Preference> findAll() {
         return preferenceRepository.findAll();
     }
 }
