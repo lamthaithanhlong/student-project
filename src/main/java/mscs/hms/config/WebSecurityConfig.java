@@ -25,6 +25,28 @@ public class WebSecurityConfig {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    private static final String[] SWAGGER_AUTH_WHITELIST = {
+            "/authenticate",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            //"/webjars/**",
+            "/swagger-ui.html"
+    };
+
+    private static final String[] APP_URL_TO_WHITELIST = {
+            "/", "/index",
+            "/process_register", "/register", "/register_success",
+            "/webjars/**"
+    };
+
+    private static final String[] RESOURCES_TO_WHITELIST = {
+            "/resources/**",
+            "/css/**",
+            "/js/**",
+            "/images/**"
+    };
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -41,9 +63,10 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().cors().and()
+        httpSecurity.csrf().and().cors().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/index", "/process_register", "/register", "/register_success", "/webjars/**").permitAll()
+                        .requestMatchers(APP_URL_TO_WHITELIST).permitAll()
+                        //.requestMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(Customizer.withDefaults())
@@ -60,6 +83,6 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/resources/**", "/css/**", "/js/**", "/images/**");
+        return (web) -> web.ignoring().requestMatchers(RESOURCES_TO_WHITELIST);
     }
 }
