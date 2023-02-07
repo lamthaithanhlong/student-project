@@ -146,4 +146,13 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
         return properties;
     }
 
+    @Override
+    public Property getById(Integer id) {
+        Property property = houseRepository.findById(id).orElse(null);
+        if(property == null){
+            return property = apartmentRepository.findById(id).orElse(null);
+        }
+        return property;
+    }
+
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import jakarta.annotation.Nullable;
 import mscs.hms.model.Role;
 import mscs.hms.service.IUserService;
-import mscs.hms.service.impl.UserServiceImpl;
 
 public class RolesEditor extends PropertyEditorSupport{
     IUserService userService;

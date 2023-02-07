@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.LegalEntity;
-import mscs.hms.service.LegalEntityService;
+import mscs.hms.model.Inquiry;
+import mscs.hms.service.InquiryService;
 
-public class LegalEntityEditor extends PropertyEditorSupport{
-    LegalEntityService legalEntityService;
+public class InquiryEditor extends PropertyEditorSupport{
+    InquiryService inquiryService;
 
 	boolean allowEmpty;
-    public LegalEntityEditor(LegalEntityService legalEntityService, boolean allowEmpty) {
-        this.legalEntityService = legalEntityService;
+    public InquiryEditor(InquiryService inquiryService, boolean allowEmpty) {
+        this.inquiryService = inquiryService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class LegalEntityEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<LegalEntity> list = new ArrayList<>();
+                List<Inquiry> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(legalEntityService.get(Integer.parseInt(idString)));
+                    list.add(inquiryService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Legal Entity %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Inquiry %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	

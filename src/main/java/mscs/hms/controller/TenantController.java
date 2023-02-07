@@ -1,10 +1,8 @@
 package mscs.hms.controller;
 
 import mscs.hms.model.Tenant;
-import mscs.hms.service.AddressService;
 import mscs.hms.service.TenantService;
 import mscs.hms.dto.selectors.UserSelectorDTO;
-import mscs.hms.dto.selectors.AddressSelectorDTO;
 import mscs.hms.dto.selectors.InquirySelectorDTO;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
@@ -19,6 +17,10 @@ import mscs.hms.service.RentalAgreementService;
 import mscs.hms.service.RentApplicationService;
 import mscs.hms.service.LegalEntityService;
 import mscs.hms.controller.editors.LegalEntityEditor;
+import mscs.hms.controller.editors.InquiryEditor;
+import mscs.hms.controller.editors.RentalAgreementEditor;
+import mscs.hms.controller.editors.RentApplicationEditor;
+import mscs.hms.controller.editors.PropertyEditor;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -65,8 +67,16 @@ public class TenantController extends AbsEntityController<Tenant> {
 
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
-        binder.registerCustomEditor(List.class, "legalEntity", 
+        binder.registerCustomEditor(String[].class, "legalEntity", 
                                     new LegalEntityEditor(legalEntityService, true));
+        binder.registerCustomEditor(List.class, "inquiries", 
+                                    new InquiryEditor(inquiryService, true));
+        binder.registerCustomEditor(List.class, "properties", 
+                                    new PropertyEditor(propertyService, true));         
+        binder.registerCustomEditor(List.class, "rentalAgreements", 
+                                    new RentalAgreementEditor(rentalAgreementService, true));                                             
+        binder.registerCustomEditor(List.class, "rentApplications", 
+                                    new RentApplicationEditor(rentApplicationService, true));
     }
 
     @GetMapping("/tenants")

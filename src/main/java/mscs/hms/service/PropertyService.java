@@ -11,4 +11,5 @@ public interface PropertyService {
     public Page<Property> getProperties(PagingRequest pagingRequest);
     public PageArray getPropertyArray(PagingRequest pagingRequest);
     public List<Property> getProperties();
+    public Property getById(Integer id);
 }

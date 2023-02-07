@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.LegalEntity;
-import mscs.hms.service.LegalEntityService;
+import mscs.hms.model.RentalAgreement;
+import mscs.hms.service.RentalAgreementService;
 
-public class LegalEntityEditor extends PropertyEditorSupport{
-    LegalEntityService legalEntityService;
+public class RentalAgreementEditor extends PropertyEditorSupport{
+    RentalAgreementService rentalagreementService;
 
 	boolean allowEmpty;
-    public LegalEntityEditor(LegalEntityService legalEntityService, boolean allowEmpty) {
-        this.legalEntityService = legalEntityService;
+    public RentalAgreementEditor(RentalAgreementService rentalagreementService, boolean allowEmpty) {
+        this.rentalagreementService = rentalagreementService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class LegalEntityEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<LegalEntity> list = new ArrayList<>();
+                List<RentalAgreement> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(legalEntityService.get(Integer.parseInt(idString)));
+                    list.add(rentalagreementService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Legal Entity %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Rental Agreement %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	

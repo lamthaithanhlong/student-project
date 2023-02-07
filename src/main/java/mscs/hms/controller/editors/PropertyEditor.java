@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.LegalEntity;
-import mscs.hms.service.LegalEntityService;
+import mscs.hms.model.Property;
+import mscs.hms.service.PropertyService;
 
-public class LegalEntityEditor extends PropertyEditorSupport{
-    LegalEntityService legalEntityService;
+public class PropertyEditor extends PropertyEditorSupport{
+    PropertyService propertyService;
 
 	boolean allowEmpty;
-    public LegalEntityEditor(LegalEntityService legalEntityService, boolean allowEmpty) {
-        this.legalEntityService = legalEntityService;
+    public PropertyEditor(PropertyService propertyService, boolean allowEmpty) {
+        this.propertyService = propertyService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class LegalEntityEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<LegalEntity> list = new ArrayList<>();
+                List<Property> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(legalEntityService.get(Integer.parseInt(idString)));
+                    list.add(propertyService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Legal Entity %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Property %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	
