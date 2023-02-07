@@ -15,15 +15,14 @@ public class Landlord {
     @GeneratedValue
     private Integer id;
 
-    @OneToMany
-    private List<Inquiry> inquiries;
-
     @ManyToMany
-    private List<RentalAgreement> rentalAgreements;
+    @JoinTable(
+            name="landlord_property",
+            joinColumns={@JoinColumn(name="propertyId", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="landlordId", referencedColumnName="id")})
+    private List<Property> properties;
 
     @OneToOne
-    private LegalEntity legalEntity;
-
-    @OneToMany
-    private List<Property> properties;
+    @JoinColumn(name = "legalEntityId", referencedColumnName = "id")
+    private LegalEntity legalEntity;    
 }

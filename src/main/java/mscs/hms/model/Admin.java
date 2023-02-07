@@ -15,5 +15,6 @@ public class Admin {
     private Integer id;
 
     @OneToOne
+    @JoinColumn(name = "legalEntityId", referencedColumnName = "id")
     private LegalEntity legalEntity;    
 }

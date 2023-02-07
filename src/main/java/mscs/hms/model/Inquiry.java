@@ -19,11 +19,14 @@ public class Inquiry {
     private String reply;
 
     @ManyToOne
+    @JoinColumn(name = "tenantId", referencedColumnName = "id")
     private Tenant tenant;
 
     @ManyToOne
+    @JoinColumn(name = "landlordId", referencedColumnName = "id")
     private Landlord landlord;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "propertyId", referencedColumnName = "id")
     private Property property;
 }

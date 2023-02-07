@@ -23,12 +23,15 @@ public class RentalAgreement {
     private String contract;
 
     @OneToOne
+    @JoinColumn(name = "propertyId", referencedColumnName = "id")
     private Property property;
 
     @OneToOne
+    @JoinColumn(name = "tenantId", referencedColumnName = "id")
     private Tenant tenant;
 
-    @ManyToMany
-    private List<Landlord> landlords;
+    @ManyToOne
+    @JoinColumn(name = "landlordId", referencedColumnName = "id")
+    private Landlord landlord;
 
 }
