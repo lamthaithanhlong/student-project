@@ -1,7 +1,7 @@
 package mscs.hms.repository;
 
 import mscs.hms.model.Landlord;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LandlordRepository extends CrudRepository<Landlord, Integer> {
+public interface LandlordRepository extends JpaRepository<Landlord, Integer> {
 }

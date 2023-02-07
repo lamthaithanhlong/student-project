@@ -28,6 +28,12 @@
                                 <a class="nav-link" href="/apartments">Apartments</a>
                               </li>                              
                               <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                <a class="nav-link" href="/landlords">Landlords</a>
+                              </li>                              
+                              <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                <a class="nav-link" href="/admins">Admins</a>
+                              </li>                              
+                              <li sec:authorize="isAuthenticated()"  class="nav-item">
                                 <a class="nav-link" href="/tenants">Tenants</a>
                               </li>                              
                               <li sec:authorize="isAuthenticated()"  class="nav-item">
@@ -35,6 +41,15 @@
                               </li>                              
                               <li sec:authorize="isAuthenticated()"  class="nav-item">
                                 <a class="nav-link" href="/property_list">Properties</a>
+                              </li>                              
+                              <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                <a class="nav-link" href="/inquiries">Inquiries</a>
+                              </li>                              
+                              <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                <a class="nav-link" href="/rent_applications">Rent Applications</a>
+                              </li>                              
+                              <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                <a class="nav-link" href="/rental_agreements">Rental Agreements</a>
                               </li>                              
                               <li sec:authorize="!isAuthenticated()" class="nav-item">
                                 <a class="nav-link" href="/register">Register</a>

@@ -1,7 +1,7 @@
 package mscs.hms.controller;
 
-import mscs.hms.model.Tenant;
-import mscs.hms.service.TenantService;
+import mscs.hms.model.Landlord;
+import mscs.hms.service.LandlordService;
 import mscs.hms.dto.selectors.UserSelectorDTO;
 import mscs.hms.dto.selectors.InquirySelectorDTO;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
@@ -39,10 +39,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TenantController extends AbsEntityController<Tenant> {
+public class LandlordController extends AbsEntityController<Landlord> {
     
     @Autowired
-    private TenantService tenantService;
+    private LandlordService landlordService;
 
     @Autowired
     private IUserService userService;
@@ -55,9 +55,6 @@ public class TenantController extends AbsEntityController<Tenant> {
 
     @Autowired
     private PropertyService propertyService;
-
-    @Autowired
-    private PreferenceService preferenceService;
 
     @Autowired
     private RentApplicationService rentApplicationService;
@@ -73,75 +70,75 @@ public class TenantController extends AbsEntityController<Tenant> {
                                     new PropertyEditor(propertyService, true));        
     }
 
-    @GetMapping("/tenants")
+    @GetMapping("/landlords")
     public ModelAndView showCompanies(Model model) {
-        LOG.info("In tenants view");
-        return getListEntitiesModelView(tenantService.findAll());
+        LOG.info("In landlords view");
+        return getListEntitiesModelView(landlordService.findAll());
     }    
 
-    @GetMapping("/tenant_new")
-    public ModelAndView newTenantForm() {
-        LOG.info("In tenants new");
-        ModelAndView modelAndView = getEditViewModel(new Tenant(), "new");
+    @GetMapping("/landlord_new")
+    public ModelAndView newLandlordForm() {
+        LOG.info("In landlords new");
+        ModelAndView modelAndView = getEditViewModel(new Landlord(), "new");
         return modelAndView;
     }    
 
-    @GetMapping("/tenant_edit/{id}")
-    public ModelAndView editTenantForm(@PathVariable(value="id") final Integer tenantId) {
-        LOG.info("In tenants edit");
-        return getEditViewModel(tenantService.getById(tenantId), "edit");        
+    @GetMapping("/landlord_edit/{id}")
+    public ModelAndView editLandlordForm(@PathVariable(value="id") final Integer landlordId) {
+        LOG.info("In landlords edit");
+        return getEditViewModel(landlordService.getById(landlordId), "edit");        
     }
 
-    @PostMapping("/tenant/delete") 
+    @PostMapping("/landlord/delete") 
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
-        LOG.info("In tenants delete");
-        tenantService.deleteById(id);
-        return getListEntitiesModelView(tenantService.findAll());
+        LOG.info("In landlords delete");
+        landlordService.deleteById(id);
+        return getListEntitiesModelView(landlordService.findAll());
     }
 
-    @PostMapping("/tenant/edit")
-    public ModelAndView processEdit(Tenant tenant) {
-        LOG.info("In tenants edit");
+    @PostMapping("/landlord/edit")
+    public ModelAndView processEdit(Landlord landlord) {
+        LOG.info("In landlords edit");
         try{
-            tenantService.save(tenant);
+            landlordService.save(landlord);
         }
         catch(Exception ex){
-            return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
+            return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.findAll());
+        return getListEntitiesModelView(landlordService.findAll());
     }
 
-    @PostMapping("/tenant/new")
-    public ModelAndView processNew(Tenant tenant) {
-        LOG.info("In tenants new");
+    @PostMapping("/landlord/new")
+    public ModelAndView processNew(Landlord landlord) {
+        LOG.info("In landlords new");
         try{
-            tenantService.save(tenant);
+            landlordService.save(landlord);
         }
         catch(Exception ex){
-            return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
+            return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.findAll());
+        return getListEntitiesModelView(landlordService.findAll());
     } 
     
     @Override
     public Class<?> getClassType(){
-        return Tenant.class;
+        return Landlord.class;
     }
     @Override
     public String getEditViewPath(){
-        return "/tenant_edit";
+        return "/landlord_edit";
     }
     @Override
     public String getListViewPath(){
-        return "/tenant_list";
+        return "/landlord_list";
     }
     @Override
     public String getNewViewPath(){
-        return "/tenant_new";
+        return "/landlord_new";
     }
     @Override
     public String getCrudPath(){
-        return "/tenant";
+        return "/landlord";
     }
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
@@ -151,7 +148,6 @@ public class TenantController extends AbsEntityController<Tenant> {
         dictionary.put("inquiries", inquiryService.findAll().stream().map(InquirySelectorDTO::new).collect(Collectors.toList()));        
         dictionary.put("properties", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("rentApplications", rentApplicationService.findAll().stream().map(RentApplicationSelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("preference", preferenceService.findAll().stream().map(PreferenceSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("rentalAgreements", rentalAgreementService.findAll().stream().map(RentalAgreementSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;

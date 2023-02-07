@@ -9,6 +9,7 @@ import mscs.hms.model.constraints.PositiveNumberConstraint;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -140,6 +141,7 @@ private static boolean isAssociationField(Field field){
    for(Annotation annotation: annotations){
        if(annotation.annotationType() == ManyToMany.class ||
           annotation.annotationType() == OneToOne.class ||
+          annotation.annotationType() == ManyToOne.class ||
           annotation.annotationType() == OneToMany.class)
          {
             return true;            

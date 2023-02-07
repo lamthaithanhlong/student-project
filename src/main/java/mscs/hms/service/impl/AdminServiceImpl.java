@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import mscs.hms.repository.AdminRepository;
 import mscs.hms.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Iterable<Admin> findAll() {
+    public List<Admin> findAll() {
         return adminRepository.findAll();
     }
 }

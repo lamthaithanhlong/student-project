@@ -5,7 +5,7 @@ import mscs.hms.repository.TenantRepository;
 import mscs.hms.service.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 @Service
 public class TenantServiceImpl implements TenantService {
 
@@ -28,7 +28,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Iterable<Tenant> findAll() {
+    public List<Tenant> findAll() {
         return tenantRepository.findAll();
     }
 }
