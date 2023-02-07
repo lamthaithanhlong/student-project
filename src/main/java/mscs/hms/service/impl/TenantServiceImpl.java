@@ -4,7 +4,9 @@ import mscs.hms.model.Tenant;
 import mscs.hms.repository.TenantRepository;
 import mscs.hms.service.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TenantServiceImpl implements TenantService {
 
     @Autowired

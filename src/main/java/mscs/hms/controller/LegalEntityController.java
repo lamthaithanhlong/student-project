@@ -46,7 +46,7 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
     }
     @Override
     public String getListViewPath(){
-        return "/legal-entity_list";
+        return "/legal_entity_list";
     }
     @Override
     public String getNewViewPath(){

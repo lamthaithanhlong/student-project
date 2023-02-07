@@ -1,4 +1,4 @@
-package mscs.hms.controller;
+package mscs.hms.controller.editors;
 
 import java.beans.PropertyEditorSupport;
 
@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import jakarta.annotation.Nullable;
 import mscs.hms.model.Role;
 import mscs.hms.service.IUserService;
-import mscs.hms.service.impl.UserServiceImpl;
 
 public class RolesEditor extends PropertyEditorSupport{
-    IUserService userService = new UserServiceImpl();
+    IUserService userService;
 
     boolean allowEmpty;
     public RolesEditor(IUserService userService, boolean allowEmpty) {

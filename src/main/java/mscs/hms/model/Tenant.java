@@ -16,17 +16,32 @@ public class Tenant {
     private Long id;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inquiryId", referencedColumnName = "id")
     private List<Inquiry> inquiries;
 
     @ManyToMany
-    private List<Property> property;
+    @JoinTable(
+            name="tenant_property",
+            joinColumns={@JoinColumn(name="propertyId", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="tenantId", referencedColumnName="id")})
+    private List<Property> properties;
 
     @OneToMany
-    private List<RentApplication> rentApplication;
+    @JoinColumn(name = "rentApplicationId", referencedColumnName = "id")
+    private List<RentApplication> rentApplications;
 
     @OneToOne
-    private Preference preference;
+    @JoinColumn(name = "preferenceId", referencedColumnName = "id")
+    private Preference preferences;
 
     @OneToOne
-    private RentalAgreement rentalAgreement;
+    @JoinColumn(name = "legalEntityId", referencedColumnName = "id")
+    private LegalEntity legalEntity;
+
+    @ManyToMany
+    @JoinTable(
+            name="tenant_rental_agreement",
+            joinColumns={@JoinColumn(name="rentalAgreementId", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="tenantId", referencedColumnName="id")})
+    private List<RentalAgreement> rentalAgreements;
 }

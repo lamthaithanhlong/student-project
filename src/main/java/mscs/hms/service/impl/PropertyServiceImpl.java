@@ -44,12 +44,7 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
 
     @Override
     public Page<Property> getProperties(PagingRequest pagingRequest) {
-
-        List<Property> properties = new ArrayList<>();
-        houseRepository.findAll().forEach(x -> properties.add(x));
-        apartmentRepository.findAll().forEach(x -> properties.add(x));
-
-        return getPage(properties, pagingRequest);
+        return getPage(getProperties(), pagingRequest);
     }
 
     @Override
@@ -140,6 +135,24 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
         }
 
         return EMPTY_COMPARATOR;
+    }
+
+    @Override
+    public List<Property> getProperties() {
+        List<Property> properties = new ArrayList<>();
+        houseRepository.findAll().forEach(x -> properties.add(x));
+        apartmentRepository.findAll().forEach(x -> properties.add(x));
+
+        return properties;
+    }
+
+    @Override
+    public Property getById(Integer id) {
+        Property property = houseRepository.findById(id).orElse(null);
+        if(property == null){
+            return property = apartmentRepository.findById(id).orElse(null);
+        }
+        return property;
     }
 
 }

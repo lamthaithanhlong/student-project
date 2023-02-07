@@ -19,7 +19,7 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
     CompanyRepository companyRepository;
 
     @Override
-    public Iterable<? extends LegalEntity> findAll() {
+    public List<? extends LegalEntity> findAll() {
         List<LegalEntity> legalEntities = new ArrayList<>();
         personRepository.findAll().forEach(x -> legalEntities.add(x));
         companyRepository.findAll().forEach(x -> legalEntities.add(x));
