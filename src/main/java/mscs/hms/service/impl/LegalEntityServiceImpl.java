@@ -21,13 +21,17 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
     @Override
     public List<? extends LegalEntity> findAll() {
         List<LegalEntity> legalEntities = new ArrayList<>();
-        personRepository.findAll().forEach(x -> legalEntities.add(x));
-        companyRepository.findAll().forEach(x -> legalEntities.add(x));
+        personRepository.findAll().forEach(legalEntities::add);
+        companyRepository.findAll().forEach(legalEntities::add);
         return legalEntities;
     }
 
     @Override
     public LegalEntity get(Integer id) {
-        return personRepository.findById(id).orElse(null);
+        LegalEntity legalEntity = personRepository.findById(id).orElse(null);
+        if(legalEntity == null){
+            legalEntity = companyRepository.findById(id).orElse(null);
+        }
+        return legalEntity;
     }
 }

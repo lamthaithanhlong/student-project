@@ -1,6 +1,8 @@
 package mscs.hms.dto.selectors;
 
+import mscs.hms.model.Company;
 import mscs.hms.model.LegalEntity;
+import mscs.hms.model.Person;
 
 public class LegalEntitySelectorDTO extends SelectorDTO<Integer, LegalEntity> {
 
@@ -28,9 +30,9 @@ public class LegalEntitySelectorDTO extends SelectorDTO<Integer, LegalEntity> {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj.getClass() != LegalEntity.class)
+        if(!(obj.getClass() == LegalEntity.class || obj.getClass() == Person.class || obj.getClass() == Company.class))
         {
-            return (obj.getClass() == this.getClass() && (((LegalEntitySelectorDTO)obj).equals(this)));
+            return (obj.getClass() == this.getClass() && obj.equals(this));
         }
         LegalEntity other = (LegalEntity)obj;
         return this.id.equals(other.getId());

@@ -1,4 +1,4 @@
-package mscs.hms.controller;
+package mscs.hms.controller.util;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

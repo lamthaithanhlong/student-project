@@ -1,4 +1,4 @@
-package mscs.hms.controller;
+package mscs.hms.controller.util;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.persistence.GeneratedValue;
@@ -56,18 +56,11 @@ public class ViewFieldUtil {
   }
 
   private static String getViewType(Field field){
-     switch(field.getType().getSimpleName()){
-         case "Integer":
-            return "number";
-         case "Long":
-            return "number";
-         case "Double":
-            return "number";
-         case "Date":
-               return "date";
-         default:
-            return "text";
-     }
+      return switch (field.getType().getSimpleName()) {
+          case "Integer", "Long", "Double" -> "number";
+          case "Date" -> "date";
+          default -> "text";
+      };
   }
 
   private static String getPlaceHolder(Field field){
@@ -81,26 +74,26 @@ public class ViewFieldUtil {
   }
 
   private static String getValidationMessage(Field field){
-   String placeHolder = "";
+   StringBuilder placeHolder = new StringBuilder();
    Annotation[] annotations = field.getAnnotations();
    for(Annotation annotation: annotations){
        try{
          if(annotation.annotationType() == NotNull.class)
          {
-            placeHolder += field.getAnnotation(NotEmpty.class).message() + " ";            
+            placeHolder.append(field.getAnnotation(NotEmpty.class).message()).append(" ");
          }
          if(annotation.annotationType() == NotEmpty.class)
          {
-            placeHolder += field.getAnnotation(NotEmpty.class).message() + " ";            
+            placeHolder.append(field.getAnnotation(NotEmpty.class).message()).append(" ");
          }
          if(annotation.annotationType() == PositiveNumberConstraint.class)
          {
-            placeHolder += field.getAnnotation(PositiveNumberConstraint.class).message() + " ";            
+            placeHolder.append(field.getAnnotation(PositiveNumberConstraint.class).message()).append(" ");
          }          
        }
        catch(Exception ex){ }
    }
-   return placeHolder;
+   return placeHolder.toString();
 }
 
 private static boolean isIdColumn(Field field){
@@ -205,7 +198,7 @@ private static boolean isManyToManyField(Field field){
       while(names.hasMoreElements()){
          if(fieldName.equals(names.nextElement())){
             List<?> listValues = (List<?>)lists.get(fieldName);
-            for (Object object : (List<?>)listValues) {
+            for (Object object : listValues) {
                for(Object selectedEntityObject : (List<?>)fieldValue)
                {
                   if(object.equals(selectedEntityObject)){

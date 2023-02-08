@@ -1,39 +1,33 @@
 package mscs.hms.controller.converters;
 
-import mscs.hms.model.Company;
 import mscs.hms.model.LegalEntity;
-import mscs.hms.model.Person;
+import mscs.hms.service.LegalEntityService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
 public class StringToLegalEntityConverterFactory
         implements ConverterFactory<String, LegalEntity> {
 
+    LegalEntityService legalEntityService;
+    public StringToLegalEntityConverterFactory(LegalEntityService legalEntityService){
+        this.legalEntityService = legalEntityService;
+    }
     @Override
     public <T extends LegalEntity> Converter<String, T> getConverter(Class<T> targetClass) {
-        return new StringToLegalEntityConverter<>(targetClass);
+        return new StringToLegalEntityConverter<>(legalEntityService);
     }
 
     private static class StringToLegalEntityConverter<T extends LegalEntity>
             implements Converter<String, T> {
-
-        private Class<T> targetClass;
-
-        public StringToLegalEntityConverter(Class<T> targetClass) {
-            this.targetClass = targetClass;
+        private LegalEntityService legalEntityService;
+        public StringToLegalEntityConverter(LegalEntityService legalEntityService) {
+            this.legalEntityService = legalEntityService;
         }
 
         @Override
         public T convert(String source) {
-            long id = Long.parseLong(source);
-            if(this.targetClass == Company.class) {
-                return (T) new Company();
-            }
-            else if(this.targetClass == Person.class) {
-                return (T) new Person();
-            } else {
-                return null;
-            }
+            Integer id = Integer.parseInt(source);
+            return (T) legalEntityService.get(id);
         }
     }
 }
