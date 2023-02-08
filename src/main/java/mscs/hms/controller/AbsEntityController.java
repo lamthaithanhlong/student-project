@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Dictionary;
 
+import mscs.hms.controller.util.ViewField;
+import mscs.hms.controller.util.ViewFieldUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.ObjectError;
 

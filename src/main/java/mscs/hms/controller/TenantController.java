@@ -2,13 +2,9 @@ package mscs.hms.controller;
 
 import mscs.hms.model.Tenant;
 import mscs.hms.service.TenantService;
-import mscs.hms.dto.selectors.UserSelectorDTO;
-import mscs.hms.dto.selectors.InquirySelectorDTO;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.dto.selectors.PreferenceSelectorDTO;
-import mscs.hms.dto.selectors.RentApplicationSelectorDTO;
-import mscs.hms.dto.selectors.RentalAgreementSelectorDTO;
 import mscs.hms.service.IUserService;
 import mscs.hms.service.InquiryService;
 import mscs.hms.service.PropertyService;
@@ -16,10 +12,6 @@ import mscs.hms.service.PreferenceService;
 import mscs.hms.service.RentalAgreementService;
 import mscs.hms.service.RentApplicationService;
 import mscs.hms.service.LegalEntityService;
-import mscs.hms.controller.editors.LegalEntityEditor;
-import mscs.hms.controller.editors.InquiryEditor;
-import mscs.hms.controller.editors.RentalAgreementEditor;
-import mscs.hms.controller.editors.RentApplicationEditor;
 import mscs.hms.controller.editors.PropertyEditor;
 
 import java.util.Dictionary;
@@ -45,12 +37,6 @@ public class TenantController extends AbsEntityController<Tenant> {
     private TenantService tenantService;
 
     @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private InquiryService inquiryService;
-
-    @Autowired
     private LegalEntityService legalEntityService;
 
     @Autowired
@@ -59,22 +45,18 @@ public class TenantController extends AbsEntityController<Tenant> {
     @Autowired
     private PreferenceService preferenceService;
 
-    @Autowired
-    private RentApplicationService rentApplicationService;
 
     @Autowired
     private RentalAgreementService rentalAgreementService;
 
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
-        binder.registerCustomEditor(String[].class, "legalEntity", 
-                                    new LegalEntityEditor(legalEntityService, true));
-        binder.registerCustomEditor(List.class, "properties", 
+        binder.registerCustomEditor(List.class, "properties",
                                     new PropertyEditor(propertyService, true));        
     }
 
     @GetMapping("/tenants")
-    public ModelAndView showCompanies(Model model) {
+    public ModelAndView showCompanies() {
         LOG.info("In tenants view");
         return getListEntitiesModelView(tenantService.findAll());
     }    
@@ -82,8 +64,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     @GetMapping("/tenant_new")
     public ModelAndView newTenantForm() {
         LOG.info("In tenants new");
-        ModelAndView modelAndView = getEditViewModel(new Tenant(), "new");
-        return modelAndView;
+        return getEditViewModel(new Tenant(), "new");
     }    
 
     @GetMapping("/tenant_edit/{id}")
@@ -147,12 +128,8 @@ public class TenantController extends AbsEntityController<Tenant> {
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
         //Note used same attributeName "systemUser"
-        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("inquiries", inquiryService.findAll().stream().map(InquirySelectorDTO::new).collect(Collectors.toList()));        
         dictionary.put("properties", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("rentApplications", rentApplicationService.findAll().stream().map(RentApplicationSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("preference", preferenceService.findAll().stream().map(PreferenceSelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("rentalAgreements", rentalAgreementService.findAll().stream().map(RentalAgreementSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
