@@ -1,0 +1,19 @@
+<html lang="en">
+<head th:insert="~{fragments/htmlhead :: head (title='Welcome')}">
+<body>
+<div class="container">
+  <header th:insert="~{fragments/header :: header}"></header>
+  <div class="row">
+
+    <div th:insert="~{fragments/navigation :: navigation}"></div>
+
+    <h3>404 Not Found</h3>
+    <h1 th:text="${errorCode}">500</h1>
+    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+    <a href="/" th:href="@{/}">Back to Home Page</a>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+  </div>
+  <div th:insert="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>
