@@ -40,8 +40,8 @@ public class ApartmentServiceImpl extends AbsBaseService implements ApartmentSer
         apartmentRepository.deleteById(id);
     }
 
-    public Page<Apartment> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Apartment> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return apartmentRepository.findAll(pageRequest);
         else

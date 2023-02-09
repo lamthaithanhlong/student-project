@@ -40,8 +40,8 @@ public class AddressServiceImpl extends AbsBaseService implements AddressService
         addressRepository.deleteById(id);
     }
 
-    public Page<Address> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Address> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return addressRepository.findAll(pageRequest);
         else

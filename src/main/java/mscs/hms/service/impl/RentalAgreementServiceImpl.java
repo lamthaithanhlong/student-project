@@ -36,8 +36,8 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
         return rentalAgreementRepository.findAll();
     }
 
-    public Page<RentalAgreement> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<RentalAgreement> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return rentalAgreementRepository.findAll(pageRequest);
         else

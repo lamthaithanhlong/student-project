@@ -40,10 +40,11 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In rental applications view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(rentapplicationService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(rentapplicationService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/rentapplication_new")

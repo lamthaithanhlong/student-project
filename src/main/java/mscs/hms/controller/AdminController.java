@@ -37,10 +37,11 @@ public class AdminController extends AbsEntityController<Admin> {
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In admin view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(adminService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(adminService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/admin_new")

@@ -33,10 +33,11 @@ public class AddressController extends AbsEntityController<Address> {
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In addresses view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        Page<Address> addresses = addressService.getAll(searchString, pageSize, offset);
+        Page<Address> addresses = addressService.getAll(searchString, currentPage, pageSize);
         return getListEntitiesModelView(addresses);
     }
 
@@ -105,7 +106,7 @@ public class AddressController extends AbsEntityController<Address> {
         return "/address";
     }
     @Override
-    public String getListPath() { return "/companies";}
+    public String getListPath() { return "/addresses";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

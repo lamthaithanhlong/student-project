@@ -14,7 +14,7 @@ import org.springframework.validation.ObjectError;
 
 public abstract class AbsEntityController<T> extends AbsBaseController {
     final Integer DEFAULT_PAGE_NUMBER = 1;
-    final Integer DEFAULT_PAGE_SIZE = 2;
+    final Integer DEFAULT_PAGE_SIZE = 3;
     /**
      * 
      * @return type of the entity e.g. Company.class

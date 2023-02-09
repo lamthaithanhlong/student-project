@@ -37,8 +37,8 @@ public class PreferenceServiceImpl implements PreferenceService {
         return preferenceRepository.findAll();
     }
 
-    public Page<Preference> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Preference> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return preferenceRepository.findAll(pageRequest);
         else

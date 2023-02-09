@@ -38,8 +38,8 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
         return legalEntity;
     }
 
-    public Page<? extends LegalEntity> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<? extends LegalEntity> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return personRepository.findAll(pageRequest);
         else

@@ -36,8 +36,8 @@ public class RentApplicationServiceImpl implements RentApplicationService {
         return rentApplicationRepository.findAll();
     }
 
-    public Page<RentApplication> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<RentApplication> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return rentApplicationRepository.findAll(pageRequest);
         else
