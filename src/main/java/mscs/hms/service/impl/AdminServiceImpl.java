@@ -1,6 +1,9 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Address;
 import mscs.hms.model.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import mscs.hms.repository.AdminRepository;
 import mscs.hms.service.AdminService;
@@ -30,5 +33,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Admin> findAll() {
         return adminRepository.findAll();
+    }
+
+    public Page<Admin> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return adminRepository.findAll(pageRequest);
+        else
+            return adminRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

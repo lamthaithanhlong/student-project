@@ -1,7 +1,9 @@
 package mscs.hms.service;
 
+import mscs.hms.model.Address;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -21,4 +23,5 @@ public interface IUserService extends UserDetailsService {
     public User get(Long id);
 
     public void delete(Long id);
+    public Page<User> getAll(String searchString, Integer pageSize, Integer offset);
 }

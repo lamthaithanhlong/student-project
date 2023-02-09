@@ -1,8 +1,11 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Apartment;
 import mscs.hms.model.Inquiry;
 import mscs.hms.repository.InquiryRepository;
 import mscs.hms.service.InquiryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +36,12 @@ public class InquiryServiceImpl implements InquiryService {
     @Override
     public List<Inquiry> findAll() {
         return inquiryRepository.findAll();
+    }
+    public Page<Inquiry> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return inquiryRepository.findAll(pageRequest);
+        else
+            return inquiryRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
     }
 }

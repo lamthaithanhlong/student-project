@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class RentApplication {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotEmpty(message = "Title should not be Empty")
+    private String title;
     private String applicationId;
     private String status;
 

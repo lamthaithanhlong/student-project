@@ -17,6 +17,7 @@ import mscs.hms.controller.editors.PropertyEditor;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,16 @@ public class TenantController extends AbsEntityController<Tenant> {
     }
 
     @GetMapping("/tenants")
-    public ModelAndView showCompanies() {
+    public ModelAndView showTenants(Model model,
+                                    @RequestParam("page") Optional<Integer> page,
+                                    @RequestParam("size") Optional<Integer> size,
+                                    @RequestParam("search") Optional<String> search) {
         LOG.info("In tenants view");
-        return getListEntitiesModelView(tenantService.findAll());
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(tenantService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/tenant_new")
@@ -77,7 +85,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In tenants delete");
         tenantService.deleteById(id);
-        return getListEntitiesModelView(tenantService.findAll());
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/tenant/edit")
@@ -89,7 +97,7 @@ public class TenantController extends AbsEntityController<Tenant> {
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.findAll());
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/tenant/new")
@@ -101,7 +109,7 @@ public class TenantController extends AbsEntityController<Tenant> {
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.findAll());
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -124,6 +132,8 @@ public class TenantController extends AbsEntityController<Tenant> {
     public String getCrudPath(){
         return "/tenant";
     }
+    @Override
+    public String getListPath() { return "/tenants";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

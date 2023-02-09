@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,9 @@ public class Preference {
     @Id
     @GeneratedValue
     private Long id;
+    @NotEmpty(message = "Title should not be Empty")
+    private String title;
+
     @PositiveNumberConstraint
     private Integer noOfRooms;
     @PositiveNumberConstraint

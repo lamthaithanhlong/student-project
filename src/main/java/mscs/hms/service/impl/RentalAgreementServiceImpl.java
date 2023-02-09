@@ -1,10 +1,14 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Property;
 import mscs.hms.model.RentalAgreement;
 import mscs.hms.repository.RentalAgreementRepository;
 import mscs.hms.service.RentalAgreementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,5 +34,13 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
     @Override
     public List<RentalAgreement> findAll() {
         return rentalAgreementRepository.findAll();
+    }
+
+    public Page<RentalAgreement> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return rentalAgreementRepository.findAll(pageRequest);
+        else
+            return rentalAgreementRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
     }
 }

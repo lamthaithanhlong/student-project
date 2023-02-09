@@ -27,6 +27,7 @@ public class HouseRepositoryTest {
     public void testCreateProperty() {
         House house = (House)PropertyFactory.createProperty(PropertyType.House);
         house.setLandExtent(150.0);
+        house.setName("Test");
         house.setNoOfBathRooms(1);
         house.setNoOfRooms(2);
 

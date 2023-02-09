@@ -10,12 +10,14 @@ import mscs.hms.dto.selectors.AddressSelectorDTO;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,9 +33,16 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
     private AddressService addressService;
 
     @GetMapping("/legal-entities")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In legalentities view");
-        return getListEntitiesModelView(legalentityService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In legal entity view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(legalentityService.getAll(searchString, pageSize, offset));
     }
 
     @Override
@@ -56,6 +65,8 @@ public class LegalEntityController extends AbsEntityController<LegalEntity> {
     public String getCrudPath(){
         return null;
     }
+    @Override
+    public String getListPath() { return "/legal-entities";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

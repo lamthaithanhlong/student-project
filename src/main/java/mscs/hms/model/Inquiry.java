@@ -3,6 +3,8 @@ package mscs.hms.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,8 @@ public class Inquiry {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotEmpty(message = "Title should not be Empty")
+    private String title;
     private LocalDate inquiryDate;
     private String inquiryDetails;
     private String reply;

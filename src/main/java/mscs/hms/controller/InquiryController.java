@@ -9,6 +9,7 @@ import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,16 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     private AddressService addressService;
 
     @GetMapping("/inquiries")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In inquiries view");
-        return getListEntitiesModelView(inquiryService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In Companies view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(inquiryService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/inquiry_new")
@@ -55,7 +63,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         inquiryService.deleteById(id);
-        return getListEntitiesModelView(inquiryService.findAll());
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/inquiry/edit")
@@ -67,7 +75,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
         catch(Exception ex){
             return getEditViewModel(inquiry, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(inquiryService.findAll());
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/inquiry/new")
@@ -79,7 +87,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
         catch(Exception ex){
             return getEditViewModel(inquiry, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(inquiryService.findAll());
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -102,6 +110,8 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     public String getCrudPath(){
         return "/inquiry";
     }
+    @Override
+    public String getListPath() { return "/inquiries";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

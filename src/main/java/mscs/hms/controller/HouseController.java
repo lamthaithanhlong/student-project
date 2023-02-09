@@ -8,6 +8,7 @@ import mscs.hms.dto.selectors.AddressSelectorDTO;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,16 @@ public class HouseController extends AbsEntityController<House> {
     private AddressService addressService;
 
     @GetMapping("/houses")
-    public ModelAndView showHouses(Model model) {
+    public ModelAndView showHouses(Model model,
+                                   @RequestParam("page") Optional<Integer> page,
+                                   @RequestParam("size") Optional<Integer> size,
+                                   @RequestParam("search") Optional<String> search) {
         LOG.info("In houses view");
-        return getListEntitiesModelView(houseService.findAll());
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(houseService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/house_new")
@@ -50,7 +58,7 @@ public class HouseController extends AbsEntityController<House> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In houses delete");
         houseService.delete(id);
-        return getListEntitiesModelView(houseService.findAll());
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/house/edit")
@@ -62,7 +70,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.findAll());
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/house/new")
@@ -74,7 +82,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.findAll());
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -97,6 +105,8 @@ public class HouseController extends AbsEntityController<House> {
     public String getCrudPath(){
         return "/house";
     }
+    @Override
+    public String getListPath() { return "/houses";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

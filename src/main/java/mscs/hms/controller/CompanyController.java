@@ -9,6 +9,7 @@ import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,16 @@ public class CompanyController extends AbsEntityController<Company> {
     private AddressService addressService;
 
     @GetMapping("/companies")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In companies view");
-        return getListEntitiesModelView(companyService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In company view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(companyService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/company_new")
@@ -55,7 +63,7 @@ public class CompanyController extends AbsEntityController<Company> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In companies delete");
         companyService.delete(id);
-        return getListEntitiesModelView(companyService.findAll());
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/company/edit")
@@ -67,7 +75,7 @@ public class CompanyController extends AbsEntityController<Company> {
         catch(Exception ex){
             return getEditViewModel(company, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(companyService.findAll());
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/company/new")
@@ -79,7 +87,7 @@ public class CompanyController extends AbsEntityController<Company> {
         catch(Exception ex){
             return getEditViewModel(company, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(companyService.findAll());
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -102,6 +110,8 @@ public class CompanyController extends AbsEntityController<Company> {
     public String getCrudPath(){
         return "/company";
     }
+    @Override
+    public String getListPath() { return "/companies";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

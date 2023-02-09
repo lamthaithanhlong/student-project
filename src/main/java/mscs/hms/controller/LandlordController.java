@@ -11,10 +11,12 @@ import mscs.hms.controller.editors.PropertyEditor;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,9 +44,16 @@ public class LandlordController extends AbsEntityController<Landlord> {
     }
 
     @GetMapping("/landlords")
-    public ModelAndView showCompanies() {
-        LOG.info("In landlords view");
-        return getListEntitiesModelView(landlordService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In Landlords view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(landlordService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/landlord_new")
@@ -63,7 +72,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In landlords delete");
         landlordService.deleteById(id);
-        return getListEntitiesModelView(landlordService.findAll());
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/landlord/edit")
@@ -75,7 +84,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.findAll());
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/landlord/new")
@@ -87,7 +96,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.findAll());
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -110,6 +119,8 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public String getCrudPath(){
         return "/landlord";
     }
+    @Override
+    public String getListPath() { return "/landlords";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

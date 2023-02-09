@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -65,9 +66,16 @@ public class UserController extends AbsEntityController<User> {
     }
 
     @GetMapping("/users")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In users view");
-        return getListEntitiesModelView(userService.findAllUsers());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In addresses view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(userService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/user_new")
@@ -87,21 +95,21 @@ public class UserController extends AbsEntityController<User> {
     public ModelAndView requestOTP( @RequestParam(value="id") Long id) {
         LOG.info("In users delete");
         userService.delete(id);
-        return getListEntitiesModelView(userService.findAllUsers());
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/user/edit")
     public ModelAndView processEdit(User user) {
         LOG.info("In users edit");
         userService.saveUser(user);
-        return getListEntitiesModelView(userService.findAllUsers());
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/user/new")
     public ModelAndView processNew(User user) {
         LOG.info("In users new");
         userService.saveUser(user);
-        return getListEntitiesModelView(userService.findAllUsers());
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
 
     @Override
@@ -126,6 +134,8 @@ public class UserController extends AbsEntityController<User> {
     public String getCrudPath(){
         return "/user";
     }
+    @Override
+    public String getListPath() { return "/users";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

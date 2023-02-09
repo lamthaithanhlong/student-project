@@ -1,10 +1,14 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.LegalEntity;
 import mscs.hms.model.Preference;
 import mscs.hms.repository.PreferenceRepository;
 import mscs.hms.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,5 +35,13 @@ public class PreferenceServiceImpl implements PreferenceService {
     @Override
     public List<Preference> findAll() {
         return preferenceRepository.findAll();
+    }
+
+    public Page<Preference> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return preferenceRepository.findAll(pageRequest);
+        else
+            return preferenceRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
     }
 }
