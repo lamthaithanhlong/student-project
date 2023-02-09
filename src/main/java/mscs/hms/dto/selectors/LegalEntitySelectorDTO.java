@@ -15,7 +15,7 @@ public class LegalEntitySelectorDTO extends SelectorDTO<Integer, LegalEntity> {
     }
     @Override
     public String getDisplayText() {
-        return entityObject.getId().toString();
+        return entityObject.getLegalEntityName();
     }
 
     @Override

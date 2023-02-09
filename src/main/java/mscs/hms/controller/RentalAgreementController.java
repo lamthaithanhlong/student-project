@@ -1,11 +1,9 @@
 package mscs.hms.controller;
 
+import mscs.hms.dto.selectors.*;
 import mscs.hms.model.RentalAgreement;
-import mscs.hms.service.AddressService;
-import mscs.hms.service.RentalAgreementService;
-import mscs.hms.dto.selectors.UserSelectorDTO;
-import mscs.hms.dto.selectors.AddressSelectorDTO;
-import mscs.hms.service.IUserService;
+import mscs.hms.service.*;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -28,10 +26,13 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     private RentalAgreementService rentalagreementService;
 
     @Autowired
-    private IUserService userService;
+    private TenantService tenantService;
 
     @Autowired
-    private AddressService addressService;
+    private LandlordService landlordService;
+
+    @Autowired
+    private PropertyService propertyService;
 
     @GetMapping("/rental_agreements")
     public ModelAndView showCompanies(Model model,
@@ -64,7 +65,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         rentalagreementService.deleteById(id);
-        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/rentalagreement/edit")
@@ -76,7 +77,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
         catch(Exception ex){
             return getEditViewModel(rentalagreement, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/rentalagreement/new")
@@ -88,7 +89,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
         catch(Exception ex){
             return getEditViewModel(rentalagreement, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
@@ -117,8 +118,9 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
         //Note used same attributeName "systemUser"
-        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("tenant", tenantService.findAll().stream().map(TenantSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("landlordId", landlordService.findAll().stream().map(LandLordSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("property", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
 }

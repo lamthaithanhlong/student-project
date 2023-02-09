@@ -13,7 +13,7 @@ public class InquirySelectorDTO extends SelectorDTO<Integer, Inquiry> {
     }
     @Override
     public String getDisplayText() {
-        return entityObject.getInquiryDate()+ "," + entityObject.getId();
+        return entityObject.getInquiryDate()+ "," + entityObject.getTitle();
     }
 
     @Override

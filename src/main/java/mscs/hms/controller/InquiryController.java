@@ -1,11 +1,9 @@
 package mscs.hms.controller;
 
+import mscs.hms.dto.selectors.*;
 import mscs.hms.model.Inquiry;
-import mscs.hms.service.AddressService;
-import mscs.hms.service.InquiryService;
-import mscs.hms.dto.selectors.UserSelectorDTO;
-import mscs.hms.dto.selectors.AddressSelectorDTO;
-import mscs.hms.service.IUserService;
+import mscs.hms.service.*;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -32,6 +30,15 @@ public class InquiryController extends AbsEntityController<Inquiry> {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private TenantService tenantService;
+
+    @Autowired
+    private PropertyService propertyService;
+
+    @Autowired
+    private LandlordService landlordService;
 
     @GetMapping("/inquiries")
     public ModelAndView showCompanies(Model model,
@@ -64,7 +71,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         inquiryService.deleteById(id);
-        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/inquiry/edit")
@@ -76,7 +83,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
         catch(Exception ex){
             return getEditViewModel(inquiry, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/inquiry/new")
@@ -88,7 +95,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
         catch(Exception ex){
             return getEditViewModel(inquiry, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
@@ -119,6 +126,9 @@ public class InquiryController extends AbsEntityController<Inquiry> {
         //Note used same attributeName "systemUser"
         dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("tenant", tenantService.findAll().stream().map(TenantSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("landlord", landlordService.findAll().stream().map(LandLordSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("property", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
 }

@@ -73,7 +73,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In landlords delete");
         landlordService.deleteById(id);
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/landlord/edit")
@@ -85,7 +85,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/landlord/new")
@@ -97,7 +97,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

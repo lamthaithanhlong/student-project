@@ -62,7 +62,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In apartments delete");
         apartmentService.delete(id);
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/apartment/edit")
@@ -77,7 +77,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }                
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/apartment/new")
@@ -89,7 +89,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

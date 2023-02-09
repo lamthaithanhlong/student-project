@@ -11,4 +11,4 @@ public interface AdminService {
     public Admin getById(Integer id);
     public void deleteById(Integer id);
     public List<Admin> findAll();
-    public Page<Admin> getAll(String searchString, Integer pageSize, Integer offset);}
+    public Page<Admin> getAll(String searchString, Integer page, Integer pageSize);}

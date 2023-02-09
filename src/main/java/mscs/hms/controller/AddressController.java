@@ -58,7 +58,7 @@ public class AddressController extends AbsEntityController<Address> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In addresses delete");
         addressService.delete(id);
-        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/address/edit")
@@ -70,7 +70,7 @@ public class AddressController extends AbsEntityController<Address> {
         catch(Exception ex){
             return getEditViewModel(address, getObjectErrorList(ex), "edit");
         }        
-        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/address/new")
@@ -82,7 +82,7 @@ public class AddressController extends AbsEntityController<Address> {
         catch(Exception ex){
             return getEditViewModel(address, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

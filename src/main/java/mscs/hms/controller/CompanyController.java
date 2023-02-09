@@ -64,7 +64,7 @@ public class CompanyController extends AbsEntityController<Company> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In companies delete");
         companyService.delete(id);
-        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/company/edit")
@@ -76,7 +76,7 @@ public class CompanyController extends AbsEntityController<Company> {
         catch(Exception ex){
             return getEditViewModel(company, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/company/new")
@@ -88,7 +88,7 @@ public class CompanyController extends AbsEntityController<Company> {
         catch(Exception ex){
             return getEditViewModel(company, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

@@ -12,5 +12,5 @@ public interface RentApplicationService {
     public RentApplication getById(Integer id);
     public void deleteById(Integer id);
     public List<RentApplication> findAll();
-    public Page<RentApplication> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<RentApplication> getAll(String searchString, Integer page, Integer pageSize);
 }

@@ -59,7 +59,7 @@ public class HouseController extends AbsEntityController<House> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In houses delete");
         houseService.delete(id);
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/house/edit")
@@ -71,7 +71,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/house/new")
@@ -83,7 +83,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

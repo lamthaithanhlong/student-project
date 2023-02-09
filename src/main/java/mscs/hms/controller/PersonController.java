@@ -64,7 +64,7 @@ public class PersonController extends AbsEntityController<Person> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In persons delete");
         personService.delete(id);
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/edit")
@@ -76,7 +76,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/new")
@@ -88,7 +88,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
