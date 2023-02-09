@@ -7,7 +7,7 @@
       <button type="submit" class="btn btn-primary">New</button>
     </div>
   </form>
-  <form th:action="${listViewPath}" method="get">
+  <form th:action="${listPath}" method="get">
 
     <div>
       <label>Search</label>
@@ -66,7 +66,7 @@
     </table>
     <div th:if="${objects.totalPages > 0}" class="pagination"
          th:each="pageNumber : ${pageNumbers}">
-      <a th:href="${listViewPath} + '?size=' + ${objects.size} + '&page=' +${pageNumber}"
+      <a th:href="${listPath} + '?size=' + ${objects.size} + '&page=' +${pageNumber}"
          th:text=${pageNumber}
          th:class="${pageNumber==objects.number + 1} ? active"></a>
     </div>

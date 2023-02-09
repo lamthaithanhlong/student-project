@@ -26,6 +26,7 @@ public class PropertyServiceTests {
         house.setLandExtent(200.0);
         house.setNoOfBathRooms(1);
         house.setNoOfRooms(2);
+        house.setName("Test");
         propertyService.saveProperty(house);
     }
 
