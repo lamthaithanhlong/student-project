@@ -1,5 +1,6 @@
 package mscs.hms.service;
 
+import mscs.hms.model.Address;
 import mscs.hms.model.Property;
 import mscs.hms.dto.paging.Page;
 import mscs.hms.dto.paging.PageArray;
@@ -12,4 +13,5 @@ public interface PropertyService {
     public PageArray getPropertyArray(PagingRequest pagingRequest);
     public List<Property> getProperties();
     public Property getById(Integer id);
+    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer pageSize, Integer offset);
 }

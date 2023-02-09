@@ -1,6 +1,9 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import mscs.hms.model.LegalEntity;
 import mscs.hms.service.LegalEntityService;
@@ -33,5 +36,13 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
             legalEntity = companyRepository.findById(id).orElse(null);
         }
         return legalEntity;
+    }
+
+    public Page<? extends LegalEntity> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return personRepository.findAll(pageRequest);
+        else
+            return personRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

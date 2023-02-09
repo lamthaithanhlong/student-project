@@ -1,6 +1,8 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.LegalEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import java.text.SimpleDateFormat;
@@ -153,6 +155,14 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
             return property = apartmentRepository.findById(id).orElse(null);
         }
         return property;
+    }
+
+    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return houseRepository.findAll(pageRequest);
+        else
+            return houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 
 }

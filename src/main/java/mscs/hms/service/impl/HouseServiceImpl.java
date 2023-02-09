@@ -1,6 +1,9 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import mscs.hms.model.House;
 import mscs.hms.repository.HouseRepository;
@@ -35,5 +38,12 @@ public class HouseServiceImpl extends AbsBaseService implements HouseService {
     @Override
     public void delete(Integer id) {
         houseRepository.deleteById(id);
+    }
+    public Page<House> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return houseRepository.findAll(pageRequest);
+        else
+            return houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

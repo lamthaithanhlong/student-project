@@ -6,7 +6,12 @@ import mscs.hms.service.AddressService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +27,18 @@ public class AddressController extends AbsEntityController<Address> {
     private AddressService addressService;
 
     @GetMapping("/addresses")
-    public ModelAndView showCompanies(Model model) {
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
         LOG.info("In addresses view");
-        return getListEntitiesModelView(addressService.findAll());
-    }    
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        Page<Address> addresses = addressService.getAll(searchString, pageSize, offset);
+        return getListEntitiesModelView(addresses);
+    }
 
     @GetMapping("/address_new")
     public ModelAndView newAddressForm() {
@@ -44,7 +57,7 @@ public class AddressController extends AbsEntityController<Address> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In addresses delete");
         addressService.delete(id);
-        return getListEntitiesModelView(addressService.findAll());
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/address/edit")
@@ -56,7 +69,7 @@ public class AddressController extends AbsEntityController<Address> {
         catch(Exception ex){
             return getEditViewModel(address, getObjectErrorList(ex), "edit");
         }        
-        return getListEntitiesModelView(addressService.findAll());
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/address/new")
@@ -68,7 +81,7 @@ public class AddressController extends AbsEntityController<Address> {
         catch(Exception ex){
             return getEditViewModel(address, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(addressService.findAll());
+        return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -91,6 +104,8 @@ public class AddressController extends AbsEntityController<Address> {
     public String getCrudPath(){
         return "/address";
     }
+    @Override
+    public String getListPath() { return "/companies";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

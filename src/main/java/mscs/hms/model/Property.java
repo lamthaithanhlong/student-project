@@ -1,6 +1,7 @@
 package mscs.hms.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,8 @@ public abstract class Property {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotEmpty(message = "Name should not be Empty")
+    private String name;
     @PositiveNumberConstraint
     private Integer noOfRooms;
     @PositiveNumberConstraint

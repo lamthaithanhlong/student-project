@@ -1,10 +1,13 @@
 package mscs.hms.service.impl;
 
 import mscs.hms.model.Role;
+import mscs.hms.model.Tenant;
 import mscs.hms.model.User;
 import mscs.hms.repository.UserRepository;
 import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +65,13 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
     @Override
     public Role getRoleById(Integer id) {
         return userRepository.getAllRoles().stream().filter(x-> x.getId().equals(id)).findAny().orElse(null);
+    }
+
+    public Page<User> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return userRepository.findAll(pageRequest);
+        else
+            return userRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

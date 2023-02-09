@@ -1,9 +1,12 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.RentalAgreement;
 import mscs.hms.model.Tenant;
 import mscs.hms.repository.TenantRepository;
 import mscs.hms.service.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
@@ -30,5 +33,12 @@ public class TenantServiceImpl implements TenantService {
     @Override
     public List<Tenant> findAll() {
         return tenantRepository.findAll();
+    }
+    public Page<Tenant> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return tenantRepository.findAll(pageRequest);
+        else
+            return tenantRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

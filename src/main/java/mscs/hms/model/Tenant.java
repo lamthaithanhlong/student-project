@@ -3,6 +3,8 @@ package mscs.hms.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,8 @@ public class Tenant {
     @GeneratedValue
     private Long id;
 
+    @NotEmpty(message = "Name should not be Empty")
+    private String name;
     @ManyToMany
     @JoinTable(
             name="tenant_property",

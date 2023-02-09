@@ -7,6 +7,7 @@ import mscs.hms.dto.selectors.AddressSelectorDTO;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,16 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     private AddressService addressService;
 
     @GetMapping("/apartments")
-    public ModelAndView showApartments(Model model) {
+    public ModelAndView showApartments(Model model,
+                                       @RequestParam("page") Optional<Integer> page,
+                                       @RequestParam("size") Optional<Integer> size,
+                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In apartments view");
-        return getListEntitiesModelView(apartmentService.findAll());
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(apartmentService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/apartment_new")
@@ -53,7 +61,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In apartments delete");
         apartmentService.delete(id);
-        return getListEntitiesModelView(apartmentService.findAll());
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/apartment/edit")
@@ -68,7 +76,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }                
-        return getListEntitiesModelView(apartmentService.findAll());
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/apartment/new")
@@ -80,7 +88,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(apartmentService.findAll());
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -103,6 +111,8 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     public String getCrudPath(){
         return "/apartment";
     }
+    @Override
+    public String getListPath() { return "/apartments";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

@@ -1,6 +1,9 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.LegalEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import mscs.hms.model.Person;
 import mscs.hms.repository.PersonRepository;
@@ -35,5 +38,13 @@ public class PersonServiceImpl extends AbsBaseService implements PersonService {
     @Override
     public void delete(Integer id) {
         personRepository.deleteById(id);
+    }
+
+    public Page<Person> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return personRepository.findAll(pageRequest);
+        else
+            return personRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

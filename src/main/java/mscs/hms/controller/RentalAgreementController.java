@@ -9,6 +9,7 @@ import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,16 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     private AddressService addressService;
 
     @GetMapping("/rental_agreements")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In inquiries view");
-        return getListEntitiesModelView(rentalagreementService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In rental agreements view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(rentalagreementService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/rentalagreement_new")
@@ -55,7 +63,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         rentalagreementService.deleteById(id);
-        return getListEntitiesModelView(rentalagreementService.findAll());
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/rentalagreement/edit")
@@ -67,7 +75,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
         catch(Exception ex){
             return getEditViewModel(rentalagreement, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentalagreementService.findAll());
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/rentalagreement/new")
@@ -79,7 +87,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
         catch(Exception ex){
             return getEditViewModel(rentalagreement, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentalagreementService.findAll());
+        return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -102,6 +110,8 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
     public String getCrudPath(){
         return "/rentalagreement";
     }
+    @Override
+    public String getListPath() { return "/rental-agreements";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

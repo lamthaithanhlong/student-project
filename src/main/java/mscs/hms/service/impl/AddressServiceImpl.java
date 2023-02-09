@@ -1,6 +1,8 @@
 package mscs.hms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import mscs.hms.model.Address;
 import mscs.hms.repository.AddressRepository;
@@ -36,5 +38,13 @@ public class AddressServiceImpl extends AbsBaseService implements AddressService
     @Override
     public void delete(Integer id) {
         addressRepository.deleteById(id);
+    }
+
+    public Page<Address> getAll(String searchString, Integer pageSize, Integer offset) {
+        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return addressRepository.findAll(pageRequest);
+        else
+            return addressRepository.findByCityContainingIgnoreCase(searchString, pageRequest);
     }
 }

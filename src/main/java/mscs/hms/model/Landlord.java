@@ -3,6 +3,8 @@ package mscs.hms.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,8 @@ public class Landlord {
             joinColumns={@JoinColumn(name="propertyId", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="landlordId", referencedColumnName="id")})
     private List<Property> properties;
-
+    @NotEmpty(message = "Name should not be Empty")
+    private String name;
     @OneToOne
     @JoinColumn(name = "legalEntityId", referencedColumnName = "id")
     private LegalEntity legalEntity;    

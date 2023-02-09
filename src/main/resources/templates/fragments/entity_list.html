@@ -7,6 +7,14 @@
       <button type="submit" class="btn btn-primary">New</button>
     </div>
   </form>
+  <form th:action="${listViewPath}" method="get">
+
+    <div>
+      <label>Search</label>
+      <input type="text" name="search" placeholder="search...">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
   <div>
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
@@ -20,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="object, counter: ${objects}">
+        <tr th:each="object, counter: ${objects.content}">
           <td th:text="${counter.count}"></td>
             <section th:each="field: ${entityFields}">
               <div th:if="${not field.manyAssociation}">
@@ -56,5 +64,11 @@
         </tr>
       </tbody>
     </table>
+    <div th:if="${objects.totalPages > 0}" class="pagination"
+         th:each="pageNumber : ${pageNumbers}">
+      <a th:href="${listViewPath} + '?size=' + ${objects.size} + '&page=' +${pageNumber}"
+         th:text=${pageNumber}
+         th:class="${pageNumber==objects.number + 1} ? active"></a>
+    </div>
   </div>
 </div>  

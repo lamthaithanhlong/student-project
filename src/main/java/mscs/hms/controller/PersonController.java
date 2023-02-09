@@ -10,6 +10,7 @@ import mscs.hms.dto.selectors.AddressSelectorDTO;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,16 @@ public class PersonController extends AbsEntityController<Person> {
     private AddressService addressService;
 
     @GetMapping("/persons")
-    public ModelAndView showPersons(Model model) {
-        LOG.info("In persons view");
-        return getListEntitiesModelView(personService.findAll());
+    public ModelAndView showPersons(Model model,
+                                    @RequestParam("page") Optional<Integer> page,
+                                    @RequestParam("size") Optional<Integer> size,
+                                    @RequestParam("search") Optional<String> search) {
+        LOG.info("In person view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(personService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/person_new")
@@ -55,7 +63,7 @@ public class PersonController extends AbsEntityController<Person> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In persons delete");
         personService.delete(id);
-        return getListEntitiesModelView(personService.findAll());
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/person/edit")
@@ -67,7 +75,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.findAll());
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/person/new")
@@ -79,7 +87,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.findAll());
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -102,6 +110,8 @@ public class PersonController extends AbsEntityController<Person> {
     public String getCrudPath(){
         return "/person";
     }
+    @Override
+    public String getListPath() { return "/persons";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

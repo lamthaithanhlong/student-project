@@ -9,6 +9,7 @@ import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,16 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     private AddressService addressService;
 
     @GetMapping("/rent_applications")
-    public ModelAndView showCompanies(Model model) {
-        LOG.info("In inquiries view");
-        return getListEntitiesModelView(rentapplicationService.findAll());
+    public ModelAndView showCompanies(Model model,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size,
+                                      @RequestParam("search") Optional<String> search) {
+        LOG.info("In rental applications view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        int offset = getOffset(currentPage, pageSize);
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(rentapplicationService.getAll(searchString, pageSize, offset));
     }    
 
     @GetMapping("/rentapplication_new")
@@ -55,7 +63,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         rentapplicationService.deleteById(id);
-        return getListEntitiesModelView(rentapplicationService.findAll());
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/rentapplication/edit")
@@ -67,7 +75,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
         catch(Exception ex){
             return getEditViewModel(rentapplication, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentapplicationService.findAll());
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     }
 
     @PostMapping("/rentapplication/new")
@@ -79,7 +87,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
         catch(Exception ex){
             return getEditViewModel(rentapplication, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentapplicationService.findAll());
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
     } 
     
     @Override
@@ -102,6 +110,8 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     public String getCrudPath(){
         return "/rentapplication";
     }
+    @Override
+    public String getListPath() { return "/rent-applications";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();

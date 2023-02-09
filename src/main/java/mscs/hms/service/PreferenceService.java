@@ -1,6 +1,9 @@
 package mscs.hms.service;
 
+import mscs.hms.model.Address;
 import mscs.hms.model.Preference;
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 public interface PreferenceService {
@@ -8,4 +11,5 @@ public interface PreferenceService {
     public Preference getById(Integer id);
     public void deleteById(Integer id);
     public List<Preference> findAll();
+    public Page<Preference> getAll(String searchString, Integer pageSize, Integer offset);
 }
