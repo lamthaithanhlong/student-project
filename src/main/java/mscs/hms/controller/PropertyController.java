@@ -3,7 +3,6 @@ package mscs.hms.controller;
 import mscs.hms.model.Property;
 import mscs.hms.service.AddressService;
 import mscs.hms.service.PropertyService;
-import mscs.hms.service.IUserService;
 import mscs.hms.dto.selectors.AddressSelectorDTO;
 
 import java.util.Dictionary;
