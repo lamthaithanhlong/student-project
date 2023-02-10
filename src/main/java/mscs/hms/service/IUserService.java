@@ -14,6 +14,8 @@ public interface IUserService extends UserDetailsService {
 
     public List<User> findAllUsers();
 
+    public Page<User> getAllUsersByRole(String roleName);
+
     public List<Role> getAllRoles();
 
     public Role getRoleByName(String name);

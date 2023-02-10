@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public Role getRoleByName(String name);
 
     public Page<User> findByFirstNameContainsIgnoreCase(String text, PageRequest pageRequest);
+
+    public Page<User> findAllByRoleNamesContainingIgnoreCase(String roleName);
 }
