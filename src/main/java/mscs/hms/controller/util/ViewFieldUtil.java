@@ -203,7 +203,7 @@ private static boolean isManyToManyField(Field field){
       return values;
    }
 
-   public static List<Object> getFieldSelectedList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
+   public static List<Object> getFieldSelectedIdList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
       List<Object> values = new ArrayList<>();
       Object fieldValue = getFieldValue(ob, fieldName);
       if(fieldValue == null)
@@ -213,7 +213,8 @@ private static boolean isManyToManyField(Field field){
          for(Object selectedEntityObject : (List<?>)fieldValue)
          {
             if(object.equals(selectedEntityObject)){
-               values.add(object);
+               Object toAdd = ((SelectorDTO<?,?>)object).getId();
+               values.add(toAdd);
             }
          }
       }
