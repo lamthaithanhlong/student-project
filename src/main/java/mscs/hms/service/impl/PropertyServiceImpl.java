@@ -165,8 +165,8 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
             resultApartment = apartmentRepository.findAll(pageRequest);
         }
         else{
-            resultHouse = houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
-            resultApartment = apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            resultHouse = houseRepository.findByNameOrLandExtentOrNoOfRoomsOrNoOfBathRoomsContainsIgnoreCase(searchString, searchString, searchString, searchString, pageRequest);
+            resultApartment = apartmentRepository.findByNameOrNoOfRoomsOrNoOfBathRooms(searchString.toLowerCase(),Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
         }
         List<Property> resultList = new ArrayList<>();
         resultList.addAll(resultHouse.getContent());

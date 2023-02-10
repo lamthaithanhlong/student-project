@@ -4,6 +4,8 @@ import mscs.hms.model.RentalAgreement;
 import mscs.hms.repository.RentalAgreementRepository;
 import mscs.hms.service.RentalAgreementService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -40,6 +42,6 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
         if(searchString == null || searchString.isBlank())
             return rentalAgreementRepository.findAll(pageRequest);
         else
-            return rentalAgreementRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
+            return rentalAgreementRepository.searchRentalAgreement(searchString, LocalDate.parse(searchString), pageRequest);
     }
 }

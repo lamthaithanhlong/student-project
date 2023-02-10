@@ -40,6 +40,6 @@ public class RentApplicationServiceImpl implements RentApplicationService {
         if(searchString == null || searchString.isBlank())
             return rentApplicationRepository.findAll(pageRequest);
         else
-            return rentApplicationRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
+            return rentApplicationRepository.findByTitleOrApplicationIdOrStatusContainsIgnoreCase(searchString, searchString, searchString, pageRequest);
     }
 }

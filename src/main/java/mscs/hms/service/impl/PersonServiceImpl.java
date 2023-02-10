@@ -44,6 +44,6 @@ public class PersonServiceImpl extends AbsBaseService implements PersonService {
         if(searchString == null || searchString.isBlank())
             return personRepository.findAll(pageRequest);
         else
-            return personRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
+            return personRepository.searchPerson(searchString, pageRequest);
     }
 }

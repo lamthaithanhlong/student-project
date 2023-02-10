@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import mscs.hms.model.Apartment;
 
 public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
-    public Page<Apartment> findByNameContainsIgnoreCase(String text, PageRequest pageRequest);
+    Page<Apartment> findByNameOrNoOfRoomsOrNoOfBathRooms(String name, Integer noOfRooms, Integer noOfBathRooms, PageRequest pageRequest);
 }

@@ -38,6 +38,6 @@ public class TenantServiceImpl implements TenantService {
         if(searchString == null || searchString.isBlank())
             return tenantRepository.findAll(pageRequest);
         else
-            return tenantRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return tenantRepository.searchTenant(searchString, pageRequest);
     }
 }

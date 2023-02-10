@@ -13,15 +13,17 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.username = ?1")
-    public User getUserByUsername(String username);
+    User getUserByUsername(String username);
 
     @Query("SELECT r FROM Role r")
-    public List<Role> getAllRoles();
+    List<Role> getAllRoles();
 
     @Query("SELECT r FROM Role r WHERE r.name = ?1")
-    public Role getRoleByName(String name);
+    Role getRoleByName(String name);
 
-    public Page<User> findByFirstNameContainsIgnoreCase(String text, PageRequest pageRequest);
+    List<User> findAllByRolesContainingIgnoreCase(String roleName);
 
-    public List<User> findAllByRolesContainingIgnoreCase(String roleName);
+    @Query("select u from User u where u.username = :searchString or u.lastName = :searchString  or u.firstName = :searchString  or u.email = :searchString or u.phone = :searchString ")
+    Page<User> searchUser(String searchString, PageRequest pageRequest);
+
 }
