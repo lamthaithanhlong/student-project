@@ -1,7 +1,9 @@
 package mscs.hms.controller;
 
+import mscs.hms.controller.editors.PropertyEditor;
 import mscs.hms.dto.selectors.*;
 import mscs.hms.model.Inquiry;
+import mscs.hms.model.Property;
 import mscs.hms.service.*;
 
 import java.util.Dictionary;
@@ -13,7 +15,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +44,12 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     @Autowired
     private LandlordService landlordService;
 
+    @InitBinder
+    public void customizeBinding (WebDataBinder binder) {
+        binder.registerCustomEditor(Property.class, "property",
+                                    new PropertyEditor(propertyService, true));
+    }
+    
     @GetMapping("/inquiries")
     public ModelAndView showCompanies(Model model,
                                       @RequestParam("page") Optional<Integer> page,
