@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.RentApplication;
-import mscs.hms.service.RentApplicationService;
+import mscs.hms.model.Inquiry;
+import mscs.hms.service.InquiryService;
 
-public class RentApplicationEditor extends PropertyEditorSupport{
-    RentApplicationService rentapplicationService;
+public class InquiryListEditor extends PropertyEditorSupport{
+    InquiryService inquiryService;
 
 	boolean allowEmpty;
-    public RentApplicationEditor(RentApplicationService rentapplicationService, boolean allowEmpty) {
-        this.rentapplicationService = rentapplicationService;
+    public InquiryListEditor(InquiryService inquiryService, boolean allowEmpty) {
+        this.inquiryService = inquiryService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class RentApplicationEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<RentApplication> list = new ArrayList<>();
+                List<Inquiry> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(rentapplicationService.getById(Integer.parseInt(idString)));
+                    list.add(inquiryService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Rent Application %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Inquiry %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	

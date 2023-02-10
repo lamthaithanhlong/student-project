@@ -5,12 +5,8 @@ import mscs.hms.service.TenantService;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.dto.selectors.PreferenceSelectorDTO;
-import mscs.hms.service.IUserService;
-import mscs.hms.service.InquiryService;
 import mscs.hms.service.PropertyService;
 import mscs.hms.service.PreferenceService;
-import mscs.hms.service.RentalAgreementService;
-import mscs.hms.service.RentApplicationService;
 import mscs.hms.service.LegalEntityService;
 import mscs.hms.controller.editors.PropertyEditor;
 
@@ -46,10 +42,6 @@ public class TenantController extends AbsEntityController<Tenant> {
     @Autowired
     private PreferenceService preferenceService;
 
-
-    @Autowired
-    private RentalAgreementService rentalAgreementService;
-
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "properties",
@@ -62,11 +54,9 @@ public class TenantController extends AbsEntityController<Tenant> {
                                     @RequestParam("size") Optional<Integer> size,
                                     @RequestParam("search") Optional<String> search) {
         LOG.info("In tenants view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(tenantService.getAll(searchString, currentPage, pageSize));
     }    
 

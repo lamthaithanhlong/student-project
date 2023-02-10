@@ -6,7 +6,7 @@ import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.service.PropertyService;
 import mscs.hms.service.LegalEntityService;
-import mscs.hms.controller.editors.PropertyEditor;
+import mscs.hms.controller.editors.PropertyListEditor;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -40,7 +40,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "properties",
-                                    new PropertyEditor(propertyService, true));        
+                                    new PropertyListEditor(propertyService, true));        
     }
 
     @GetMapping("/landlords")
@@ -49,11 +49,9 @@ public class LandlordController extends AbsEntityController<Landlord> {
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In Landlords view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(landlordService.getAll(searchString, currentPage, pageSize));
     }    
 

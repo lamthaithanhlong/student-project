@@ -1,7 +1,6 @@
 package mscs.hms.controller;
 
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
-import mscs.hms.model.Address;
 import mscs.hms.model.Admin;
 import mscs.hms.service.AdminService;
 import mscs.hms.dto.selectors.UserSelectorDTO;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 
 import mscs.hms.service.LegalEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +39,9 @@ public class AdminController extends AbsEntityController<Admin> {
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In admin view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(adminService.getAll(searchString, currentPage, pageSize));
     }    
 

@@ -3,6 +3,7 @@ package mscs.hms.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.ObjectError;
 
 public abstract class AbsEntityController<T> extends AbsBaseController {
-    final Integer DEFAULT_PAGE_NUMBER = 1;
+    final Integer DEFAULT_PAGE_NUMBER = 0;
     final Integer DEFAULT_PAGE_SIZE = 3;
     /**
      * 
@@ -83,6 +84,23 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
         return modelAndView;
     }
 
+    protected static String getSearchString(Optional<String> search) {
+        String searchString = search.orElse(null);
+        return searchString;
+    }
+
+    protected int getPageSize(Optional<Integer> size) {
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
+        return pageSize;
+    }
+
+    protected int getCurrentPage(Optional<Integer> page) {
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
+        return currentPage;
+    }
+
     protected ModelAndView getEditViewModel(Object object, String action) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("object", object);
@@ -103,11 +121,6 @@ public abstract class AbsEntityController<T> extends AbsBaseController {
         List<ObjectError> errors = new ArrayList<>();
         errors.add(new ObjectError("object", getError(ex)));
         return errors;
-    }
-
-    protected int getOffset(int currentPage, int pageSize) {
-        int offset = (currentPage - 1) * pageSize - 1;
-        return offset < 0 ? 0 : offset;
     }
 
     private String getError(Throwable ex){

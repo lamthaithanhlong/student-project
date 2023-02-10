@@ -9,11 +9,11 @@ import jakarta.annotation.Nullable;
 import mscs.hms.model.Role;
 import mscs.hms.service.IUserService;
 
-public class RolesEditor extends PropertyEditorSupport{
+public class RolesListEditor extends PropertyEditorSupport{
     IUserService userService;
 
     boolean allowEmpty;
-    public RolesEditor(IUserService userService, boolean allowEmpty) {
+    public RolesListEditor(IUserService userService, boolean allowEmpty) {
         this.userService = userService;
         this.allowEmpty = allowEmpty;
 	}

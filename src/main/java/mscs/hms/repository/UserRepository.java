@@ -1,6 +1,5 @@
 package mscs.hms.repository;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import org.springframework.beans.factory.annotation.Qualifier;

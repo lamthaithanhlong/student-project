@@ -3,10 +3,7 @@ package mscs.hms.controller.editors;
 import java.beans.PropertyEditorSupport;
 
 import org.springframework.util.StringUtils;
-import java.util.List;
-import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.Property;
 import mscs.hms.service.PropertyService;
 
 public class PropertyEditor extends PropertyEditorSupport{
@@ -26,14 +23,10 @@ public class PropertyEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<Property> list = new ArrayList<>();
-                for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(propertyService.getById(Integer.parseInt(idString)));
-                }
-				setValue(list);
+                setValue(propertyService.getById(Integer.parseInt(text)));
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Property %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException(String.format("Could not get Property %s due to error %s: ", text, ex));
 			}
 		}
 	}	

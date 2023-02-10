@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.controller.editors.RolesEditor;
+import mscs.hms.controller.editors.RolesListEditor;
 import mscs.hms.dto.selectors.RoleSelectorDTO;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
@@ -35,7 +35,7 @@ public class UserController extends AbsEntityController<User> {
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "roles", 
-                                    new RolesEditor(userService, true));
+                                    new RolesListEditor(userService, true));
     }
     
     @GetMapping("/register")
@@ -71,11 +71,9 @@ public class UserController extends AbsEntityController<User> {
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In companies view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(userService.getAll(searchString, currentPage, pageSize));
     }    
 

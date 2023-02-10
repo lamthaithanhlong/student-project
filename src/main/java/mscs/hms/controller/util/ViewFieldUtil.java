@@ -159,11 +159,12 @@ private static boolean isManyToManyField(Field field){
       try{
          PropertyDescriptor pd = new PropertyDescriptor(fieldName, ob.getClass());
          Method getter = pd.getReadMethod();
-         return getter.invoke(ob);
+         Object value = getter.invoke(ob);
+         return value == null ? "" : value;
       }
       catch(Exception ex){
          LOG.error(String.format("Error fetching value for field %s",fieldName), ex);
-         return null;
+         return "";
       }
    }   
 
