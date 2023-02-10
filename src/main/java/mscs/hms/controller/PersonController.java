@@ -40,11 +40,9 @@ public class PersonController extends AbsEntityController<Person> {
                                     @RequestParam("size") Optional<Integer> size,
                                     @RequestParam("search") Optional<String> search) {
         LOG.info("In person view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(personService.getAll(searchString, currentPage, pageSize));
     }    
 

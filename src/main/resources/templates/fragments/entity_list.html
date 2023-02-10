@@ -38,7 +38,7 @@
           <td th:text="${counter.count}"></td>
             <section th:each="field: ${entityFields}">
               <div th:if="${not field.manyAssociation}">
-                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
+                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}"></td>
                 <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__}"></td>            
               </div>          
               <div th:if="${field.manyAssociation}">

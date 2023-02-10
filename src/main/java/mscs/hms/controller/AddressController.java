@@ -32,11 +32,9 @@ public class AddressController extends AbsEntityController<Address> {
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In addresses view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         Page<Address> addresses = addressService.getAll(searchString, currentPage, pageSize);
         return getListEntitiesModelView(addresses);
     }
