@@ -1,6 +1,5 @@
 package mscs.hms.service;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import org.springframework.data.domain.Page;

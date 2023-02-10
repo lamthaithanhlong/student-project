@@ -1,11 +1,10 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.LegalEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -29,7 +28,7 @@ import mscs.hms.service.PropertyService;
 
 @Service
 public class PropertyServiceImpl extends AbsBaseService implements PropertyService {
-    
+
     @Autowired
     HouseRepository houseRepository;
 
@@ -68,8 +67,6 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
     }
 
     private static final Comparator<Property> EMPTY_COMPARATOR = (e1, e2) -> 0;
-
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     private List<String> toStringList(Property employee) {
         return Arrays.asList(employee.getNoOfBathRooms().toString(), employee.getNoOfRooms().toString());
@@ -151,18 +148,36 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
     @Override
     public Property getById(Integer id) {
         Property property = houseRepository.findById(id).orElse(null);
-        if(property == null){
+        if (property == null) {
             return property = apartmentRepository.findById(id).orElse(null);
         }
         return property;
     }
 
-    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer page, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
-            return houseRepository.findAll(pageRequest);
-        else
-            return houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer page,
+            Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        org.springframework.data.domain.Page<House> resultHouse;
+        org.springframework.data.domain.Page<Apartment> resultApartment;
+        //TODO: Query only the remainig page size for apartments
+        if (searchString == null || searchString.isBlank()){
+            resultHouse = houseRepository.findAll(pageRequest);
+            resultApartment = apartmentRepository.findAll(pageRequest);
+        }
+        else{
+            resultHouse = houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            resultApartment = apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+        }
+        List<Property> resultList = new ArrayList<>();
+        resultList.addAll(resultHouse.getContent());
+        if(resultHouse.getNumberOfElements() < pageSize)
+        {
+            int remainigPageSize = pageSize - resultHouse.getNumberOfElements();
+            List<Apartment> apartmentContent = resultApartment.getContent();
+            resultList.addAll(apartmentContent.subList(0, remainigPageSize <= apartmentContent.size() ? remainigPageSize : apartmentContent.size()));
+        }
+        final org.springframework.data.domain.Page<Property> pageResult = new PageImpl<>(resultList, pageRequest, resultHouse.getTotalElements() + resultApartment.getTotalElements());
+        
+        return pageResult;
     }
-
 }

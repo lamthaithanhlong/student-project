@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.LegalEntity;
 import mscs.hms.model.Preference;
 import mscs.hms.repository.PreferenceRepository;
 import mscs.hms.service.PreferenceService;
