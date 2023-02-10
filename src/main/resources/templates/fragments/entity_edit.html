@@ -15,7 +15,7 @@
                     <div class="col-8">
                         <input th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:readonly="${field.generatedColumn}" th:name="${field.name}" th:data-type="${field.viewType}" class="form-control" th:value="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}" th:required="${field.required}" th:placeholder="${field.placeHolder}"/>
                         
-                        <select th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:name="${field.name}" class="form-select" multiple aria-label="multiple select example">
+                        <select th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:name="${field.name}" class="form-select" th:multiple="${field.manyAssociation}" aria-label="multiple select example">
                             <div th:each="objectValue: ${listObjects.remove(field.getName())}">
                                 <option th:value="${objectValue.id}"  th:text="${objectValue}">Value</option>
                             </div>
