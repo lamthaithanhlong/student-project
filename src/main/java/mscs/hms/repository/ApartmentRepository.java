@@ -1,7 +1,10 @@
 package mscs.hms.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import mscs.hms.entity.Apartment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
+import mscs.hms.model.Apartment;
 
-public interface ApartmentRepository extends CrudRepository<Apartment, Integer> {    
+public interface ApartmentRepository extends JpaRepository<Apartment, Integer> {
+    public Page<Apartment> findByNameContainsIgnoreCase(String text, PageRequest pageRequest);
 }

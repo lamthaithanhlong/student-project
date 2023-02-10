@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import mscs.hms.entity.Property;
-import mscs.hms.entity.paging.Page;
-import mscs.hms.entity.paging.PageArray;
-import mscs.hms.entity.paging.PagingRequest;
+import mscs.hms.model.Property;
+import mscs.hms.dto.paging.Page;
+import mscs.hms.dto.paging.PageArray;
+import mscs.hms.dto.paging.PagingRequest;
 import mscs.hms.service.PropertyService;
 
 @RestController

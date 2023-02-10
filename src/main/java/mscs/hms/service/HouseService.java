@@ -1,6 +1,7 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.House;
+import mscs.hms.model.House;
+import org.springframework.data.domain.Page;
 
 public interface HouseService {
     public House saveHouse(House house);
@@ -8,4 +9,5 @@ public interface HouseService {
     public void delete(Integer id);
     public Iterable<House> findAll();
     public House save(House house);
+    public Page<House> getAll(String searchString, Integer page, Integer pageSize);
 }

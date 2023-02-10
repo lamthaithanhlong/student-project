@@ -1,8 +1,10 @@
 package mscs.hms.repository;
 
-import mscs.hms.entity.Role;
-import mscs.hms.entity.User;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
@@ -19,4 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT r FROM Role r WHERE r.name = ?1")
     public Role getRoleByName(String name);
 
+    public Page<User> findByFirstNameContainsIgnoreCase(String text, PageRequest pageRequest);
 }

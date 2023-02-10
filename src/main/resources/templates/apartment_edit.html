@@ -4,7 +4,7 @@
   <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
     <div th:replace="~{fragments/navigation :: navigation}"></div>
-    <div th:replace="~{fragments/entity_edit :: edit (title='Apartment', fields = ${fields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, object = ${object}, action = ${action})}"></div>    
+    <div th:replace="~{fragments/entity_edit :: edit (title='Apartment', entityFields = ${entityFields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, object = ${object}, action = ${action})}"></div>    
     <div th:replace="~{fragments/footer :: footer}"></div>
     <div th:replace="~{fragments/scripts :: scripts}"></div>
   </div>
