@@ -6,7 +6,7 @@ import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.service.PropertyService;
 import mscs.hms.service.LegalEntityService;
-import mscs.hms.controller.editors.PropertyEditor;
+import mscs.hms.controller.editors.PropertyListEditor;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -40,7 +40,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "properties",
-                                    new PropertyEditor(propertyService, true));        
+                                    new PropertyListEditor(propertyService, true));        
     }
 
     @GetMapping("/landlords")

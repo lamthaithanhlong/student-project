@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.RentalAgreement;
-import mscs.hms.service.RentalAgreementService;
+import mscs.hms.model.RentApplication;
+import mscs.hms.service.RentApplicationService;
 
-public class RentalAgreementEditor extends PropertyEditorSupport{
-    RentalAgreementService rentalagreementService;
+public class RentApplicationListEditor extends PropertyEditorSupport{
+    RentApplicationService rentapplicationService;
 
 	boolean allowEmpty;
-    public RentalAgreementEditor(RentalAgreementService rentalagreementService, boolean allowEmpty) {
-        this.rentalagreementService = rentalagreementService;
+    public RentApplicationListEditor(RentApplicationService rentapplicationService, boolean allowEmpty) {
+        this.rentapplicationService = rentapplicationService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class RentalAgreementEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<RentalAgreement> list = new ArrayList<>();
+                List<RentApplication> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(rentalagreementService.getById(Integer.parseInt(idString)));
+                    list.add(rentapplicationService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Rental Agreement %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Rent Application %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	

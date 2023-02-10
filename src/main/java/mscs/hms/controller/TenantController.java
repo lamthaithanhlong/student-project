@@ -5,12 +5,8 @@ import mscs.hms.service.TenantService;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.dto.selectors.PreferenceSelectorDTO;
-import mscs.hms.service.IUserService;
-import mscs.hms.service.InquiryService;
 import mscs.hms.service.PropertyService;
 import mscs.hms.service.PreferenceService;
-import mscs.hms.service.RentalAgreementService;
-import mscs.hms.service.RentApplicationService;
 import mscs.hms.service.LegalEntityService;
 import mscs.hms.controller.editors.PropertyEditor;
 
@@ -45,10 +41,6 @@ public class TenantController extends AbsEntityController<Tenant> {
 
     @Autowired
     private PreferenceService preferenceService;
-
-
-    @Autowired
-    private RentalAgreementService rentalAgreementService;
 
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {

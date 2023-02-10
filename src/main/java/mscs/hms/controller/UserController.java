@@ -1,6 +1,6 @@
 package mscs.hms.controller;
 
-import mscs.hms.controller.editors.RolesEditor;
+import mscs.hms.controller.editors.RolesListEditor;
 import mscs.hms.dto.selectors.RoleSelectorDTO;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
@@ -35,7 +35,7 @@ public class UserController extends AbsEntityController<User> {
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "roles", 
-                                    new RolesEditor(userService, true));
+                                    new RolesListEditor(userService, true));
     }
     
     @GetMapping("/register")

@@ -1,7 +1,6 @@
 package mscs.hms.controller;
 
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
-import mscs.hms.model.Address;
 import mscs.hms.model.Admin;
 import mscs.hms.service.AdminService;
 import mscs.hms.dto.selectors.UserSelectorDTO;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 
 import mscs.hms.service.LegalEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
