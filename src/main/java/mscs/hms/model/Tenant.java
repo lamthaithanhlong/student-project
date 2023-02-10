@@ -27,10 +27,6 @@ public class Tenant {
     private List<Property> properties;
 
     @OneToOne
-    @JoinColumn(name = "preferenceId", referencedColumnName = "id")
-    private Preference preferences;
-
-    @OneToOne
     @JoinColumn(name = "legalEntityId", referencedColumnName = "id")
     private LegalEntity legalEntity;    
 }

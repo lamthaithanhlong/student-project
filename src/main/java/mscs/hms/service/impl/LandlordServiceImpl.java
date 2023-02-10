@@ -35,8 +35,8 @@ public class LandlordServiceImpl implements LandlordService {
         return landlordRepository.findAll();
     }
 
-    public Page<Landlord> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Landlord> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return landlordRepository.findAll(pageRequest);
         else

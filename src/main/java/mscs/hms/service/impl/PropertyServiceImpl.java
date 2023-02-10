@@ -157,8 +157,8 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
         return property;
     }
 
-    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public org.springframework.data.domain.Page<? extends Property> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return houseRepository.findAll(pageRequest);
         else

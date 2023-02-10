@@ -13,7 +13,7 @@ public class RentApplicationSelectorDTO extends SelectorDTO<Integer, RentApplica
     }
     @Override
     public String getDisplayText() {
-        return entityObject.getApplicationId()+ "," + entityObject.getId();
+        return entityObject.getApplicationId()+ "," + entityObject.getTitle();
     }
 
     @Override

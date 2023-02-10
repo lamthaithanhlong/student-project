@@ -36,10 +36,11 @@ public class HouseController extends AbsEntityController<House> {
                                    @RequestParam("search") Optional<String> search) {
         LOG.info("In houses view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(houseService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(houseService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/house_new")
@@ -58,7 +59,7 @@ public class HouseController extends AbsEntityController<House> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In houses delete");
         houseService.delete(id);
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/house/edit")
@@ -70,7 +71,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/house/new")
@@ -82,7 +83,7 @@ public class HouseController extends AbsEntityController<House> {
         catch(Exception ex){
             return getEditViewModel(house, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

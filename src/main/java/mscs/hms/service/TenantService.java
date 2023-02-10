@@ -11,5 +11,5 @@ public interface TenantService {
     public Tenant getById(Integer id);
     public void deleteById(Integer id);
     public List<Tenant> findAll();
-    public Page<Tenant> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Tenant> getAll(String searchString, Integer page, Integer pageSize);
 }

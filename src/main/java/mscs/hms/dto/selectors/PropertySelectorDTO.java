@@ -15,7 +15,7 @@ public class PropertySelectorDTO extends SelectorDTO<Integer, Property> {
     }
     @Override
     public String getDisplayText() {
-        return entityObject.getId().toString();
+        return entityObject.getName().toString();
     }
 
     @Override

@@ -40,8 +40,8 @@ public class PersonServiceImpl extends AbsBaseService implements PersonService {
         personRepository.deleteById(id);
     }
 
-    public Page<Person> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Person> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return personRepository.findAll(pageRequest);
         else

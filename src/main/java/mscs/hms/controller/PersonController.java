@@ -41,10 +41,11 @@ public class PersonController extends AbsEntityController<Person> {
                                     @RequestParam("search") Optional<String> search) {
         LOG.info("In person view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(personService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(personService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/person_new")
@@ -63,7 +64,7 @@ public class PersonController extends AbsEntityController<Person> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In persons delete");
         personService.delete(id);
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/edit")
@@ -75,7 +76,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/new")
@@ -87,7 +88,7 @@ public class PersonController extends AbsEntityController<Person> {
         catch(Exception ex){
             return getEditViewModel(person, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

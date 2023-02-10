@@ -11,5 +11,5 @@ public interface AddressService {
     public void delete(Integer id);
     public List<Address> findAll();
     public Address save(Address address);
-    public Page<Address> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Address> getAll(String searchString, Integer page, Integer pageSize);
 }

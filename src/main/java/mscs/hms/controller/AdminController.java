@@ -1,5 +1,6 @@
 package mscs.hms.controller;
 
+import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.model.Address;
 import mscs.hms.model.Admin;
 import mscs.hms.service.AdminService;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import mscs.hms.service.LegalEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,9 @@ public class AdminController extends AbsEntityController<Admin> {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private LegalEntityService legalEntityService;
+
     @GetMapping("/admins")
     public ModelAndView showCompanies(Model model,
                                       @RequestParam("page") Optional<Integer> page,
@@ -37,10 +42,11 @@ public class AdminController extends AbsEntityController<Admin> {
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In admin view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(adminService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(adminService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/admin_new")
@@ -60,7 +66,7 @@ public class AdminController extends AbsEntityController<Admin> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In admins delete");
         adminService.deleteById(id);
-        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/admin/edit")
@@ -72,7 +78,7 @@ public class AdminController extends AbsEntityController<Admin> {
         catch(Exception ex){
             return getEditViewModel(admin, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/admin/new")
@@ -84,7 +90,7 @@ public class AdminController extends AbsEntityController<Admin> {
         catch(Exception ex){
             return getEditViewModel(admin, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
@@ -114,6 +120,7 @@ public class AdminController extends AbsEntityController<Admin> {
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
         //Note used same attributeName "systemUser"
         dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
 }

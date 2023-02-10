@@ -11,5 +11,5 @@ public interface LandlordService {
     public Landlord getById(Integer id);
     public void deleteById(Integer id);
     public List<Landlord> findAll();
-    public Page<Landlord> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Landlord> getAll(String searchString, Integer page, Integer pageSize);
 }

@@ -1,11 +1,9 @@
 package mscs.hms.controller;
 
+import mscs.hms.dto.selectors.*;
 import mscs.hms.model.RentApplication;
-import mscs.hms.service.AddressService;
-import mscs.hms.service.RentApplicationService;
-import mscs.hms.dto.selectors.UserSelectorDTO;
-import mscs.hms.dto.selectors.AddressSelectorDTO;
-import mscs.hms.service.IUserService;
+import mscs.hms.service.*;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -28,10 +26,13 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     private RentApplicationService rentapplicationService;
 
     @Autowired
-    private IUserService userService;
+    private TenantService tenantService;
 
     @Autowired
-    private AddressService addressService;
+    private LandlordService landlordService;
+
+    @Autowired
+    private PropertyService propertyService;
 
     @GetMapping("/rent_applications")
     public ModelAndView showCompanies(Model model,
@@ -40,10 +41,11 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In rental applications view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(rentapplicationService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(rentapplicationService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/rentapplication_new")
@@ -63,7 +65,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In inquiries delete");
         rentapplicationService.deleteById(id);
-        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/rentapplication/edit")
@@ -75,7 +77,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
         catch(Exception ex){
             return getEditViewModel(rentapplication, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/rentapplication/new")
@@ -87,7 +89,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
         catch(Exception ex){
             return getEditViewModel(rentapplication, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
@@ -116,8 +118,9 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
         //Note used same attributeName "systemUser"
-        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
-        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("tenant", tenantService.findAll().stream().map(TenantSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("landlordId", landlordService.findAll().stream().map(LandLordSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("property", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
     }
 }

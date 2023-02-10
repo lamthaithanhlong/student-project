@@ -12,5 +12,5 @@ public interface CompanyService {
     public void delete(Integer id);
     public Iterable<Company> findAll();
     public Company save(Company company);
-    public Page<Company> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Company> getAll(String searchString, Integer page, Integer pageSize);
 }

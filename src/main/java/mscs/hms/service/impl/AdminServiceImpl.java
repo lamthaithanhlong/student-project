@@ -35,8 +35,8 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findAll();
     }
 
-    public Page<Admin> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Admin> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return adminRepository.findAll(pageRequest);
         else

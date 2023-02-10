@@ -50,10 +50,11 @@ public class LandlordController extends AbsEntityController<Landlord> {
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In Landlords view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(landlordService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(landlordService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/landlord_new")
@@ -72,7 +73,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In landlords delete");
         landlordService.deleteById(id);
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/landlord/edit")
@@ -84,7 +85,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/landlord/new")
@@ -96,7 +97,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

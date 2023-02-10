@@ -63,10 +63,11 @@ public class TenantController extends AbsEntityController<Tenant> {
                                     @RequestParam("search") Optional<String> search) {
         LOG.info("In tenants view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(tenantService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(tenantService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/tenant_new")
@@ -85,7 +86,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In tenants delete");
         tenantService.deleteById(id);
-        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/tenant/edit")
@@ -97,7 +98,7 @@ public class TenantController extends AbsEntityController<Tenant> {
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/tenant/new")
@@ -109,7 +110,7 @@ public class TenantController extends AbsEntityController<Tenant> {
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
