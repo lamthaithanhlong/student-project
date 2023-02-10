@@ -1,6 +1,10 @@
 package mscs.hms.service;
 
-import mscs.hms.entity.Person;
+import mscs.hms.model.Address;
+import mscs.hms.model.Person;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface PersonService {
     public Person savePerson(Person person);
@@ -8,4 +12,5 @@ public interface PersonService {
     public void delete(Integer id);
     public Iterable<Person> findAll();
     public Person save(Person person);
+    public Page<Person> getAll(String searchString, Integer page, Integer pageSize);
 }

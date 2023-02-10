@@ -1,7 +1,18 @@
 package mscs.hms.controller;
 
-import mscs.hms.entity.Person;
+import mscs.hms.model.Person;
+import mscs.hms.service.AddressService;
 import mscs.hms.service.PersonService;
+import mscs.hms.service.IUserService;
+import mscs.hms.dto.selectors.UserSelectorDTO;
+import mscs.hms.dto.selectors.AddressSelectorDTO;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +28,24 @@ public class PersonController extends AbsEntityController<Person> {
     @Autowired
     private PersonService personService;
 
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private AddressService addressService;
+
     @GetMapping("/persons")
-    public ModelAndView showPersons(Model model) {
-        LOG.info("In persons view");
-        return getListEntitiesModelView(personService.findAll());
+    public ModelAndView showPersons(Model model,
+                                    @RequestParam("page") Optional<Integer> page,
+                                    @RequestParam("size") Optional<Integer> size,
+                                    @RequestParam("search") Optional<String> search) {
+        LOG.info("In person view");
+        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
+        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
+        String searchString = search.orElse(null);
+        return getListEntitiesModelView(personService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/person_new")
@@ -32,28 +57,38 @@ public class PersonController extends AbsEntityController<Person> {
     @GetMapping("/person_edit/{id}")
     public ModelAndView editPersonForm(@PathVariable(value="id") final Integer personId) {
         LOG.info("In persons edit");
-        return getEditViewModel(personService.get(personId), "new");        
+        return getEditViewModel(personService.get(personId), "edit");        
     }
 
     @PostMapping("/person/delete") 
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In persons delete");
         personService.delete(id);
-        return getListEntitiesModelView(personService.findAll());
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/edit")
     public ModelAndView processEdit(Person person) {
         LOG.info("In persons edit");
-        personService.save(person);
-        return getListEntitiesModelView(personService.findAll());
+        try{
+            personService.save(person);
+        }
+        catch(Exception ex){
+            return getEditViewModel(person, getObjectErrorList(ex), "edit");
+        }
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/person/new")
     public ModelAndView processNew(Person person) {
         LOG.info("In persons new");
-        personService.save(person);
-        return getListEntitiesModelView(personService.findAll());
+        try{
+            personService.save(person);
+        }
+        catch(Exception ex){
+            return getEditViewModel(person, getObjectErrorList(ex), "edit");
+        }
+        return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override
@@ -66,7 +101,7 @@ public class PersonController extends AbsEntityController<Person> {
     }
     @Override
     public String getListViewPath(){
-        return "/persons";
+        return "/person_list";
     }
     @Override
     public String getNewViewPath(){
@@ -75,5 +110,15 @@ public class PersonController extends AbsEntityController<Person> {
     @Override
     public String getCrudPath(){
         return "/person";
+    }
+    @Override
+    public String getListPath() { return "/persons";}
+    @Override
+    public Dictionary<String, List<?>> getSelectLists(){
+        Dictionary<String, List<?>> dictionary = new Hashtable<>();
+        //Note used same attributeName "systemUser"
+        dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
+        dictionary.put("address", addressService.findAll().stream().map(AddressSelectorDTO::new).collect(Collectors.toList()));
+       return dictionary;
     }
 }

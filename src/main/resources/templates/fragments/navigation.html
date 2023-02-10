@@ -10,40 +10,83 @@
                           <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                               <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/companies">Companies</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/persons">Persons</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/legal-entities">Legal Entities</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/houses">Houses</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/apartments">Apartments</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/users">Users</a>
-                              </li>                              
-                              <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                <a class="nav-link" href="/property_list">Properties</a>
-                              </li>                              
-                              <li sec:authorize="!isAuthenticated()" class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
+                                <a class="nav-link" href="/addresses">Addresses</a>
                               </li>
-                              <li sec:authorize="!isAuthenticated()" class="nav-item">
-                                <a class="nav-link" href="/login">Sign-in</a>
+                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                                   href="/legal-entities" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Legal Entities
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/legal-entities">All entries</a>
+                                  </li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/companies">Companies</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/persons">Persons</a>
+                                  </li>
+                                </ul>
                               </li>
-                              <li sec:authorize="isAuthenticated()" class="nav-item">
-                                <a class="nav-link" href="/logout">Sign-out</a>
+                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                                   href="/properties" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Properties
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/properties">All properties</a>
+                                  </li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/houses">Houses</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/apartments">Apartments</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                                   href="/users" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Users
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/users">All users</a>
+                                  </li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/admins">Admins</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/landlords">Landlords</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/tenants">Tenants</a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Rental Options
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/inquiries">Inquiries</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/rent_applications">Rent Applications</a>
+                                  </li>
+                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                    <a class="dropdown-item" href="/rental_agreements">Rental Agreements</a>
+                                  </li>
+                                </ul>
                               </li>
                             </ul>
-                            <form class="d-flex">
-                              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                              <button class="btn btn-outline-success" type="submit">Search</button>
-                            </form>
                           </div>
                         </div>
                       </nav>

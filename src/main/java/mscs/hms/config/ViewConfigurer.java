@@ -15,6 +15,7 @@ public class ViewConfigurer implements WebMvcConfigurer {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/users").setViewName("user_list");
+        registry.addViewController("/user_edit").setViewName("user_edit");
         registry.addViewController("/register").setViewName("signup");
         registry.addViewController("/register_success").setViewName("register_success");
         registry.addViewController("/property_list").setViewName("property_list");
@@ -26,6 +27,20 @@ public class ViewConfigurer implements WebMvcConfigurer {
         registry.addViewController("/apartment_edit").setViewName("apartment_edit");
         registry.addViewController("/legal_entity_list").setViewName("legal_entity_list");
         registry.addViewController("/person_list").setViewName("person_list");
-        registry.addViewController("/person_edit").setViewName("person_edit");
+        registry.addViewController("/person_edit").setViewName("person_edit");        
+        registry.addViewController("/address_list").setViewName("address_list");
+        registry.addViewController("/address_edit").setViewName("address_edit");
+        registry.addViewController("/tenant_list").setViewName("tenant_list");
+        registry.addViewController("/tenant_edit").setViewName("tenant_edit");
+        registry.addViewController("/admin_list").setViewName("admin_list");
+        registry.addViewController("/admin_edit").setViewName("admin_edit");
+        registry.addViewController("/landlord_list").setViewName("landlord_list");
+        registry.addViewController("/landlord_edit").setViewName("landlord_edit");
+        registry.addViewController("/inquiry_list").setViewName("landlord_list");
+        registry.addViewController("/inquiry_edit").setViewName("landlord_edit");
+        registry.addViewController("/rentalagreement_list").setViewName("landlord_list");
+        registry.addViewController("/rentalagreement_edit").setViewName("landlord_edit");
+        registry.addViewController("/rentapplication_list").setViewName("landlord_list");
+        registry.addViewController("/rentapplication_edit").setViewName("landlord_edit");
     }
 }

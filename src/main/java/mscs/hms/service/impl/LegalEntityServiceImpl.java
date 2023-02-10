@@ -1,8 +1,11 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import mscs.hms.entity.LegalEntity;
+import mscs.hms.model.LegalEntity;
 import mscs.hms.service.LegalEntityService;
 import mscs.hms.repository.PersonRepository;
 import mscs.hms.repository.CompanyRepository;
@@ -19,15 +22,27 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
     CompanyRepository companyRepository;
 
     @Override
-    public Iterable<? extends LegalEntity> findAll() {
+    public List<? extends LegalEntity> findAll() {
         List<LegalEntity> legalEntities = new ArrayList<>();
-        personRepository.findAll().forEach(x -> legalEntities.add(x));
-        companyRepository.findAll().forEach(x -> legalEntities.add(x));
+        personRepository.findAll().forEach(legalEntities::add);
+        companyRepository.findAll().forEach(legalEntities::add);
         return legalEntities;
     }
 
     @Override
     public LegalEntity get(Integer id) {
-        return personRepository.findById(id).orElse(null);
+        LegalEntity legalEntity = personRepository.findById(id).orElse(null);
+        if(legalEntity == null){
+            legalEntity = companyRepository.findById(id).orElse(null);
+        }
+        return legalEntity;
+    }
+
+    public Page<? extends LegalEntity> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return personRepository.findAll(pageRequest);
+        else
+            return personRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

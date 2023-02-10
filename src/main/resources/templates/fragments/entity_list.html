@@ -1,18 +1,32 @@
-<div th:fragment="list (title, fields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
+<div th:fragment="list (title, entityFields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
   <div>
     <h5 th:text="${title}">List</h5>
-  </div>      
-  <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">
-    <div>
-      <button type="submit" class="btn btn-primary">New</button>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">
+        <div>
+          <button type="submit" class="btn btn-primary">New</button>
+        </div>
+      </form>
     </div>
-  </form>
+    <div class="col-auto">
+      <form th:action="${listPath}" method="get" class="row g-3">
+        <div class="col-auto">
+          <input type="text" id="search" name="search" placeholder="search..." class="form-control">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <div>
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
         <tr>
           <th>#</th>
-          <section th:each="field: ${fields}">
+          <section th:each="field: ${entityFields}">
             <th th:text="@{__${@viewFieldUtil.getDisplayName(field.name)}__}"></th>
           </section>
           <td th:if="${not #strings.isEmpty(editViewPath)}"></td>
@@ -20,11 +34,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="object, counter: ${objects}">
+        <tr th:each="object, counter: ${objects.content}">
           <td th:text="${counter.count}"></td>
-          <section th:each="field: ${fields}">
-            <td th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
-          </section>
+            <section th:each="field: ${entityFields}">
+              <div th:if="${not field.manyAssociation}">
+                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
+                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__}"></td>            
+              </div>          
+              <div th:if="${field.manyAssociation}">
+                <td>
+                  <table>
+                    <tbody th:with="listObjectArray=@{__${@viewFieldUtil.getFieldSelectedList(object, field.getName(), listObjects)}__}">
+                      <section th:each="listObject: ${listObjectArray}">
+                        <tr th:text="${listObject}"></tr>
+                      </section>
+                    </tbody>
+                  </table>
+                </td>
+              </div>
+            </section>
           <td th:if="${not #strings.isEmpty(editViewPath)}">
             <form th:action="${editViewPath} +  @{/} + ${object.id}" method="get">
               <div>
@@ -42,5 +70,17 @@
         </tr>
       </tbody>
     </table>
+    <div class="navbar-expand justify-content-center">
+      <nav class="justify-content-center">
+        <ul class="pagination">
+          <li th:each="pageNumber : ${pageNumbers}"
+              th:class="${pageNumber==objects.number + 1} ? 'page-item active' : 'page-item'">
+            <a class="page-link"
+               th:href="${listPath} + '?size=' + ${objects.size} + '&page=' +${pageNumber}"
+               th:text="${pageNumber}">1</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>  

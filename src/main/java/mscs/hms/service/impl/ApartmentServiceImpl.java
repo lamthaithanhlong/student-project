@@ -1,8 +1,11 @@
 package mscs.hms.service.impl;
 
+import mscs.hms.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import mscs.hms.entity.Apartment;
+import mscs.hms.model.Apartment;
 import mscs.hms.repository.ApartmentRepository;
 import mscs.hms.service.ApartmentService;
 
@@ -35,5 +38,13 @@ public class ApartmentServiceImpl extends AbsBaseService implements ApartmentSer
     @Override
     public void delete(Integer id) {
         apartmentRepository.deleteById(id);
+    }
+
+    public Page<Apartment> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
+        if(searchString == null || searchString.isBlank())
+            return apartmentRepository.findAll(pageRequest);
+        else
+            return apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

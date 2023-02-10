@@ -1,0 +1,12 @@
+<html lang="en">
+<head th:replace="~{fragments/htmlhead :: head (title='Company')}">
+<body>
+  <div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div th:replace="~{fragments/navigation :: navigation}"></div>
+    <div th:replace="~{fragments/entity_edit :: edit (title='User', entityFields = ${entityFields}, listViewPath = ${listViewPath}, newViewPath = ${newViewPath}, editViewPath = ${editViewPath}, crudPath = ${crudPath}, object = ${object}, action = ${action})}"></div>    
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <div th:replace="~{fragments/scripts :: scripts}"></div>
+  </div>
+</body>
+</html>
