@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Property;
 import mscs.hms.model.RentalAgreement;
 import mscs.hms.repository.RentalAgreementRepository;
 import mscs.hms.service.RentalAgreementService;

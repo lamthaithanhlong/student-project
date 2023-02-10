@@ -1,6 +1,5 @@
 package mscs.hms.service;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Property;
 import mscs.hms.dto.paging.Page;
 import mscs.hms.dto.paging.PageArray;

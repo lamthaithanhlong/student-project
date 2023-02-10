@@ -1,7 +1,6 @@
 package mscs.hms.service.impl;
 
 import mscs.hms.model.RentApplication;
-import mscs.hms.model.RentalAgreement;
 import mscs.hms.repository.RentApplicationRepository;
 import mscs.hms.service.RentApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
