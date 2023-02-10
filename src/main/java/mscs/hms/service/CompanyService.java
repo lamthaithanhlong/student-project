@@ -1,10 +1,7 @@
 package mscs.hms.service;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Company;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface CompanyService {
     public Company saveCompany(Company company);
