@@ -34,7 +34,10 @@ public class PropertySelectorDTO extends SelectorDTO<Integer, Property> {
         {
             return (obj.getClass() == this.getClass() && obj.equals(this));
         }
-        Property other = (Property)obj;
-        return this.id.equals(other.getId());
+        if(obj instanceof Property){
+            Property other = (Property)obj;
+            return this.id.equals(other.getId());
+        }
+        return false;
     }
 }
