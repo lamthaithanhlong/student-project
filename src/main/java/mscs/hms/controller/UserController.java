@@ -70,12 +70,13 @@ public class UserController extends AbsEntityController<User> {
                                       @RequestParam("page") Optional<Integer> page,
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
-        LOG.info("In addresses view");
+        LOG.info("In companies view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(userService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(userService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/user_new")
@@ -95,21 +96,21 @@ public class UserController extends AbsEntityController<User> {
     public ModelAndView requestOTP( @RequestParam(value="id") Long id) {
         LOG.info("In users delete");
         userService.delete(id);
-        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/user/edit")
     public ModelAndView processEdit(User user) {
         LOG.info("In users edit");
         userService.saveUser(user);
-        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/user/new")
     public ModelAndView processNew(User user) {
         LOG.info("In users new");
         userService.saveUser(user);
-        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(userService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
 
     @Override

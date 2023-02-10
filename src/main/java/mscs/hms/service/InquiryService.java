@@ -11,5 +11,5 @@ public interface InquiryService {
     public Inquiry getById(Integer id);
     public void deleteById(Integer id);
     public List<Inquiry> findAll();
-    public Page<Inquiry> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Inquiry> getAll(String searchString, Integer page, Integer pageSize);
 }

@@ -39,8 +39,8 @@ public class HouseServiceImpl extends AbsBaseService implements HouseService {
     public void delete(Integer id) {
         houseRepository.deleteById(id);
     }
-    public Page<House> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<House> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return houseRepository.findAll(pageRequest);
         else

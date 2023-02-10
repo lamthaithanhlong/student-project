@@ -34,8 +34,8 @@ public class TenantServiceImpl implements TenantService {
     public List<Tenant> findAll() {
         return tenantRepository.findAll();
     }
-    public Page<Tenant> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<Tenant> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return tenantRepository.findAll(pageRequest);
         else

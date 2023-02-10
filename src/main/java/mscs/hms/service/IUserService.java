@@ -23,5 +23,5 @@ public interface IUserService extends UserDetailsService {
     public User get(Long id);
 
     public void delete(Long id);
-    public Page<User> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<User> getAll(String searchString, Integer page, Integer pageSize);
 }

@@ -67,8 +67,8 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
         return userRepository.getAllRoles().stream().filter(x-> x.getId().equals(id)).findAny().orElse(null);
     }
 
-    public Page<User> getAll(String searchString, Integer pageSize, Integer offset) {
-        PageRequest pageRequest = PageRequest.of(offset,pageSize);
+    public Page<User> getAll(String searchString, Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page,pageSize);
         if(searchString == null || searchString.isBlank())
             return userRepository.findAll(pageRequest);
         else

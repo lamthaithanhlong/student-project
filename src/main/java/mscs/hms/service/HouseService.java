@@ -12,5 +12,5 @@ public interface HouseService {
     public void delete(Integer id);
     public Iterable<House> findAll();
     public House save(House house);
-    public Page<House> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<House> getAll(String searchString, Integer page, Integer pageSize);
 }

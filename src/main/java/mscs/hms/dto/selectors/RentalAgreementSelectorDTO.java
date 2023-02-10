@@ -13,7 +13,7 @@ public class RentalAgreementSelectorDTO extends SelectorDTO<Long, RentalAgreemen
     }
     @Override
     public String getDisplayText() {
-        return entityObject.getId().toString();
+        return entityObject.getTitle().toString();
     }
 
     @Override

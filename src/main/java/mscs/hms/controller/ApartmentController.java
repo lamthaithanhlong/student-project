@@ -39,10 +39,11 @@ public class ApartmentController extends AbsEntityController<Apartment> {
                                        @RequestParam("search") Optional<String> search) {
         LOG.info("In apartments view");
         int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
+        currentPage = currentPage > 0 ? currentPage - 1 : 0;
         int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        int offset = getOffset(currentPage, pageSize);
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         String searchString = search.orElse(null);
-        return getListEntitiesModelView(apartmentService.getAll(searchString, pageSize, offset));
+        return getListEntitiesModelView(apartmentService.getAll(searchString, currentPage, pageSize));
     }    
 
     @GetMapping("/apartment_new")
@@ -61,7 +62,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
     public ModelAndView requestOTP( @RequestParam(value="id") Integer id) {
         LOG.info("In apartments delete");
         apartmentService.delete(id);
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/apartment/edit")
@@ -76,7 +77,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }                
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @PostMapping("/apartment/new")
@@ -88,7 +89,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
         catch(Exception ex){
             return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
         }
-        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_SIZE, 0));
+        return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
     
     @Override

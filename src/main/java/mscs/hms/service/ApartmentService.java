@@ -12,5 +12,5 @@ public interface ApartmentService {
     public void delete(Integer id);
     public Iterable<Apartment> findAll();
     public Apartment save(Apartment apartment);
-    public Page<Apartment> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Apartment> getAll(String searchString, Integer page, Integer pageSize);
 }

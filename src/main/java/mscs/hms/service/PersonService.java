@@ -12,5 +12,5 @@ public interface PersonService {
     public void delete(Integer id);
     public Iterable<Person> findAll();
     public Person save(Person person);
-    public Page<Person> getAll(String searchString, Integer pageSize, Integer offset);
+    public Page<Person> getAll(String searchString, Integer page, Integer pageSize);
 }
