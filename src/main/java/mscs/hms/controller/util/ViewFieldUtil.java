@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
+import mscs.hms.dto.selectors.SelectorDTO;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import jakarta.persistence.ManyToMany;
@@ -188,8 +189,54 @@ private static boolean isManyToManyField(Field field){
       return fieldValue;
    }
    
+   public static List<Object> getFieldSelectorIdList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
+      List<Object> values = new ArrayList<>();
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null)
+         return values;
+      List<?> listValues = getFieldList(ob, fieldName, lists);
+      for (Object object : listValues) {
+         Object toAdd = ((SelectorDTO<?,?>)object).getId();
+         values.add(toAdd);
+      }
+   
+      return values;
+   }
+
    public static List<Object> getFieldSelectedList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
       List<Object> values = new ArrayList<>();
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null)
+         return values;
+      List<?> listValues = getFieldList(ob, fieldName, lists);
+      for (Object object : listValues) {
+         for(Object selectedEntityObject : (List<?>)fieldValue)
+         {
+            if(object.equals(selectedEntityObject)){
+               values.add(object);
+            }
+         }
+      }
+      return values;
+   }
+
+   public static String getFieldSelecterDisplayName(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists, String idValue) throws Exception{
+      String value = "";
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null || idValue == null)
+         return value;
+      List<?> listValues = getFieldList(ob, fieldName, lists);
+      for (Object object : listValues) {
+         String id = ((SelectorDTO<?,?>)object).getId().toString();
+         if(id.equalsIgnoreCase(idValue.trim())){
+            return ((SelectorDTO<?,?>)object).getDisplayText();
+         }
+      }
+      return value;
+   }
+
+   public static List<?> getFieldList(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists) throws Exception{
+      List<?> values = new ArrayList<>();
       Object fieldValue = getFieldValue(ob, fieldName);
       if(fieldValue == null)
          return values;
@@ -198,18 +245,41 @@ private static boolean isManyToManyField(Field field){
       Enumeration<String> names = lists.keys();
       while(names.hasMoreElements()){
          if(fieldName.equals(names.nextElement())){
-            List<?> listValues = (List<?>)lists.get(fieldName);
+            List<?> list = (List<?>)lists.get(fieldName);
+            return list;
+         }
+      }
+      return values;
+   }
+
+   public static boolean isSelected(Object ob, String fieldName, Dictionary<String, Iterable<?>> lists, String idValueToCheck) throws Exception{
+      Object fieldValue = getFieldValue(ob, fieldName);
+      if(fieldValue == null || idValueToCheck == null)
+         return false;
+      List<?> listValues = getFieldList(ob, fieldName, lists);
+      if(fieldValue instanceof List){
+         for(Object selectedEntityObject : (List<?>)fieldValue){
             for (Object object : listValues) {
-               for(Object selectedEntityObject : (List<?>)fieldValue)
-               {
-                  if(object.equals(selectedEntityObject)){
-                     values.add(object);
+               if(object.equals(selectedEntityObject)){
+                  String id = ((SelectorDTO<?,?>)object).getId().toString();               
+                  if(id.equalsIgnoreCase(idValueToCheck.trim())){
+                     return true;
                   }
                }
             }
          }
       }
-      return values;
+      else {
+         for (Object object : listValues) {
+            if(object.equals(fieldValue)){
+               String id = ((SelectorDTO<?,?>)object).getId().toString();               
+               if(id.equalsIgnoreCase(idValueToCheck.trim())){
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
    }
 
    public static String getDisplayName(String fieldName) throws Exception{
