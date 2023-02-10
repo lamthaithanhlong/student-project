@@ -75,6 +75,6 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
         if(searchString == null || searchString.isBlank())
             return userRepository.findAll(pageRequest);
         else
-            return userRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
+            return userRepository.searchUser(searchString, pageRequest);
     }
 }

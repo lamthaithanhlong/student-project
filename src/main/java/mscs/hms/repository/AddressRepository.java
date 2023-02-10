@@ -6,5 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
-    public Page<Address> findByCityContainingIgnoreCase(String text, PageRequest pageRequest);
+    Page<Address> findByCityOrStateOrStreetNameOrZipContainingIgnoreCase(String city, String state, String streetName, String zip, PageRequest pageRequest);
+
 }
