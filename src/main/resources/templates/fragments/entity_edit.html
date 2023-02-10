@@ -13,7 +13,7 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label" th:text="@{__${@viewFieldUtil.getDisplayName(field.getName())}__}">Name: </label>
                     <div class="col-8">
-                        <input th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:readonly="${field.generatedColumn}" th:name="${field.name}" th:data-type="${field.viewType}" class="form-control" th:value="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}" th:required="${field.required}" th:placeholder="${field.placeHolder}"/>
+                        <input th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:readonly="${field.generatedColumn}" th:name="${field.name}" th:type="${field.viewType}" class="form-control" th:value="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}" th:required="${field.required}" th:placeholder="${field.placeHolder}"/>
                         
                         <select th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:name="${field.name}" class="form-select" th:multiple="${field.manyAssociation}" aria-label="select">
                             <div th:with="objectValues=@{__${@viewFieldUtil.getFieldSelectorIdList(object, field.getName(), listObjects)}__}">
