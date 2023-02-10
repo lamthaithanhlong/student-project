@@ -121,7 +121,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
         return "/rentapplication";
     }
     @Override
-    public String getListPath() { return "/rent-applications";}
+    public String getListPath() { return "/rent_applications";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
