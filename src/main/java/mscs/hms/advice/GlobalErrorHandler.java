@@ -16,7 +16,7 @@ public class GlobalErrorHandler {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(final Throwable throwable, final Model model) {
-        logger.error("Exception occurred");
+        logger.error("Exception occurred", throwable);        
         String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
         model.addAttribute("errorCode", 500);
         model.addAttribute("errorMessage", errorMessage);
