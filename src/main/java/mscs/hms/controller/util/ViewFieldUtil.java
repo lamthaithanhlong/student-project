@@ -58,8 +58,8 @@ public class ViewFieldUtil {
 
   private static String getViewType(Field field){
       return switch (field.getType().getSimpleName()) {
-          case "Integer", "Long", "Double" -> "number";
-          case "Date" -> "date";
+          case "Integer", "Long", "Double", "double", "int", "long" -> "number";
+          case "Date", "LocalDate" -> "date";
           default -> "text";
       };
   }
