@@ -42,6 +42,7 @@ public class UserController extends AbsEntityController<User> {
     public String showRegistrationForm(Model model) {
         LOG.info("In register view");
         model.addAttribute("user", new User());
+        model.addAttribute("roles", userService.getAllRoles());
         return "signup";
     }
 
