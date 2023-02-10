@@ -41,8 +41,8 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
         return userRepository.findAll();
     }
 
-    public Page<User> getAllUsersByRole(String roleName) {
-        return userRepository.findAllByRoleNamesContainingIgnoreCase(roleName);
+    public List<User> getAllUsersByRole(String roleName) {
+        return userRepository.findAllByRolesContainingIgnoreCase(roleName);
     }
 
     @Override
