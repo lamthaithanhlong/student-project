@@ -21,4 +21,17 @@ public class HomeController extends AbsBaseController {
         model.addAttribute("loggedInUserName", principal.getName());
         return "home";
     }
+
+    @GetMapping(value = "/login")
+    public String login(Model model, String error, String logout) {
+        if (error != null) {
+            model.addAttribute("errorMsg", "Your username and password are invalid.");
+        }
+
+        if (logout != null) {
+            model.addAttribute("msg", "You have been logged out successfully.");
+        }
+
+        return "login";
+    }
 }
