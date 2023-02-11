@@ -39,6 +39,6 @@ public class LandlordServiceImpl implements LandlordService {
         if(searchString == null || searchString.isBlank())
             return landlordRepository.findAll(pageRequest);
         else
-            return landlordRepository.searchLandlord(searchString, pageRequest);
+            return landlordRepository.searchLandlord(searchString.toLowerCase(), pageRequest);
     }
 }

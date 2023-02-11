@@ -101,7 +101,7 @@ INSERT INTO property (id, name, property_type, no_of_bath_rooms, no_of_rooms, la
 VALUES (null, 'house', 'house', 1, 2, 1870, 1);
 
 INSERT INTO property (id, name, property_type, no_of_bath_rooms, no_of_rooms, land_extent, address_id)
-VALUES (null, 'apartment', 'apartment', 2, 6, 12870, 4);
+VALUES (null, 'apartment', 'apartment', 2, 6, 12870, 1);
 
 -- Landlord_Property
 
@@ -114,8 +114,8 @@ VALUES (null, 'apartment', 'apartment', 2, 6, 12870, 4);
 # INSERT INTO landlord_property (property_id, landlord_id)
 # VALUES (3, 2);
 
--- INSERT INTO Landlord_property (property_id, landlord_id)
--- VALUES (4, 3);
+# INSERT INTO Landlord_property (property_id, landlord_id)
+# VALUES (4, 3);
 
 -- Tenant_Property
 
