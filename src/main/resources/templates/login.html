@@ -23,26 +23,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <div class="box">&nbsp;</div>
+                <div class="col-auto">
+                    <div class="box">&nbsp;
+                        <div class="container text-center align-items-center">
+                            <form th:action="@{/login}" method="post" >
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="username-label">Username</span>
+                                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-label">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="password-label">Password</span>
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-label">
+                                </div>
+                                <input class="btn btn-primary" type="submit" value="Login">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="container text-center">
-                <form th:action="@{/login}" method="post" >
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="username-label">Username</span>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-label">
-                      </div>
-                      <div class="input-group mb-3">
-                        <span class="input-group-text" id="password-label">Password</span>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-label">
-                      </div>
-                      <input class="btn btn-primary" type="submit" value="Submit">
-                </form>
-        </div>
-
-    <div th:insert="~{fragments/footer :: footer}"></div>
-</div>
-<div th:insert="~{fragments/scripts :: scripts}"></div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
+    </div>
+    <div th:insert="~{fragments/scripts :: scripts}"></div>
 </body>
 </html>
