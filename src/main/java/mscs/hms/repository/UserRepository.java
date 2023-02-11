@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByRolesContainingIgnoreCase(String roleName);
 
-    @Query("select u from User u where u.username = :searchString or u.lastName = :searchString  or u.firstName = :searchString  or u.email = :searchString or u.phone = :searchString ")
+    @Query("select u from User u where u.username = :searchString or u.lastName = :searchString  or u.firstName = :searchString  or u.email = :searchString or u.phoneNumber = :searchString ")
     Page<User> searchUser(String searchString, PageRequest pageRequest);
 
 }
