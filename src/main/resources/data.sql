@@ -17,8 +17,8 @@ WHERE NOT EXISTS (SELECT * FROM roles WHERE name='Guest' LIMIT 1);
 
 -- USER
 
-# INSERT INTO users (id, user_name, email, first_name, last_name, password, phone_number)
-# VALUES (null, 'admin', 'admin@miu.edu', 'John', 'Smith', '$2a$10$zRLQjacElrjmGJouWg4G0ehtg4oYZ88RtORarMtuxuWCvo122a3iK','641-234-5679');
+-- INSERT INTO users (id, user_name, email, first_name, last_name, password, phone_number)
+-- VALUES (null, 'admin', 'admin@miu.edu', 'John', 'Smith', '$2a$10$zRLQjacElrjmGJouWg4G0ehtg4oYZ88RtORarMtuxuWCvo122a3iK','641-234-5679');
 
 INSERT INTO users (id, user_name, email, first_name, last_name, password, phone_number)
 VALUES (null, 'owner', 'owner@miu.edu', 'Dana', 'Ali', '$2a$10$h2DNVT4FN9vC6fuc8By1huiF7qGUMrpJqC6oGUqD4oYi7mEHfc2Ly','441-134-5660');
@@ -26,7 +26,7 @@ VALUES (null, 'owner', 'owner@miu.edu', 'Dana', 'Ali', '$2a$10$h2DNVT4FN9vC6fuc8
 INSERT INTO users (id, user_name, email, first_name, last_name, password, phone_number)
 VALUES (null, 'renter', 'renter@miu.edu', 'Renter', 'Renter','$2a$10$jcatEpTX1.L3Gq3KIyE/E.d3FzViiNkyKY9dl62GUmhqgzM.FzgI6', '941-234-0023');
 
-# User_Role
+-- User_Role
 
 INSERT INTO user_role (user_id, role_id)
 values (1, 1);
@@ -37,7 +37,7 @@ values (2, 2);
 INSERT INTO user_role (user_id, role_id)
 values (3, 3);
 
-# Address
+-- Address
 
 INSERT INTO address (id, city, state, street_name, zip)
 VALUES (null, 'Fairfield', 'Iowa', '1000N 4th Street', '52557');
@@ -105,17 +105,17 @@ VALUES (null, 'apartment', 'apartment', 2, 6, 12870, 1);
 
 -- Landlord_Property
 
-# INSERT INTO landlord_property (property_id, landlord_id)
-# VALUES (1, 3);
-#
-# INSERT INTO landlord_property (property_id, landlord_id)
-# VALUES (2, 1);
-#
-# INSERT INTO landlord_property (property_id, landlord_id)
-# VALUES (3, 2);
+-- INSERT INTO landlord_property (property_id, landlord_id)
+-- VALUES (1, 3);
 
-# INSERT INTO Landlord_property (property_id, landlord_id)
-# VALUES (4, 3);
+-- INSERT INTO landlord_property (property_id, landlord_id)
+-- VALUES (2, 1);
+
+-- INSERT INTO landlord_property (property_id, landlord_id)
+-- VALUES (3, 2);
+
+-- INSERT INTO Landlord_property (property_id, landlord_id)
+-- VALUES (4, 3);
 
 -- Tenant_Property
 
