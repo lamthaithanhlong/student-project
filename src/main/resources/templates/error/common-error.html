@@ -1,34 +1,32 @@
 <html lang="en">
 <head th:insert="~{fragments/htmlhead :: head (title='Welcome')}">
 <body>
-<div class="container">
-  <header th:insert="~{fragments/header :: header}"></header>
+    <div class="container">
+        <header th:insert="~{fragments/header :: header}"></header>
 
+        <div th:insert="~{fragments/navigation :: navigation}"></div>
 
-    <div th:insert="~{fragments/navigation :: navigation}"></div>
+        <div class="row">
+            <div class="col-12 mt-5">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="/images/error.png" class="card-img-top" alt="...">
+                    </div>
 
+                    <div class="col-8">
+                        <h3 th:text="${errorMessage}"></h3>
+                        <h1 th:text="${errorCode}"></h1>
+                        <p th:utext="${errorMessage}"></p>
 
-      <div class="row">
-        <div class="col-12 mt-5">
-          <div class="row">
-          <div class="col-4"><img src="/images/error.png" class="card-img-top" alt="...">
-          </div>
-          <div class="col-8">
-            <h3 th:text="${errorMessage}"></h3>
-            <h1 th:text="${errorCode}">500</h1>
-            <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-            <a href="/" th:href="@{/}">Back to Home Page</a>
-          </div>
-          </div>
+                        <a href="/" th:href="@{/}">Back to Home Page</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
 
+        <div th:insert="~{fragments/footer :: footer}"></div>
 
-
-<!--    <img src="/images/error.png" class="card-img-top" alt="..." height="400px">-->
-    <div th:insert="~{fragments/footer :: footer}"></div>
-
-  <div th:insert="~{fragments/scripts :: scripts}"></div>
-</div>
+        <div th:insert="~{fragments/scripts :: scripts}"></div>
+    </div>
 </body>
 </html>
