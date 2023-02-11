@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    private String phone;
+    private String phoneNumber;
 
     @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
@@ -136,12 +136,12 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phone) {
+        this.phoneNumber = phone;
     }
 
     public List<Role> getRoles() {

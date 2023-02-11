@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDate;
 
 public interface RentalAgreementRepository extends JpaRepository<RentalAgreement, Integer> {
-    @Query("select r from RentalAgreement r where r.property.name =:searchString or r.title =:searchString or r.contract =:searchString or r.endDate =:date or " +
-            "r.landlord.name =:searchString or r.preparedDate =:date or r.tenant.name =:searchString")
-    Page<RentalAgreement> searchRentalAgreement(String searchString, LocalDate date, PageRequest pageRequest);
+    @Query("select r from RentalAgreement r where r.property.name =:searchString or r.title =:searchString or r.contract =:searchString or " +
+            "r.landlord.name =:searchString or r.tenant.name =:searchString")
+    Page<RentalAgreement> searchRentalAgreement(String searchString, PageRequest pageRequest);
+
+    Page<RentalAgreement> searchByPreparedDateOrEndDateOrSignedDateOrStartDate(LocalDate preparedDate, LocalDate endDate, LocalDate signedDate, LocalDate startDate, PageRequest pageRequest);
 }

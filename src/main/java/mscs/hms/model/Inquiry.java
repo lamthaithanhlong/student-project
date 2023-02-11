@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 public class Inquiry {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotEmpty(message = "Title should not be Empty")
     private String title;

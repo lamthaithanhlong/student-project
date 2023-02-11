@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDate;
 
 public interface InquiryRepository extends JpaRepository<Inquiry, Integer> {
-    @Query("select i from Inquiry i where i.title = :searchString or i.property.name = :searchString or i.inquiryDate = :date or i.inquiryDetails =:searchString")
-    Page<Inquiry> searchInquiries(String searchString, LocalDate date, PageRequest pageRequest);
+    @Query("select i from Inquiry i where i.title = :searchString or i.property.name = :searchString or i.inquiryDetails =:searchString")
+    Page<Inquiry> searchInquiries(String searchString, PageRequest pageRequest);
+
+    Page<Inquiry> findByInquiryDate(LocalDate date, PageRequest pageRequest);
 }

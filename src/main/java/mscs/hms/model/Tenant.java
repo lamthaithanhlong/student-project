@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 public class Tenant {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Name should not be Empty")

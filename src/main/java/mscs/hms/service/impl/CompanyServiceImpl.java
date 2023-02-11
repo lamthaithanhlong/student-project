@@ -44,6 +44,6 @@ public class CompanyServiceImpl extends AbsBaseService implements CompanyService
         if (searchString == null || searchString.isBlank())
             return companyRepository.findAll(pageRequest);
         else
-            return companyRepository.searchCompany(searchString,  pageRequest);
+            return companyRepository.searchCompany(searchString.toLowerCase(),  pageRequest);
     }
 }
