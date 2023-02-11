@@ -36,6 +36,14 @@ class UserCreator {
         }
         roles.add(role);
 
+        role = userRepository.getRoleByName("Guest");
+        if(role == null){
+            role = new Role();
+            role.setName("Guest");
+            role = roleRepository.save(role);
+        }
+        roles.add(role);
+
         User existingUser = userRepository.getUserByUsername("admin");
         if(existingUser != null)
             return;

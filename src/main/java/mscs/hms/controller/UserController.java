@@ -57,9 +57,9 @@ public class UserController extends AbsEntityController<User> {
         user.setPassword(encodedPassword);
         user.setRoles(new ArrayList<>());
         //Adding Guest Role to user if no role selected
-        if (user.getRoles().isEmpty()) {
+        if (user.getRoles().isEmpty() ||
+            user.getRoles().stream().anyMatch(x -> x.getName().equals("Guest"))) {
             Role role = userService.getRoleByName("Guest");
-
             if (role != null) {
                 user.getRoles().add(role);
             }
