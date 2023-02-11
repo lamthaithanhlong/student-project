@@ -1,19 +1,16 @@
 package mscs.hms.controller;
 
+import mscs.hms.model.Landlord;
+import mscs.hms.model.Role;
 import mscs.hms.model.Tenant;
-import mscs.hms.service.TenantService;
+import mscs.hms.model.User;
+import mscs.hms.service.*;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
 import mscs.hms.dto.selectors.PreferenceSelectorDTO;
-import mscs.hms.service.PropertyService;
-import mscs.hms.service.PreferenceService;
-import mscs.hms.service.LegalEntityService;
-import mscs.hms.controller.editors.PropertyEditor;
+import mscs.hms.controller.editors.PropertyListEditor;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TenantController extends AbsEntityController<Tenant> {
-    
+
+    @Autowired
+    private IUserService userService;
     @Autowired
     private TenantService tenantService;
 
@@ -45,7 +44,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     @InitBinder
     public void customizeBinding (WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "properties",
-                                    new PropertyEditor(propertyService, true));        
+                                    new PropertyListEditor(propertyService, true));        
     }
 
     @GetMapping("/tenants")
@@ -83,7 +82,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     public ModelAndView processEdit(Tenant tenant) {
         LOG.info("In tenants edit");
         try{
-            tenantService.save(tenant);
+            saveUser(tenant);
         }
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
@@ -95,7 +94,7 @@ public class TenantController extends AbsEntityController<Tenant> {
     public ModelAndView processNew(Tenant tenant) {
         LOG.info("In tenants new");
         try{
-            tenantService.save(tenant);
+            saveUser(tenant);
         }
         catch(Exception ex){
             return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
@@ -133,5 +132,17 @@ public class TenantController extends AbsEntityController<Tenant> {
         dictionary.put("preference", preferenceService.findAll().stream().map(PreferenceSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
+    }
+    private void saveUser(Tenant tenant) throws Exception{
+        tenant = tenantService.save(tenant);
+        User user = tenant.getLegalEntity().getSystemUser();
+        if(user == null){
+            throw new Exception("Legal Entity does not have a User connected");
+        }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Owner"))){
+            List<Role> roles = new ArrayList<>();
+            roles.add(userService.getRoleByName("Owner"));
+            userService.saveUser(user);
+        }
     }
 }

@@ -2,12 +2,15 @@ package mscs.hms.controller;
 
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.model.Admin;
+import mscs.hms.model.User;
+import mscs.hms.model.Role;
 import mscs.hms.service.AdminService;
 import mscs.hms.dto.selectors.UserSelectorDTO;
 import mscs.hms.service.IUserService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -69,7 +72,7 @@ public class AdminController extends AbsEntityController<Admin> {
     public ModelAndView processEdit(Admin admin) {
         LOG.info("In admins edit");
         try{
-            adminService.save(admin);
+            saveUser(admin);
         }
         catch(Exception ex){
             return getEditViewModel(admin, getObjectErrorList(ex), "edit");
@@ -81,7 +84,7 @@ public class AdminController extends AbsEntityController<Admin> {
     public ModelAndView processNew(Admin admin) {
         LOG.info("In admins new");
         try{
-            adminService.save(admin);
+            saveUser(admin);
         }
         catch(Exception ex){
             return getEditViewModel(admin, getObjectErrorList(ex), "edit");
@@ -118,5 +121,18 @@ public class AdminController extends AbsEntityController<Admin> {
         dictionary.put("systemUser", userService.findAllUsers().stream().map(UserSelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
+    }
+
+    private void saveUser(Admin admin) throws Exception{
+        adminService.save(admin);
+        User user = admin.getLegalEntity().getSystemUser();
+        if(user == null){
+            throw new Exception("Legal Entity does not have a User connected");
+        }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Admin"))){
+            List<Role> roles = new ArrayList<>();
+            roles.add(userService.getRoleByName("Admin"));
+            userService.saveUser(user);
+        }
     }
 }
