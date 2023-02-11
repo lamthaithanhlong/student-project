@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,6 @@ public class InquiryServiceImpl implements InquiryService {
         if(searchString == null || searchString.isBlank())
             return inquiryRepository.findAll(pageRequest);
         else
-            return inquiryRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
+            return inquiryRepository.searchInquiries(searchString, LocalDate.parse(searchString), pageRequest);
     }
 }
