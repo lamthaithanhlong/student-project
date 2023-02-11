@@ -1,6 +1,9 @@
 package mscs.hms.controller;
 
 import mscs.hms.model.Landlord;
+import mscs.hms.model.Role;
+import mscs.hms.model.User;
+import mscs.hms.service.IUserService;
 import mscs.hms.service.LandlordService;
 import mscs.hms.dto.selectors.LegalEntitySelectorDTO;
 import mscs.hms.dto.selectors.PropertySelectorDTO;
@@ -8,10 +11,7 @@ import mscs.hms.service.PropertyService;
 import mscs.hms.service.LegalEntityService;
 import mscs.hms.controller.editors.PropertyListEditor;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LandlordController extends AbsEntityController<Landlord> {
-    
+
+    @Autowired
+    private IUserService userService;
     @Autowired
     private LandlordService landlordService;
 
@@ -78,7 +80,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public ModelAndView processEdit(Landlord landlord) {
         LOG.info("In landlords edit");
         try{
-            landlordService.save(landlord);
+            saveUser(landlord);
         }
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
@@ -90,7 +92,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
     public ModelAndView processNew(Landlord landlord) {
         LOG.info("In landlords new");
         try{
-            landlordService.save(landlord);
+            saveUser(landlord);
         }
         catch(Exception ex){
             return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
@@ -127,5 +129,18 @@ public class LandlordController extends AbsEntityController<Landlord> {
         dictionary.put("properties", propertyService.getProperties().stream().map(PropertySelectorDTO::new).collect(Collectors.toList()));
         dictionary.put("legalEntity", legalEntityService.findAll().stream().map(LegalEntitySelectorDTO::new).collect(Collectors.toList()));
         return dictionary;
+    }
+
+    private void saveUser(Landlord landlord) throws Exception{
+        landlord = landlordService.save(landlord);
+        User user = landlord.getLegalEntity().getSystemUser();
+        if(user == null){
+            throw new Exception("Legal Entity does not have a User connected");
+        }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Owner"))){
+            List<Role> roles = new ArrayList<>();
+            roles.add(userService.getRoleByName("Owner"));
+            userService.saveUser(user);
+        }
     }
 }
