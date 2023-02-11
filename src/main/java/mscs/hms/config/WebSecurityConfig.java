@@ -4,7 +4,6 @@ import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,14 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
-    @Autowired
-    private AuthenticationHandler authenticationHandler;
 
     @Autowired
     private IUserService userService;
@@ -102,15 +97,13 @@ public class WebSecurityConfig {
                         .requestMatchers(SWAGGER_AUTH_WHITELIST).hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
-                .formLogin().permitAll()
-                /*.formLogin((form) -> form.loginPage("/login")
-                                        .successHandler(authenticationHandler)
+                .formLogin((form) -> form.loginPage("/login")
                                         .failureUrl("/login?error")
                                         .defaultSuccessUrl("/home", true)
-                                        .permitAll())*/
-                .and()
-                .logout().permitAll();
-                //.logout((logout) -> logout.logoutSuccessUrl("/login?logout").permitAll());
+                                        .permitAll())
+                .logout((logout) -> logout.invalidateHttpSession(true)
+                                        .deleteCookies("JSESSIONID")
+                                        .logoutSuccessUrl("/login?logout").permitAll());
 
         return httpSecurity.build();
     }
