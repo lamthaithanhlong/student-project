@@ -131,7 +131,11 @@ public class AdminController extends AbsEntityController<Admin> {
         }
         if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Admin"))){
             user.getRoles().add(userService.getRoleByName("Admin"));
-            userService.saveUser(user);
         }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Guest"))){
+            user.getRoles().add(userService.getRoleByName("Guest"));
+        }
+        userService.saveUser(user);
+        
     }
 }

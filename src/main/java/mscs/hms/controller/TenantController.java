@@ -139,9 +139,13 @@ public class TenantController extends AbsEntityController<Tenant> {
         if(user == null){
             throw new Exception("Legal Entity does not have a User connected");
         }
-        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Owner"))){
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Renter"))){
             user.getRoles().add(userService.getRoleByName("Renter"));
-            userService.saveUser(user);
         }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Guest"))){
+            user.getRoles().add(userService.getRoleByName("Guest"));
+        }
+        userService.saveUser(user);
+        
     }
 }

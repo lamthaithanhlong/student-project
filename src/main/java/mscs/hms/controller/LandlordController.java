@@ -139,7 +139,10 @@ public class LandlordController extends AbsEntityController<Landlord> {
         }
         if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Owner"))){
             user.getRoles().add(userService.getRoleByName("Owner"));
-            userService.saveUser(user);
         }
+        if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Guest"))){
+            user.getRoles().add(userService.getRoleByName("Guest"));
+        }
+        userService.saveUser(user);        
     }
 }
