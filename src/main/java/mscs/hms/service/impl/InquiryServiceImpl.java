@@ -3,6 +3,7 @@ package mscs.hms.service.impl;
 import mscs.hms.model.Inquiry;
 import mscs.hms.repository.InquiryRepository;
 import mscs.hms.service.InquiryService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -37,11 +38,16 @@ public class InquiryServiceImpl implements InquiryService {
     public List<Inquiry> findAll() {
         return inquiryRepository.findAll();
     }
+
     public Page<Inquiry> getAll(String searchString, Integer page, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        if (searchString == null || searchString.isBlank()) {
             return inquiryRepository.findAll(pageRequest);
-        else
-            return inquiryRepository.searchInquiries(searchString, LocalDate.parse(searchString), pageRequest);
+        } else if (NumberUtils.isParsable(searchString)) {
+            System.out.println("parsable inquiries");
+            return inquiryRepository.findByInquiryDate(LocalDate.parse(searchString), pageRequest);
+        } else {
+            return inquiryRepository.searchInquiries(searchString.toLowerCase(), pageRequest);
+        }
     }
 }

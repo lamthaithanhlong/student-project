@@ -35,7 +35,7 @@ class UserCreator {
         adminUser.setPassword(bCryptPasswordEncoder.encode("admin"));
         adminUser.setEmail("admin@admin.com");
         adminUser.setFirstName("System");
-        adminUser.setPhone("123-456-7890");
+        adminUser.setPhoneNumber("123-456-7890");
         adminUser.setLastName("Main User");
         adminUser.setRoles(roles);
         userRepository.save(adminUser);

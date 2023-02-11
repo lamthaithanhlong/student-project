@@ -1,20 +1,17 @@
 <html lang="en">
 <head th:insert="~{fragments/htmlhead :: head (title='Welcome')}">
 <body>
-    <div class="container">
-        <header th:insert="~{fragments/header :: header}"></header>
-        <div class="row">
-            <div th:insert="~{fragments/navigation :: navigation}"></div>
+<div class="container">
+    <header th:insert="~{fragments/header :: header}"></header>
+    <div class="row">
+        <div th:insert="~{fragments/navigation :: navigation}"></div>
 
+        <div>
+            <img src="/images/banner.jpg" class="card-img-top" alt="..." height="600px">
+        </div>
 
-    <div>
-        <h1>You are in the home page now</h1>
+        <div th:insert="~{fragments/footer :: footer}"></div>
     </div>
-
-
-
-    <div th:insert="~{fragments/footer :: footer}"></div>
-</div>
-<div th:insert="~{fragments/scripts :: scripts}"></div>
+    <div th:insert="~{fragments/scripts :: scripts}"></div>
 </body>
 </html>

@@ -14,7 +14,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name="legalEntity_type", discriminatorType=DiscriminatorType.STRING)
 public abstract class LegalEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @PhoneNumberConstraint
     private String phoneNumber;

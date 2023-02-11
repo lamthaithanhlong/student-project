@@ -12,7 +12,7 @@ import lombok.Setter;
 @Entity
 public class Admin {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "Name should not be Empty")

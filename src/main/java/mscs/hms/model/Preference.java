@@ -1,9 +1,6 @@
 package mscs.hms.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import mscs.hms.model.constraints.PositiveNumberConstraint;
 import lombok.AllArgsConstructor;
@@ -15,7 +12,7 @@ import lombok.Setter;
 @Entity
 public class Preference {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Title should not be Empty")
     private String title;
