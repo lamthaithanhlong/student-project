@@ -85,7 +85,7 @@ public class ApartmentController extends AbsEntityController<Apartment> {
             apartmentService.save(apartment);
         }
         catch(Exception ex){
-            return getEditViewModel(apartment, getObjectErrorList(ex), "edit");
+            return getEditViewModel(apartment, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(apartmentService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

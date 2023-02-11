@@ -87,7 +87,7 @@ public class AdminController extends AbsEntityController<Admin> {
             saveUser(admin);
         }
         catch(Exception ex){
-            return getEditViewModel(admin, getObjectErrorList(ex), "edit");
+            return getEditViewModel(admin, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
@@ -130,8 +130,7 @@ public class AdminController extends AbsEntityController<Admin> {
             throw new Exception("Legal Entity does not have a User connected");
         }
         if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Admin"))){
-            List<Role> roles = new ArrayList<>();
-            roles.add(userService.getRoleByName("Admin"));
+            user.getRoles().add(userService.getRoleByName("Admin"));
             userService.saveUser(user);
         }
     }

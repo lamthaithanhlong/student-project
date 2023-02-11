@@ -21,7 +21,7 @@
                                   <li class="nav-item">
                                     <a class="dropdown-item" href="/legal-entities">All Legal Entities</a>
                                   </li>
-                                  <li><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated()" ><hr class="dropdown-divider"></li>
                                   <li sec:authorize="isAuthenticated()"  class="nav-item">
                                     <a class="dropdown-item" href="/companies">Companies</a>
                                   </li>
@@ -39,7 +39,7 @@
                                   <li class="nav-item">
                                     <a class="dropdown-item" href="/properties-list">All Properties</a>
                                   </li>
-                                  <li><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated()" ><hr class="dropdown-divider"></li>
                                   <li sec:authorize="isAuthenticated()"  class="nav-item">
                                     <a class="dropdown-item" href="/houses">Houses</a>
                                   </li>

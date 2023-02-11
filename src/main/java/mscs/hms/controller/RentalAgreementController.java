@@ -95,7 +95,7 @@ public class RentalAgreementController extends AbsEntityController<RentalAgreeme
             rentalagreementService.save(rentalagreement);
         }
         catch(Exception ex){
-            return getEditViewModel(rentalagreement, getObjectErrorList(ex), "edit");
+            return getEditViewModel(rentalagreement, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(rentalagreementService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

@@ -84,7 +84,7 @@ public class PersonController extends AbsEntityController<Person> {
             personService.save(person);
         }
         catch(Exception ex){
-            return getEditViewModel(person, getObjectErrorList(ex), "edit");
+            return getEditViewModel(person, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(personService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
