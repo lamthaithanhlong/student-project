@@ -99,7 +99,7 @@ public class WebSecurityConfig {
                         .requestMatchers(RENTER_ACCESS_URLS).hasAnyAuthority("Admin", "Renter", "Owner")
                         .requestMatchers(OWNER_ACCESS_URLS).hasAnyAuthority("Admin", "Owner")
                         .requestMatchers("/**").hasAuthority("Admin")
-                        //.requestMatchers(SWAGGER_AUTH_WHITELIST).hasAuthority("Admin")
+                        .requestMatchers(SWAGGER_AUTH_WHITELIST).hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin().permitAll()
@@ -111,10 +111,6 @@ public class WebSecurityConfig {
                 .and()
                 .logout().permitAll();
                 //.logout((logout) -> logout.logoutSuccessUrl("/login?logout").permitAll());
-                //.logout().logoutUrl("/logout")//.addLogoutHandler(logoutHandler)
-                //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
-                //.logoutSuccessUrl("/login?logout")
-                //.permitAll();
 
         return httpSecurity.build();
     }
