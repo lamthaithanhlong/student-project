@@ -13,3 +13,4 @@ WHERE NOT EXISTS (SELECT * FROM roles WHERE name='Renter' LIMIT 1);
 INSERT INTO roles (name)
 SELECT 'Guest' FROM DUAL
 WHERE NOT EXISTS (SELECT * FROM roles WHERE name='Guest' LIMIT 1);
+

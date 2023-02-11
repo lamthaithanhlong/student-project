@@ -1,6 +1,7 @@
 package mscs.hms.service.impl;
 
 import mscs.hms.model.Address;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,9 +43,11 @@ public class ApartmentServiceImpl extends AbsBaseService implements ApartmentSer
 
     public Page<Apartment> getAll(String searchString, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
+        if(searchString == null || searchString.isBlank()) {
             return apartmentRepository.findAll(pageRequest);
-        else
-            return apartmentRepository.findByNameOrNoOfRoomsOrNoOfBathRooms(searchString.toLowerCase(), Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
+        } else if (NumberUtils.isParsable(searchString)) {
+            return apartmentRepository.findByNoOfRoomsOrNoOfBathRooms(Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
+        } else
+            return apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
     }
 }

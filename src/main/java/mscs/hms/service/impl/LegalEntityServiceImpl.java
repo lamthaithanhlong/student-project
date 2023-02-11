@@ -50,8 +50,8 @@ public class LegalEntityServiceImpl extends AbsBaseService implements LegalEntit
             resultPerson = personRepository.findAll(pageRequest);
         }
         else{
-            resultCompany = companyRepository.searchCompany(searchString, pageRequest);
-            resultPerson = personRepository.searchPerson(searchString, pageRequest);
+            resultCompany = companyRepository.searchCompany(searchString.toLowerCase(), pageRequest);
+            resultPerson = personRepository.searchPerson(searchString.toLowerCase(), pageRequest);
         }
         List<LegalEntity> resultList = new ArrayList<>();
         resultList.addAll(resultCompany.getContent());

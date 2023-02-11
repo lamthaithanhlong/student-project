@@ -14,7 +14,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name="property_type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Property {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotEmpty(message = "Name should not be Empty")
     private String name;

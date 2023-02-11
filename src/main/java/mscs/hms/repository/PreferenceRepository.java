@@ -6,5 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PreferenceRepository extends JpaRepository<Preference, Integer> {
-    Page<Preference> findByTitleOrNoOfRoomsOrNoOfBathRooms(String title, Integer noOfRooms, Integer noOfBathRooma, PageRequest pageRequest);
+    Page<Preference> findByNoOfRoomsOrNoOfBathRooms(Integer noOfRooms, Integer noOfBathRooms, PageRequest pageRequest);
+
+    Page<Preference> findByTitleContainsIgnoreCase(String title, PageRequest pageRequest);
 }
