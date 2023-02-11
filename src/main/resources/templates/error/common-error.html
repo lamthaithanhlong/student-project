@@ -7,7 +7,7 @@
 
     <div th:insert="~{fragments/navigation :: navigation}"></div>
 
-    <h3>Internal Server Error</h3>
+    <h3 th:text="${errorMessage}"></h3>
     <h1 th:text="${errorCode}">500</h1>
     <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
     <a href="/" th:href="@{/}">Back to Home Page</a>
