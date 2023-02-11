@@ -16,9 +16,8 @@ public class HomeController extends AbsBaseController {
     }
 
     @GetMapping("/home")
-    public String home(Principal principal, Model model) {
+    public String home() {
         LOG.info("In home view");
-        model.addAttribute("loggedInUserName", principal.getName());
         return "home";
     }
 
