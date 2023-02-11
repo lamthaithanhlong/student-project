@@ -1,12 +1,14 @@
 <html lang="en">
 <head th:insert="~{fragments/htmlhead :: head (title='Welcome')}">
 <body>
-<div class="container">
-    <header th:insert="~{fragments/header :: header}"></header>
-    <div class="row">
-        <div th:insert="~{fragments/navigation :: navigation}"></div>
+    <div class="container">
+        <header th:insert="~{fragments/header :: header}"></header>
 
-        <div>
+        <div class="row">
+            <div th:insert="~{fragments/navigation :: navigation}"></div>
+
+            <div th:replace="~{fragments/content :: content}"></div>
+
             <img src="/images/banner.jpg" class="card-img-top" alt="..." height="600px">
         </div>
 

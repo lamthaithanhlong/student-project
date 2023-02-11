@@ -3,13 +3,15 @@
 <body>
     <div class="container">
         <header th:insert="~{fragments/header :: header}"></header>
+
         <div class="row">
             <div th:insert="~{fragments/navigation :: navigation}"></div>
-            <div th:replace="~{fragments/content :: content}">
 
-                </div>
+            <div th:replace="~{fragments/content :: content}"></div>
+
             <img src="/images/banner.jpg" class="card-img-top" alt="..." height="600px">
         </div>
+
         <div th:insert="~{fragments/footer :: footer}"></div>
     </div>
     <div th:insert="~{fragments/scripts :: scripts}"></div>
