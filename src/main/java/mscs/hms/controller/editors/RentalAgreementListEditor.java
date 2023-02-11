@@ -6,15 +6,15 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.ArrayList;
 import jakarta.annotation.Nullable;
-import mscs.hms.model.Inquiry;
-import mscs.hms.service.InquiryService;
+import mscs.hms.model.RentalAgreement;
+import mscs.hms.service.RentalAgreementService;
 
-public class InquiryEditor extends PropertyEditorSupport{
-    InquiryService inquiryService;
+public class RentalAgreementListEditor extends PropertyEditorSupport{
+    RentalAgreementService rentalagreementService;
 
 	boolean allowEmpty;
-    public InquiryEditor(InquiryService inquiryService, boolean allowEmpty) {
-        this.inquiryService = inquiryService;
+    public RentalAgreementListEditor(RentalAgreementService rentalagreementService, boolean allowEmpty) {
+        this.rentalagreementService = rentalagreementService;
         this.allowEmpty = allowEmpty;
 	}
 
@@ -26,14 +26,14 @@ public class InquiryEditor extends PropertyEditorSupport{
 		}
 		else {
 			try {
-                List<Inquiry> list = new ArrayList<>();
+                List<RentalAgreement> list = new ArrayList<>();
                 for(String idString : StringUtils.tokenizeToStringArray(text, ",")){
-                    list.add(inquiryService.getById(Integer.parseInt(idString)));
+                    list.add(rentalagreementService.getById(Integer.parseInt(idString)));
                 }
 				setValue(list);
 			}
 			catch (Exception ex) {
-				throw new IllegalArgumentException("Could not get Inquiry %s: " + ex.getMessage(), ex);
+				throw new IllegalArgumentException("Could not get Rental Agreement %s: " + ex.getMessage(), ex);
 			}
 		}
 	}	

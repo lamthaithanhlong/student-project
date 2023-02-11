@@ -45,6 +45,6 @@ public class AddressServiceImpl extends AbsBaseService implements AddressService
         if(searchString == null || searchString.isBlank())
             return addressRepository.findAll(pageRequest);
         else
-            return addressRepository.findByCityContainingIgnoreCase(searchString, pageRequest);
+            return addressRepository.findByCityOrStateOrStreetNameOrZipContainingIgnoreCase(searchString, searchString, searchString, searchString, pageRequest);
     }
 }

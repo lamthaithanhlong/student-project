@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Apartment;
+import mscs.hms.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +11,9 @@ import mscs.hms.service.HouseService;
 
 @Service
 public class HouseServiceImpl extends AbsBaseService implements HouseService {
-    
+
     @Autowired
-    HouseRepository houseRepository;    
+    HouseRepository houseRepository;
 
     @Override
     public House saveHouse(House house) {
@@ -39,11 +39,12 @@ public class HouseServiceImpl extends AbsBaseService implements HouseService {
     public void delete(Integer id) {
         houseRepository.deleteById(id);
     }
+
     public Page<House> getAll(String searchString, Integer page, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        if (searchString == null || searchString.isBlank())
             return houseRepository.findAll(pageRequest);
         else
-            return houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return houseRepository.findByNameOrLandExtentOrNoOfRoomsOrNoOfBathRoomsContainsIgnoreCase(searchString, searchString, searchString, searchString, pageRequest);
     }
 }

@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Apartment;
 import mscs.hms.model.Landlord;
 import mscs.hms.repository.LandlordRepository;
 import mscs.hms.service.LandlordService;
@@ -40,6 +39,6 @@ public class LandlordServiceImpl implements LandlordService {
         if(searchString == null || searchString.isBlank())
             return landlordRepository.findAll(pageRequest);
         else
-            return landlordRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return landlordRepository.searchLandlord(searchString, pageRequest);
     }
 }

@@ -1,6 +1,6 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Admin;
+import mscs.hms.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,6 +45,6 @@ public class ApartmentServiceImpl extends AbsBaseService implements ApartmentSer
         if(searchString == null || searchString.isBlank())
             return apartmentRepository.findAll(pageRequest);
         else
-            return apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return apartmentRepository.findByNameOrNoOfRoomsOrNoOfBathRooms(searchString.toLowerCase(), Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
     }
 }

@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.LegalEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,6 +44,6 @@ public class PersonServiceImpl extends AbsBaseService implements PersonService {
         if(searchString == null || searchString.isBlank())
             return personRepository.findAll(pageRequest);
         else
-            return personRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
+            return personRepository.searchPerson(searchString, pageRequest);
     }
 }

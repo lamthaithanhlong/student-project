@@ -1,6 +1,5 @@
 package mscs.hms.service;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,8 @@ public interface IUserService extends UserDetailsService {
     public User saveUser(User user);
 
     public List<User> findAllUsers();
+
+    public List<User> getAllUsersByRole(String roleName);
 
     public List<Role> getAllRoles();
 

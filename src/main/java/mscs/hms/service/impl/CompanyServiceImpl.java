@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Apartment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,9 +10,9 @@ import mscs.hms.service.CompanyService;
 
 @Service
 public class CompanyServiceImpl extends AbsBaseService implements CompanyService {
-    
+
     @Autowired
-    CompanyRepository companyRepository;    
+    CompanyRepository companyRepository;
 
     @Override
     public Company saveCompany(Company company) {
@@ -39,11 +38,12 @@ public class CompanyServiceImpl extends AbsBaseService implements CompanyService
     public void delete(Integer id) {
         companyRepository.deleteById(id);
     }
+
     public Page<Company> getAll(String searchString, Integer page, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        if (searchString == null || searchString.isBlank())
             return companyRepository.findAll(pageRequest);
         else
-            return companyRepository.findByCompanyNameContainsIgnoreCase(searchString, pageRequest);
+            return companyRepository.searchCompany(searchString,  pageRequest);
     }
 }

@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +39,6 @@ public class AdminServiceImpl implements AdminService {
         if(searchString == null || searchString.isBlank())
             return adminRepository.findAll(pageRequest);
         else
-            return adminRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return adminRepository.searchAdmin(searchString, pageRequest);
     }
 }

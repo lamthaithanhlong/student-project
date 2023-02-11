@@ -1,7 +1,5 @@
 package mscs.hms.service;
 
-
-import mscs.hms.model.Address;
 import mscs.hms.model.RentApplication;
 import org.springframework.data.domain.Page;
 

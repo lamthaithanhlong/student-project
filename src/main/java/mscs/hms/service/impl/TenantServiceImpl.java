@@ -1,6 +1,5 @@
 package mscs.hms.service.impl;
 
-import mscs.hms.model.RentalAgreement;
 import mscs.hms.model.Tenant;
 import mscs.hms.repository.TenantRepository;
 import mscs.hms.service.TenantService;
@@ -39,6 +38,6 @@ public class TenantServiceImpl implements TenantService {
         if(searchString == null || searchString.isBlank())
             return tenantRepository.findAll(pageRequest);
         else
-            return tenantRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return tenantRepository.searchTenant(searchString, pageRequest);
     }
 }

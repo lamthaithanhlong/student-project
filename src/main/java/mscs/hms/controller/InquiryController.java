@@ -1,7 +1,9 @@
 package mscs.hms.controller;
 
+import mscs.hms.controller.editors.PropertyEditor;
 import mscs.hms.dto.selectors.*;
 import mscs.hms.model.Inquiry;
+import mscs.hms.model.Property;
 import mscs.hms.service.*;
 
 import java.util.Dictionary;
@@ -13,7 +15,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,17 +44,21 @@ public class InquiryController extends AbsEntityController<Inquiry> {
     @Autowired
     private LandlordService landlordService;
 
+    @InitBinder
+    public void customizeBinding (WebDataBinder binder) {
+        binder.registerCustomEditor(Property.class, "property",
+                                    new PropertyEditor(propertyService, true));
+    }
+    
     @GetMapping("/inquiries")
     public ModelAndView showCompanies(Model model,
                                       @RequestParam("page") Optional<Integer> page,
                                       @RequestParam("size") Optional<Integer> size,
                                       @RequestParam("search") Optional<String> search) {
         LOG.info("In Companies view");
-        int currentPage = page.orElse(DEFAULT_PAGE_NUMBER);
-        currentPage = currentPage > 0 ? currentPage - 1 : 0;
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-        String searchString = search.orElse(null);
+        int currentPage = getCurrentPage(page);
+        int pageSize = getPageSize(size);
+        String searchString = getSearchString(search);
         return getListEntitiesModelView(inquiryService.getAll(searchString, currentPage, pageSize));
     }    
 

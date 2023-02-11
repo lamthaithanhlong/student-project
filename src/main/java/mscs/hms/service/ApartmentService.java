@@ -1,10 +1,7 @@
 package mscs.hms.service;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Apartment;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface ApartmentService {
     public Apartment saveApartment(Apartment apartment);

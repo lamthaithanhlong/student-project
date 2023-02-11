@@ -35,18 +35,22 @@
       </thead>
       <tbody>
         <tr th:each="object, counter: ${objects.content}">
-          <td th:text="${counter.count}"></td>
+          <th th:text="${counter.count}"></th>
             <section th:each="field: ${entityFields}">
               <div th:if="${not field.manyAssociation}">
-                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValue(object, field.getName())}__}"></td>
-                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__}"></td>            
+                <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}"></td>
+                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__'}"></td>            
               </div>          
               <div th:if="${field.manyAssociation}">
                 <td>
                   <table>
-                    <tbody th:with="listObjectArray=@{__${@viewFieldUtil.getFieldSelectedList(object, field.getName(), listObjects)}__}">
-                      <section th:each="listObject: ${listObjectArray}">
-                        <tr th:text="${listObject}"></tr>
+                    <tbody th:with="listObjectArray=@{__${@viewFieldUtil.getFieldSelectedIdList(object, field.getName(), listObjects)}__}">
+                      <section th:each="objectValue, counter: ${#strings.arraySplit(listObjectArray, ',[]')}">
+                        <tr th:if="${objectValue} != null">
+                          <th th:text="${counter.count}"></th>
+                          <td th:text="@{'__${@viewFieldUtil.getFieldSelecterDisplayName(object, field.getName(), listObjects, objectValue)}__'}">
+                          </td>
+                        </tr>
                       </section>
                     </tbody>
                   </table>

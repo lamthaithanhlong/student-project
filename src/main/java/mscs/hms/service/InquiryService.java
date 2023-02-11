@@ -2,7 +2,6 @@ package mscs.hms.service;
 
 import java.util.List;
 
-import mscs.hms.model.Address;
 import mscs.hms.model.Inquiry;
 import org.springframework.data.domain.Page;
 
