@@ -21,11 +21,11 @@
                                   <li class="nav-item">
                                     <a class="dropdown-item" href="/legal-entities">All Legal Entities</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()" ><hr class="dropdown-divider"></li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')" ><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/companies">Companies</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/persons">Persons</a>
                                   </li>
                                 </ul>
@@ -39,11 +39,11 @@
                                   <li class="nav-item">
                                     <a class="dropdown-item" href="/properties-list">All Properties</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()" ><hr class="dropdown-divider"></li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')" ><hr class="dropdown-divider"></li>
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/houses">Houses</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/apartments">Apartments</a>
                                   </li>
                                 </ul>
@@ -69,19 +69,19 @@
                                   </li>
                                 </ul>
                               </li>
-                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                              <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')" class="nav-item dropdown">
+                                <a sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-link dropdown-toggle"
                                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Rental Options
                                 </a>
                                 <ul class="dropdown-menu">
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/inquiries">Inquiries</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/rent_applications">Rent Applications</a>
                                   </li>
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li sec:authorize="isAuthenticated() and !hasAuthority('Guest')"  class="nav-item">
                                     <a class="dropdown-item" href="/rental_agreements">Rental Agreements</a>
                                   </li>
                                 </ul>
