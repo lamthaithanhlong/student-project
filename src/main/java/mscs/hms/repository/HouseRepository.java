@@ -7,6 +7,7 @@ import mscs.hms.model.House;
 import org.springframework.data.jpa.repository.Query;
 
 public interface HouseRepository extends JpaRepository<House, Integer> {
-//    @Query(value="select h from House h , Address a where h.Address = a and a.")
-    Page<House> findByNameOrLandExtentOrNoOfRoomsOrNoOfBathRoomsContainsIgnoreCase(String name, String landExtent, String noOfRooms, String noOfBathrooms, PageRequest pageRequest);
+    Page<House> findByLandExtentOrNoOfRoomsOrNoOfBathRooms(Double landExtent, Integer noOfRooms, Integer noOfBathrooms, PageRequest pageRequest);
+
+    Page<House> findByNameContainsIgnoreCase(String name, PageRequest pageRequest);
 }

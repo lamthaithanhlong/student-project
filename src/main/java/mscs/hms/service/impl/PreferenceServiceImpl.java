@@ -3,6 +3,7 @@ package mscs.hms.service.impl;
 import mscs.hms.model.Preference;
 import mscs.hms.repository.PreferenceRepository;
 import mscs.hms.service.PreferenceService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -39,9 +40,12 @@ public class PreferenceServiceImpl implements PreferenceService {
 
     public Page<Preference> getAll(String searchString, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        if (searchString == null || searchString.isBlank())
+        if (searchString == null || searchString.isBlank()) {
             return preferenceRepository.findAll(pageRequest);
-        else
-            return preferenceRepository.findByTitleOrNoOfRoomsOrNoOfBathRooms(searchString.toLowerCase(), Integer.parseInt(searchString), Integer.parseInt(searchString), pageRequest);
+        } else if (NumberUtils.isParsable(searchString)) {
+            return preferenceRepository.findByNoOfRoomsOrNoOfBathRooms(Integer.parseInt(searchString), Integer.parseInt(searchString), pageRequest);
+        } else {
+            return preferenceRepository.findByTitleContainsIgnoreCase(searchString, pageRequest);
+        }
     }
 }

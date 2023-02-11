@@ -1,5 +1,6 @@
 package mscs.hms.service.impl;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -164,9 +165,12 @@ public class PropertyServiceImpl extends AbsBaseService implements PropertyServi
             resultHouse = houseRepository.findAll(pageRequest);
             resultApartment = apartmentRepository.findAll(pageRequest);
         }
-        else{
-            resultHouse = houseRepository.findByNameOrLandExtentOrNoOfRoomsOrNoOfBathRoomsContainsIgnoreCase(searchString, searchString, searchString, searchString, pageRequest);
-            resultApartment = apartmentRepository.findByNameOrNoOfRoomsOrNoOfBathRooms(searchString.toLowerCase(),Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
+        else if (NumberUtils.isParsable(searchString)) {
+            resultHouse = houseRepository.findByLandExtentOrNoOfRoomsOrNoOfBathRooms(Double.parseDouble(searchString), Integer.parseInt(searchString), Integer.parseInt(searchString), pageRequest);
+            resultApartment = apartmentRepository.findByNoOfRoomsOrNoOfBathRooms(Integer.parseInt(searchString),Integer.parseInt(searchString), pageRequest);
+        } else {
+            resultHouse = houseRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            resultApartment = apartmentRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
         }
         List<Property> resultList = new ArrayList<>();
         resultList.addAll(resultHouse.getContent());

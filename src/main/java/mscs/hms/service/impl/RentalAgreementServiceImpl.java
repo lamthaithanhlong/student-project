@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import static org.apache.commons.validator.GenericValidator.isDate;
+
 @Service
 public class RentalAgreementServiceImpl implements RentalAgreementService {
     @Autowired
@@ -39,9 +41,12 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
 
     public Page<RentalAgreement> getAll(String searchString, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page,pageSize);
-        if(searchString == null || searchString.isBlank())
+        if(searchString == null || searchString.isBlank()) {
             return rentalAgreementRepository.findAll(pageRequest);
-        else
-            return rentalAgreementRepository.searchRentalAgreement(searchString, LocalDate.parse(searchString), pageRequest);
+        } else if (isDate(searchString, "YYYY-MM-DD",true)) {
+            return rentalAgreementRepository.searchByPreparedDateOrEndDateOrSignedDateOrStartDate(LocalDate.parse(searchString), LocalDate.parse(searchString), LocalDate.parse(searchString), LocalDate.parse(searchString), pageRequest);
+        } else {
+            return rentalAgreementRepository.searchRentalAgreement(searchString.toLowerCase(), pageRequest);
+        }
     }
 }

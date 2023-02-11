@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 public class RentalAgreement {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Title should not be Empty")
     private String title;

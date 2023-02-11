@@ -32,7 +32,7 @@ public class UserServiceTests {
         user.setFirstName("Unit-" + index);
         user.setLastName("Test-" + index);
         user.setEmail("test"+ index + "@test.com");
-        user.setPhone("145789652");
+        user.setPhoneNumber("145789652");
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode("123456"));
