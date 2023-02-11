@@ -28,13 +28,13 @@ VALUES ('renter', 'renter@miu.edu', 'Renter', 'Renter','$2a$10$jcatEpTX1.L3Gq3KI
 -- User_Role
 
 INSERT INTO user_role (user_id, role_id)
-values (1, 1);
+values ((SELECT user_id from users where user_id = 1), (SELECT role_id from roles where role_id = 1));
 
 INSERT INTO user_role (user_id, role_id)
-values (2, 2);
+values ((SELECT user_id from users where user_id = 2), (SELECT role_id from roles where role_id = 1));
 
 INSERT INTO user_role (user_id, role_id)
-values (3, 3);
+values ((SELECT user_id from users where user_id = 3), (SELECT role_id from users where role_id = 1));
 
 -- Address
 
