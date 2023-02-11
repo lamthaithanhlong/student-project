@@ -41,7 +41,8 @@ public class WebSecurityConfig {
             "/legal-entities",
             "/addresses",
             "/login",
-            "/logout"
+            "/logout",
+            "/error"
     };
 
     private static final String[] RENTER_ACCESS_URLS = {

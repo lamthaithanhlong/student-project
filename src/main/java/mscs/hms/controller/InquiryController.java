@@ -101,7 +101,7 @@ public class InquiryController extends AbsEntityController<Inquiry> {
             inquiryService.save(inquiry);
         }
         catch(Exception ex){
-            return getEditViewModel(inquiry, getObjectErrorList(ex), "edit");
+            return getEditViewModel(inquiry, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(inquiryService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

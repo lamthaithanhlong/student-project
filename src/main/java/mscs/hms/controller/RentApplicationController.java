@@ -95,7 +95,7 @@ public class RentApplicationController extends AbsEntityController<RentApplicati
             rentapplicationService.save(rentapplication);
         }
         catch(Exception ex){
-            return getEditViewModel(rentapplication, getObjectErrorList(ex), "edit");
+            return getEditViewModel(rentapplication, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(rentapplicationService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

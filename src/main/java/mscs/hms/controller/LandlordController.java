@@ -95,7 +95,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
             saveUser(landlord);
         }
         catch(Exception ex){
-            return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
+            return getEditViewModel(landlord, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

@@ -76,7 +76,7 @@ public class AddressController extends AbsEntityController<Address> {
             addressService.save(address);
         }
         catch(Exception ex){
-            return getEditViewModel(address, getObjectErrorList(ex), "edit");
+            return getEditViewModel(address, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(addressService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

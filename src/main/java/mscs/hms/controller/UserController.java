@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
@@ -42,7 +43,10 @@ public class UserController extends AbsEntityController<User> {
     public String showRegistrationForm(Model model) {
         LOG.info("In register view");
         model.addAttribute("user", new User());
-        model.addAttribute("roles", userService.getAllRoles());
+        
+        List<Role> roles = new ArrayList<>();
+        roles.add(userService.getRoleByName("Guest"));
+        model.addAttribute("roles", roles);
         return "signup";
     }
 
@@ -51,7 +55,7 @@ public class UserController extends AbsEntityController<User> {
         LOG.info("Registration request received");
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
+        user.setRoles(new ArrayList<>());
         //Adding Guest Role to user if no role selected
         if (user.getRoles().isEmpty()) {
             Role role = userService.getRoleByName("Guest");

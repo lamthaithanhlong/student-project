@@ -97,7 +97,7 @@ public class TenantController extends AbsEntityController<Tenant> {
             saveUser(tenant);
         }
         catch(Exception ex){
-            return getEditViewModel(tenant, getObjectErrorList(ex), "edit");
+            return getEditViewModel(tenant, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(tenantService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

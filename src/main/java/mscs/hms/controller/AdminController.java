@@ -87,7 +87,7 @@ public class AdminController extends AbsEntityController<Admin> {
             saveUser(admin);
         }
         catch(Exception ex){
-            return getEditViewModel(admin, getObjectErrorList(ex), "edit");
+            return getEditViewModel(admin, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(adminService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
