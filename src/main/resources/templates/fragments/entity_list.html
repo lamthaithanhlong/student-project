@@ -1,14 +1,16 @@
 <div th:fragment="list (title, entityFields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
-  <div>
-    <h5 th:text="${title}">List</h5>
-  </div>
-  <div class="row">
+<!--  <div>-->
+<!--    <h5 th:text="${title}">List</h5>-->
+<!--  </div>-->
+  <div class="row mt-5">
     <div class="col">
-      <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">
-        <div>
-          <button type="submit" class="btn btn-primary">New</button>
-        </div>
-      </form>
+<!--      <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">-->
+<!--        <div>-->
+<!--          <button type="submit" class="btn btn-primary">New</button>-->
+<!--        </div>-->
+<!--      </form>-->
+
+      <h5 th:text="${title}">List</h5>
     </div>
     <div class="col-auto">
       <form th:action="${listPath}" method="get" class="row g-3">
@@ -22,6 +24,7 @@
     </div>
   </div>
   <div>
+    <div class="table-responsive">
     <table class="table table-striped table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -39,8 +42,8 @@
             <section th:each="field: ${entityFields}">
               <div th:if="${not field.manyAssociation}">
                 <td th:if="not @{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValue(object, field.getName())}__'}"></td>
-                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__'}"></td>            
-              </div>          
+                <td th:if="@{__${@viewFieldUtil.isAssociationFieldAndListAvailableAndNotNullOrEmpty(field, listObjects, object)}__}" th:text="@{'__${@viewFieldUtil.getFieldValueFromSelectList(object, field.getName(), listObjects)}__'}"></td>
+              </div>
               <div th:if="${field.manyAssociation}">
                 <td>
                   <table>
@@ -70,10 +73,11 @@
                 <button type="submit" class="btn btn-primary">Delete</button>
               </div>
             </form>
-          </td>               
+          </td>
         </tr>
       </tbody>
     </table>
+    </div>
     <div class="navbar justify-content-center">
       <nav class="justify-content-center">
         <ul class="pagination">
@@ -86,5 +90,10 @@
         </ul>
       </nav>
     </div>
+          <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">
+            <div>
+              <button type="submit" class="btn btn-primary">New</button>
+            </div>
+          </form>
   </div>
-</div>  
+</div>
