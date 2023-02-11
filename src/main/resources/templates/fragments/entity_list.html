@@ -47,7 +47,7 @@
               <div th:if="${field.manyAssociation}">
                 <td>
                   <table>
-                    <tbody th:with="listObjectArray=@{__${@viewFieldUtil.getFieldSelectedIdList(object, field.getName(), listObjects)}__}">
+                    <tbody th:with="listObjectArray=@{'__${@viewFieldUtil.getFieldSelectedIdList(object, field.getName(), listObjects)}__'}">
                       <section th:each="objectValue, counter: ${#strings.arraySplit(listObjectArray, ',[]')}">
                         <tr th:if="${objectValue} != null">
                           <th th:text="${counter.count}"></th>
