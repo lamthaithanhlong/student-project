@@ -3,38 +3,43 @@
 <body>
     <div class="container">
         <header th:insert="~{fragments/header :: header}"></header>
+
         <div class="row">
             <div th:insert="~{fragments/navigation :: navigation}"></div>
 
+            <div th:if="${param.error}">
+                <div class="box" style="text-align: center;">
+                    <p>&nbsp;</p>
+                    Invalid username and password.
+                    <p>&nbsp;</p>
+                </div>
+            </div>
 
-
-
-    <div th:if="${param.error}">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="box">&nbsp;</div>
+            <div th:if="${param.logout}">
+                <div class="box" style="text-align: center;">
+                    <p>&nbsp;</p>
+                    You have been logged out.
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="box">&nbsp;</div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <form th:action="@{/login}" method="post" >
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="username-label">Username</span>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-label">
+                      </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="password-label">Password</span>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-label">
+                      </div>
+                      <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
         </div>
-    </div>
-    <div class="container text-center">
-            <form th:action="@{/login}" method="post" >
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="username-label">Username</span>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="username-label">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="password-label">Password</span>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-label">
-                  </div>
-                  <input class="btn btn-primary" type="submit" value="Submit">
-        </form>
-    </div>
-
-
 
     <div th:insert="~{fragments/footer :: footer}"></div>
 </div>

@@ -28,7 +28,7 @@ public class PropertyController extends AbsEntityController<Property> {
     @Autowired
     private AddressService addressService;
 
-    @GetMapping("/properties2")
+    @GetMapping("/properties-list")
     public ModelAndView showPropertys(Model model,
                                     @RequestParam("page") Optional<Integer> page,
                                     @RequestParam("size") Optional<Integer> size,
@@ -61,7 +61,7 @@ public class PropertyController extends AbsEntityController<Property> {
         return null;
     }
     @Override
-    public String getListPath() { return "/properties2";}
+    public String getListPath() { return "/properties-list";}
     @Override
     public Dictionary<String, List<?>> getSelectLists(){
         Dictionary<String, List<?>> dictionary = new Hashtable<>();
