@@ -79,7 +79,7 @@ public class HouseController extends AbsEntityController<House> {
             houseService.save(house);
         }
         catch(Exception ex){
-            return getEditViewModel(house, getObjectErrorList(ex), "edit");
+            return getEditViewModel(house, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(houseService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

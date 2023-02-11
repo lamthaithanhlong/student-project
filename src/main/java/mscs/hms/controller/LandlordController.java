@@ -95,7 +95,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
             saveUser(landlord);
         }
         catch(Exception ex){
-            return getEditViewModel(landlord, getObjectErrorList(ex), "edit");
+            return getEditViewModel(landlord, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(landlordService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 
@@ -138,8 +138,7 @@ public class LandlordController extends AbsEntityController<Landlord> {
             throw new Exception("Legal Entity does not have a User connected");
         }
         if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Owner"))){
-            List<Role> roles = new ArrayList<>();
-            roles.add(userService.getRoleByName("Owner"));
+            user.getRoles().add(userService.getRoleByName("Owner"));
             userService.saveUser(user);
         }
     }

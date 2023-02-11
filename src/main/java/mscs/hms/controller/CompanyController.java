@@ -84,7 +84,7 @@ public class CompanyController extends AbsEntityController<Company> {
             companyService.save(company);
         }
         catch(Exception ex){
-            return getEditViewModel(company, getObjectErrorList(ex), "edit");
+            return getEditViewModel(company, getObjectErrorList(ex), "new");
         }
         return getListEntitiesModelView(companyService.getAll(null, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     } 

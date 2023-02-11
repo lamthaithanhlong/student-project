@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import mscs.hms.model.Role;
 import mscs.hms.model.User;
 import mscs.hms.repository.UserRepository;
+import mscs.hms.repository.RoleRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -19,12 +20,21 @@ class UserCreator {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init() {
         List<Role> roles = new ArrayList<>();
-        roles.add(userRepository.getRoleByName("Admin"));
+        Role role = userRepository.getRoleByName("Admin");
+        if(role == null){
+            role = new Role();
+            role.setName("Admin");
+            role = roleRepository.save(role);
+        }
+        roles.add(role);
 
         User existingUser = userRepository.getUserByUsername("admin");
         if(existingUser != null)
