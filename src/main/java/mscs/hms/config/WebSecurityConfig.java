@@ -50,20 +50,20 @@ public class WebSecurityConfig {
             "/persons", 
             "/houses", 
             "/apartments",
-            "/inquiries", "/inquiry_new", "/inquiry_edit", "/inquiry/new", "/inquiry/edit",
-            "/rent_applications",  "/rentapplication_new", "/rentapplication_edit",  "/rentapplication/new", "/rentapplication/edit",
-            "/rental_agreements",  "/rentalagreement_edit", "/rentalagreement/edit"
+            "/inquiries", "/inquiry_new", "/inquiry_edit/**", "/inquiry/new", "/inquiry/edit", "/inquiry/edit",
+            "/rent_applications",  "/rentapplication_new", "/rentapplication_edit/**",  "/rentapplication/new", "/rentapplication/edit",
+            "/rental_agreements",  "/rentalagreement_edit/**", "/rentalagreement/edit"
     };
 
     private static final String[] OWNER_ACCESS_URLS = {
             "/companies",
-            "/addresses", "/address_new", "/address_edit",  "/address/new", "/address/edit",                      
+            "/addresses", "/address_new", "/address_edit/**",  "/address/new", "/address/edit",                      
             "/persons",
-            "/houses", "/house_new", "/house_edit", "/house/new", "/house/edit",
-            "/apartments", "/apartment_new", "/apartment_edit", "/apartment/new", "/apartment/edit",
-            "/inquiries", "/inquiry_new", "/inquiry_edit", "/inquiry/new", "/inquiry/edit",
-            "/rent_applications", "/rentapplication_edit", "/rentapplication/edit",
-            "/rental_agreements", "/rentalagreement_new", "/rentalagreement_edit", "/rentalagreement/new", "/rentalagreement/edit",
+            "/houses", "/house_new", "/house_edit/**", "/house/new", "/house/edit",
+            "/apartments", "/apartment_new", "/apartment_edit/**", "/apartment/new", "/apartment/edit",
+            "/inquiries", "/inquiry_new", "/inquiry_edit/**", "/inquiry/new", "/inquiry/edit",
+            "/rent_applications", "/rentapplication_edit/**", "/rentapplication/edit",
+            "/rental_agreements", "/rentalagreement_new", "/rentalagreement_edit/**", "/rentalagreement/new", "/rentalagreement/edit",
     };
 
     private static final String[] RESOURCES_TO_WHITELIST = {
