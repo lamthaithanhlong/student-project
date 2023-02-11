@@ -130,8 +130,7 @@ public class AdminController extends AbsEntityController<Admin> {
             throw new Exception("Legal Entity does not have a User connected");
         }
         if(!user.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("Admin"))){
-            List<Role> roles = new ArrayList<>();
-            roles.add(userService.getRoleByName("Admin"));
+            user.getRoles().add(userService.getRoleByName("Admin"));
             userService.saveUser(user);
         }
     }

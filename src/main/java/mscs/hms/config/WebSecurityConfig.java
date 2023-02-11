@@ -47,22 +47,23 @@ public class WebSecurityConfig {
 
     private static final String[] RENTER_ACCESS_URLS = {
             "/companies",
-            "/persons",
-            "/houses",
+            "/persons", 
+            "/houses", 
             "/apartments",
-            "/inquiries",
-            "/rent_applications",
-            "/rental_agreements"
+            "/inquiries", "/inquiry_new", "/inquiry_edit", "/inquiry/new", "/inquiry/edit",
+            "/rent_applications",  "/rentapplication_new", "/rentapplication_edit",  "/rentapplication/new", "/rentapplication/edit",
+            "/rental_agreements",  "/rentalagreement_edit", "/rentalagreement/edit"
     };
 
     private static final String[] OWNER_ACCESS_URLS = {
             "/companies",
+            "/addresses", "/address_new", "/address_edit",  "/address/new", "/address/edit",                      
             "/persons",
-            "/houses",
-            "/apartments",
-            "/inquiries",
-            "/rent_applications",
-            "/rental_agreements"
+            "/houses", "/house_new", "/house_edit", "/house/new", "/house/edit",
+            "/apartments", "/apartment_new", "/apartment_edit", "/apartment/new", "/apartment/edit",
+            "/inquiries", "/inquiry_new", "/inquiry_edit", "/inquiry/new", "/inquiry/edit",
+            "/rent_applications", "/rentapplication_edit", "/rentapplication/edit",
+            "/rental_agreements", "/rentalagreement_new", "/rentalagreement_edit", "/rentalagreement/new", "/rentalagreement/edit",
     };
 
     private static final String[] RESOURCES_TO_WHITELIST = {
