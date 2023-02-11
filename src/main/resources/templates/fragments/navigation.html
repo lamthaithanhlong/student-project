@@ -12,13 +12,13 @@
                               <li sec:authorize="isAuthenticated()"  class="nav-item">
                                 <a class="nav-link" href="/addresses">Addresses</a>
                               </li>
-                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
+                              <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
                                    href="/legal-entities" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Legal Entities
                                 </a>
                                 <ul class="dropdown-menu">
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
+                                  <li class="nav-item">
                                     <a class="dropdown-item" href="/legal-entities">All Legal Entities</a>
                                   </li>
                                   <li><hr class="dropdown-divider"></li>
@@ -30,14 +30,14 @@
                                   </li>
                                 </ul>
                               </li>
-                              <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                                <a sec:authorize="isAuthenticated()"  class="nav-link dropdown-toggle"
-                                   href="/properties" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <li sclass="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="/properties-list" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   Properties
                                 </a>
                                 <ul class="dropdown-menu">
-                                  <li sec:authorize="isAuthenticated()"  class="nav-item">
-                                    <a class="dropdown-item" href="/properties2">All Properties</a>
+                                  <li class="nav-item">
+                                    <a class="dropdown-item" href="/properties-list">All Properties</a>
                                   </li>
                                   <li><hr class="dropdown-divider"></li>
                                   <li sec:authorize="isAuthenticated()"  class="nav-item">

@@ -41,7 +41,7 @@ public class WebSecurityConfig {
             "/", "/index", "/home",
             "/process_register", "/register", "/register_success",
             "/webjars/**",
-            "/properties2",
+            "/properties-list",
             "/legal-entities",
             "/addresses",
             "/login",
