@@ -4,6 +4,7 @@ import mscs.hms.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,15 +31,41 @@ public class WebSecurityConfig {
             "/authenticate",
             "/swagger-resources/**",
             "/swagger-ui/**",
+            "/swagger-ui/index.html",
             "/v2/api-docs",
             //"/webjars/**",
             "/swagger-ui.html"
     };
 
     private static final String[] APP_URL_TO_WHITELIST = {
-            "/", "/index",
+            "/", "/index", "/home",
             "/process_register", "/register", "/register_success",
-            "/webjars/**"
+            "/webjars/**",
+            "/properties-list",
+            "/legal-entities",
+            "/addresses",
+            "/login",
+            "/logout"
+    };
+
+    private static final String[] RENTER_ACCESS_URLS = {
+            "/companies",
+            "/persons",
+            "/houses",
+            "/apartments",
+            "/inquiries",
+            "/rent_applications",
+            "/rental_agreements"
+    };
+
+    private static final String[] OWNER_ACCESS_URLS = {
+            "/companies",
+            "/persons",
+            "/houses",
+            "/apartments",
+            "/inquiries",
+            "/rent_applications",
+            "/rental_agreements"
     };
 
     private static final String[] RESOURCES_TO_WHITELIST = {
@@ -46,6 +74,8 @@ public class WebSecurityConfig {
             "/js/**",
             "/images/**"
     };
+
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -66,17 +96,21 @@ public class WebSecurityConfig {
         httpSecurity.csrf().and().cors().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(APP_URL_TO_WHITELIST).permitAll()
-                        //.requestMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
+                        .requestMatchers(RENTER_ACCESS_URLS).hasAnyAuthority("Admin", "Renter", "Owner")
+                        .requestMatchers(OWNER_ACCESS_URLS).hasAnyAuthority("Admin", "Owner")
+                        .requestMatchers("/**").hasAuthority("Admin")
+                        .requestMatchers(SWAGGER_AUTH_WHITELIST).hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
-                //.httpBasic(Customizer.withDefaults())
-                .formLogin((form) -> form.loginPage("/login")
-                                        //.successHandler(authenticationHandler)
+                .formLogin().permitAll()
+                /*.formLogin((form) -> form.loginPage("/login")
+                                        .successHandler(authenticationHandler)
                                         .failureUrl("/login?error")
                                         .defaultSuccessUrl("/home", true)
-                                        .permitAll())
-                .logout((logout) -> logout.logoutSuccessUrl("/login?logout")
-                .permitAll());
+                                        .permitAll())*/
+                .and()
+                .logout().permitAll();
+                //.logout((logout) -> logout.logoutSuccessUrl("/login?logout").permitAll());
 
         return httpSecurity.build();
     }
