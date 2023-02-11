@@ -41,6 +41,10 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
         return userRepository.findAll();
     }
 
+    public List<User> getAllUsersByRole(String roleName) {
+        return userRepository.findAllByRolesContainingIgnoreCase(roleName);
+    }
+
     @Override
     public List<Role> getAllRoles() {
         return userRepository.getAllRoles();
@@ -71,6 +75,6 @@ public class UserServiceImpl extends AbsBaseService implements IUserService {
         if(searchString == null || searchString.isBlank())
             return userRepository.findAll(pageRequest);
         else
-            return userRepository.findByFirstNameContainsIgnoreCase(searchString, pageRequest);
+            return userRepository.searchUser(searchString, pageRequest);
     }
 }

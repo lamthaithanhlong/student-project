@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-//@MappedSuperclass
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="legalEntity_type", discriminatorType=DiscriminatorType.STRING)
@@ -19,7 +18,7 @@ public abstract class LegalEntity {
     private Integer id;
     @PhoneNumberConstraint
     private String phoneNumber;
-    @Transient
+//    @Transient
     private String legalEntityName;
     @OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

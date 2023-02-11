@@ -39,6 +39,6 @@ public class AdminServiceImpl implements AdminService {
         if(searchString == null || searchString.isBlank())
             return adminRepository.findAll(pageRequest);
         else
-            return adminRepository.findByNameContainsIgnoreCase(searchString, pageRequest);
+            return adminRepository.searchAdmin(searchString, pageRequest);
     }
 }
