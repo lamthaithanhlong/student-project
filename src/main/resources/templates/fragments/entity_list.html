@@ -1,15 +1,6 @@
 <div th:fragment="list (title, entityFields, listViewPath, newViewPath, editViewPath, crudPath, objects)">
-<!--  <div>-->
-<!--    <h5 th:text="${title}">List</h5>-->
-<!--  </div>-->
   <div class="row mt-5">
     <div class="col">
-<!--      <form th:if="${not #strings.isEmpty(newViewPath)}" th:action="${newViewPath}" method="get">-->
-<!--        <div>-->
-<!--          <button type="submit" class="btn btn-primary">New</button>-->
-<!--        </div>-->
-<!--      </form>-->
-
       <h5 th:text="${title}">List</h5>
     </div>
     <div class="col-auto">
@@ -18,7 +9,7 @@
           <input type="text" id="search" name="search" placeholder="search..." class="form-control">
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-3">Search</button>
+          <button type="submit" class="btn btn-secondaryf mb-3">Search</button>
         </div>
       </form>
     </div>

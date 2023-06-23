@@ -15,11 +15,11 @@
                               <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle"
                                    href="/legal-entities" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Legal Entities
+                                  Corporate Entities
                                 </a>
                                 <ul class="dropdown-menu">
                                   <li class="nav-item">
-                                    <a class="dropdown-item" href="/legal-entities">All Legal Entities</a>
+                                    <a class="dropdown-item" href="/legal-entities">All Corporate Entities</a>
                                   </li>
                                   <li sec:authorize="isAuthenticated()  or hasAuthority('Admin') or hasAuthority('Renter') or hasAuthority('Owner')" ><hr class="dropdown-divider"></li>
                                   <li sec:authorize="isAuthenticated()  or hasAuthority('Admin') or hasAuthority('Renter') or hasAuthority('Owner')"  class="nav-item">

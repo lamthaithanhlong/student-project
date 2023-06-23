@@ -1,13 +1,13 @@
 <div th:fragment="header">
-    <div class="row bg-primary">
+    <div class="row bg-secondary">
         <div class="d-flex col">
-            <div class="d-inline p-2 bg-primary text-white flex-grow-1">Home Rental System</div>
+            <div class="d-inline p-2 bg-secondary text-white flex-grow-1">MIU Home Rental System</div>
         </div>
         <div class="d-flex col">
             <div class="box"></div>
         </div>        
         <div class="d-flex col">
-            <div class="d-inline p-2 bg-primary text-white flex-grow-1 text-end">
+            <div class="d-inline p-2 bg-secondary text-white flex-grow-1 text-end">
                 Welcome
                 <span sec:authorize="not isAuthenticated()">, Guest</span>
                 <span sec:authorize="isAuthenticated()">, </span>
